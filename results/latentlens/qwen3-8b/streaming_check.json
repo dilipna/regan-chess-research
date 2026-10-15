@@ -1,0 +1,99 @@
+{
+ "schema": "latentlens.streaming_check/1",
+ "status": "ok",
+ "model_id": "Qwen/Qwen3-8B-Base",
+ "revision": "49e3418fbbbca6ecbdf9608b4d22e5a407081db4",
+ "dtype": "bfloat16",
+ "reference": "transformers AutoModelForCausalLM + accelerate offload (sdpa)",
+ "candidate": "LatentLens layer streaming (sdpa)",
+ "results": [
+  {
+   "text": "The researcher opened the notebook",
+   "positions": 6,
+   "top1_agreement": 1.0,
+   "max_abs_logprob_diff_top20": 0.463126,
+   "max_abs_logit_diff": 0.75,
+   "ref_top1": [
+    "Human",
+    "The",
+    "'s",
+    " the",
+    " researcher",
+    "."
+   ],
+   "stream_top1": [
+    "Human",
+    "The",
+    "'s",
+    " the",
+    " researcher",
+    "."
+   ]
+  },
+  {
+   "text": "Four score and seven years ago our fathers brought forth on this continent",
+   "positions": 14,
+   "top1_agreement": 0.857143,
+   "max_abs_logprob_diff_top20": 0.389867,
+   "max_abs_logit_diff": 0.5,
+   "ref_top1": [
+    "Human",
+    "Four",
+    " and",
+    " ten",
+    " years",
+    " and",
+    ",",
+    " country",
+    " brought",
+    " us",
+    " the",
+    " the",
+    " continent",
+    " a"
+   ],
+   "stream_top1": [
+    "Human",
+    "Four",
+    " and",
+    " ten",
+    " years",
+    " ago",
+    ",",
+    " country",
+    " brought",
+    " us",
+    " upon",
+    " the",
+    " continent",
+    " a"
+   ]
+  }
+ ],
+ "runtime_s": {
+  "reference": 53.1,
+  "stream": 28.0
+ },
+ "provenance": {
+  "git_commit": "66f82840720896724ee1b32a8f734461913342fa-dirty",
+  "timestamp": "2026-10-15T22:47:48+00:00",
+  "versions": {
+   "python": "3.13.14",
+   "torch": "2.14.1+cu126",
+   "transformers": "5.18.0",
+   "tokenizers": "0.23.2",
+   "safetensors": "0.8.0",
+   "numpy": "2.5.3",
+   "scikit-learn": "1.9.1",
+   "pandas": "3.0.6"
+  },
+  "hardware": {
+   "platform": "Windows-11-10.0.26300-SP0",
+   "machine": "AMD64",
+   "node": "BrahmaVishnuShiva",
+   "gpu": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+   "gpu_memory_gib": 4.0
+  },
+  "script": "scripts/latentlens/verify_streaming.py"
+ }
+}

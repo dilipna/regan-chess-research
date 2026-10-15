@@ -1,0 +1,934 @@
+{
+ "schema": "latentlens.tokenizer/1",
+ "status": "ok",
+ "model_id": "Qwen/Qwen3-8B-Base",
+ "revision": "49e3418fbbbca6ecbdf9608b4d22e5a407081db4",
+ "tokenizer_class": "Qwen2Tokenizer",
+ "tokenizer_size": 151669,
+ "add_special_tokens_prepends": [],
+ "special_tokens": {
+  "<|endoftext|>": 151643,
+  "<|im_start|>": 151644,
+  "<|im_end|>": 151645
+ },
+ "examples": [
+  {
+   "text": "The researcher opened the notebook",
+   "note": "The running example used throughout Learn Mode.",
+   "n_chars": 34,
+   "n_words": 5,
+   "n_tokens": 5,
+   "tokens": [
+    {
+     "id": 785,
+     "piece": "The",
+     "text": "The",
+     "start": 0,
+     "end": 3,
+     "special": false
+    },
+    {
+     "id": 31085,
+     "piece": "Ġresearcher",
+     "text": " researcher",
+     "start": 3,
+     "end": 14,
+     "special": false
+    },
+    {
+     "id": 8930,
+     "piece": "Ġopened",
+     "text": " opened",
+     "start": 14,
+     "end": 21,
+     "special": false
+    },
+    {
+     "id": 279,
+     "piece": "Ġthe",
+     "text": " the",
+     "start": 21,
+     "end": 25,
+     "special": false
+    },
+    {
+     "id": 37166,
+     "piece": "Ġnotebook",
+     "text": " notebook",
+     "start": 25,
+     "end": 34,
+     "special": false
+    }
+   ],
+   "roundtrip_ok": true
+  },
+  {
+   "text": "Tokenization is not the same as splitting on spaces.",
+   "note": "Common words are single tokens; the leading space is part of the token.",
+   "n_chars": 52,
+   "n_words": 9,
+   "n_tokens": 11,
+   "tokens": [
+    {
+     "id": 3323,
+     "piece": "Token",
+     "text": "Token",
+     "start": 0,
+     "end": 5,
+     "special": false
+    },
+    {
+     "id": 2022,
+     "piece": "ization",
+     "text": "ization",
+     "start": 5,
+     "end": 12,
+     "special": false
+    },
+    {
+     "id": 374,
+     "piece": "Ġis",
+     "text": " is",
+     "start": 12,
+     "end": 15,
+     "special": false
+    },
+    {
+     "id": 537,
+     "piece": "Ġnot",
+     "text": " not",
+     "start": 15,
+     "end": 19,
+     "special": false
+    },
+    {
+     "id": 279,
+     "piece": "Ġthe",
+     "text": " the",
+     "start": 19,
+     "end": 23,
+     "special": false
+    },
+    {
+     "id": 1852,
+     "piece": "Ġsame",
+     "text": " same",
+     "start": 23,
+     "end": 28,
+     "special": false
+    },
+    {
+     "id": 438,
+     "piece": "Ġas",
+     "text": " as",
+     "start": 28,
+     "end": 31,
+     "special": false
+    },
+    {
+     "id": 44373,
+     "piece": "Ġsplitting",
+     "text": " splitting",
+     "start": 31,
+     "end": 41,
+     "special": false
+    },
+    {
+     "id": 389,
+     "piece": "Ġon",
+     "text": " on",
+     "start": 41,
+     "end": 44,
+     "special": false
+    },
+    {
+     "id": 12621,
+     "piece": "Ġspaces",
+     "text": " spaces",
+     "start": 44,
+     "end": 51,
+     "special": false
+    },
+    {
+     "id": 13,
+     "piece": ".",
+     "text": ".",
+     "start": 51,
+     "end": 52,
+     "special": false
+    }
+   ],
+   "roundtrip_ok": true
+  },
+  {
+   "text": "unbelievably",
+   "note": "One word, several tokens.",
+   "n_chars": 12,
+   "n_words": 1,
+   "n_tokens": 3,
+   "tokens": [
+    {
+     "id": 359,
+     "piece": "un",
+     "text": "un",
+     "start": 0,
+     "end": 2,
+     "special": false
+    },
+    {
+     "id": 31798,
+     "piece": "belie",
+     "text": "belie",
+     "start": 2,
+     "end": 7,
+     "special": false
+    },
+    {
+     "id": 88134,
+     "piece": "vably",
+     "text": "vably",
+     "start": 7,
+     "end": 12,
+     "special": false
+    }
+   ],
+   "roundtrip_ok": true
+  },
+  {
+   "text": " notebook | notebook | Notebook | NOTEBOOK",
+   "note": "The same word with and without a leading space or capitals maps to different ids.",
+   "n_chars": 42,
+   "n_words": 7,
+   "n_tokens": 8,
+   "tokens": [
+    {
+     "id": 37166,
+     "piece": "Ġnotebook",
+     "text": " notebook",
+     "start": 0,
+     "end": 9,
+     "special": false
+    },
+    {
+     "id": 760,
+     "piece": "Ġ|",
+     "text": " |",
+     "start": 9,
+     "end": 11,
+     "special": false
+    },
+    {
+     "id": 37166,
+     "piece": "Ġnotebook",
+     "text": " notebook",
+     "start": 11,
+     "end": 20,
+     "special": false
+    },
+    {
+     "id": 760,
+     "piece": "Ġ|",
+     "text": " |",
+     "start": 20,
+     "end": 22,
+     "special": false
+    },
+    {
+     "id": 68655,
+     "piece": "ĠNotebook",
+     "text": " Notebook",
+     "start": 22,
+     "end": 31,
+     "special": false
+    },
+    {
+     "id": 760,
+     "piece": "Ġ|",
+     "text": " |",
+     "start": 31,
+     "end": 33,
+     "special": false
+    },
+    {
+     "id": 16743,
+     "piece": "ĠNOTE",
+     "text": " NOTE",
+     "start": 33,
+     "end": 38,
+     "special": false
+    },
+    {
+     "id": 36625,
+     "piece": "BOOK",
+     "text": "BOOK",
+     "start": 38,
+     "end": 42,
+     "special": false
+    }
+   ],
+   "roundtrip_ok": true
+  },
+  {
+   "text": "In 1863, roughly 2,000 people listened.",
+   "note": "Numbers are split into digit pieces.",
+   "n_chars": 39,
+   "n_words": 6,
+   "n_tokens": 17,
+   "tokens": [
+    {
+     "id": 641,
+     "piece": "In",
+     "text": "In",
+     "start": 0,
+     "end": 2,
+     "special": false
+    },
+    {
+     "id": 220,
+     "piece": "Ġ",
+     "text": " ",
+     "start": 2,
+     "end": 3,
+     "special": false
+    },
+    {
+     "id": 16,
+     "piece": "1",
+     "text": "1",
+     "start": 3,
+     "end": 4,
+     "special": false
+    },
+    {
+     "id": 23,
+     "piece": "8",
+     "text": "8",
+     "start": 4,
+     "end": 5,
+     "special": false
+    },
+    {
+     "id": 21,
+     "piece": "6",
+     "text": "6",
+     "start": 5,
+     "end": 6,
+     "special": false
+    },
+    {
+     "id": 18,
+     "piece": "3",
+     "text": "3",
+     "start": 6,
+     "end": 7,
+     "special": false
+    },
+    {
+     "id": 11,
+     "piece": ",",
+     "text": ",",
+     "start": 7,
+     "end": 8,
+     "special": false
+    },
+    {
+     "id": 17267,
+     "piece": "Ġroughly",
+     "text": " roughly",
+     "start": 8,
+     "end": 16,
+     "special": false
+    },
+    {
+     "id": 220,
+     "piece": "Ġ",
+     "text": " ",
+     "start": 16,
+     "end": 17,
+     "special": false
+    },
+    {
+     "id": 17,
+     "piece": "2",
+     "text": "2",
+     "start": 17,
+     "end": 18,
+     "special": false
+    },
+    {
+     "id": 11,
+     "piece": ",",
+     "text": ",",
+     "start": 18,
+     "end": 19,
+     "special": false
+    },
+    {
+     "id": 15,
+     "piece": "0",
+     "text": "0",
+     "start": 19,
+     "end": 20,
+     "special": false
+    },
+    {
+     "id": 15,
+     "piece": "0",
+     "text": "0",
+     "start": 20,
+     "end": 21,
+     "special": false
+    },
+    {
+     "id": 15,
+     "piece": "0",
+     "text": "0",
+     "start": 21,
+     "end": 22,
+     "special": false
+    },
+    {
+     "id": 1251,
+     "piece": "Ġpeople",
+     "text": " people",
+     "start": 22,
+     "end": 29,
+     "special": false
+    },
+    {
+     "id": 33693,
+     "piece": "Ġlistened",
+     "text": " listened",
+     "start": 29,
+     "end": 38,
+     "special": false
+    },
+    {
+     "id": 13,
+     "piece": ".",
+     "text": ".",
+     "start": 38,
+     "end": 39,
+     "special": false
+    }
+   ],
+   "roundtrip_ok": true
+  },
+  {
+   "text": "def rms(x): return (sum(v*v for v in x)/len(x))**0.5",
+   "note": "Code.",
+   "n_chars": 52,
+   "n_words": 8,
+   "n_tokens": 21,
+   "tokens": [
+    {
+     "id": 750,
+     "piece": "def",
+     "text": "def",
+     "start": 0,
+     "end": 3,
+     "special": false
+    },
+    {
+     "id": 79994,
+     "piece": "Ġrms",
+     "text": " rms",
+     "start": 3,
+     "end": 7,
+     "special": false
+    },
+    {
+     "id": 2075,
+     "piece": "(x",
+     "text": "(x",
+     "start": 7,
+     "end": 9,
+     "special": false
+    },
+    {
+     "id": 1648,
+     "piece": "):",
+     "text": "):",
+     "start": 9,
+     "end": 11,
+     "special": false
+    },
+    {
+     "id": 470,
+     "piece": "Ġreturn",
+     "text": " return",
+     "start": 11,
+     "end": 18,
+     "special": false
+    },
+    {
+     "id": 320,
+     "piece": "Ġ(",
+     "text": " (",
+     "start": 18,
+     "end": 20,
+     "special": false
+    },
+    {
+     "id": 1242,
+     "piece": "sum",
+     "text": "sum",
+     "start": 20,
+     "end": 23,
+     "special": false
+    },
+    {
+     "id": 3747,
+     "piece": "(v",
+     "text": "(v",
+     "start": 23,
+     "end": 25,
+     "special": false
+    },
+    {
+     "id": 49149,
+     "piece": "*v",
+     "text": "*v",
+     "start": 25,
+     "end": 27,
+     "special": false
+    },
+    {
+     "id": 369,
+     "piece": "Ġfor",
+     "text": " for",
+     "start": 27,
+     "end": 31,
+     "special": false
+    },
+    {
+     "id": 348,
+     "piece": "Ġv",
+     "text": " v",
+     "start": 31,
+     "end": 33,
+     "special": false
+    },
+    {
+     "id": 304,
+     "piece": "Ġin",
+     "text": " in",
+     "start": 33,
+     "end": 36,
+     "special": false
+    },
+    {
+     "id": 856,
+     "piece": "Ġx",
+     "text": " x",
+     "start": 36,
+     "end": 38,
+     "special": false
+    },
+    {
+     "id": 5620,
+     "piece": ")/",
+     "text": ")/",
+     "start": 38,
+     "end": 40,
+     "special": false
+    },
+    {
+     "id": 2892,
+     "piece": "len",
+     "text": "len",
+     "start": 40,
+     "end": 43,
+     "special": false
+    },
+    {
+     "id": 2075,
+     "piece": "(x",
+     "text": "(x",
+     "start": 43,
+     "end": 45,
+     "special": false
+    },
+    {
+     "id": 593,
+     "piece": "))",
+     "text": "))",
+     "start": 45,
+     "end": 47,
+     "special": false
+    },
+    {
+     "id": 334,
+     "piece": "**",
+     "text": "**",
+     "start": 47,
+     "end": 49,
+     "special": false
+    },
+    {
+     "id": 15,
+     "piece": "0",
+     "text": "0",
+     "start": 49,
+     "end": 50,
+     "special": false
+    },
+    {
+     "id": 13,
+     "piece": ".",
+     "text": ".",
+     "start": 50,
+     "end": 51,
+     "special": false
+    },
+    {
+     "id": 20,
+     "piece": "5",
+     "text": "5",
+     "start": 51,
+     "end": 52,
+     "special": false
+    }
+   ],
+   "roundtrip_ok": true
+  },
+  {
+   "text": "Der Forscher öffnete das Notizbuch.",
+   "note": "German: accented characters are byte-level pieces.",
+   "n_chars": 35,
+   "n_words": 5,
+   "n_tokens": 11,
+   "tokens": [
+    {
+     "id": 22171,
+     "piece": "Der",
+     "text": "Der",
+     "start": 0,
+     "end": 3,
+     "special": false
+    },
+    {
+     "id": 49890,
+     "piece": "ĠFors",
+     "text": " Fors",
+     "start": 3,
+     "end": 8,
+     "special": false
+    },
+    {
+     "id": 9034,
+     "piece": "cher",
+     "text": "cher",
+     "start": 8,
+     "end": 12,
+     "special": false
+    },
+    {
+     "id": 63318,
+     "piece": "ĠÃ¶ff",
+     "text": " öff",
+     "start": 12,
+     "end": 16,
+     "special": false
+    },
+    {
+     "id": 4711,
+     "piece": "net",
+     "text": "net",
+     "start": 16,
+     "end": 19,
+     "special": false
+    },
+    {
+     "id": 68,
+     "piece": "e",
+     "text": "e",
+     "start": 19,
+     "end": 20,
+     "special": false
+    },
+    {
+     "id": 6616,
+     "piece": "Ġdas",
+     "text": " das",
+     "start": 20,
+     "end": 24,
+     "special": false
+    },
+    {
+     "id": 2806,
+     "piece": "ĠNot",
+     "text": " Not",
+     "start": 24,
+     "end": 28,
+     "special": false
+    },
+    {
+     "id": 449,
+     "piece": "iz",
+     "text": "iz",
+     "start": 28,
+     "end": 30,
+     "special": false
+    },
+    {
+     "id": 72043,
+     "piece": "buch",
+     "text": "buch",
+     "start": 30,
+     "end": 34,
+     "special": false
+    },
+    {
+     "id": 13,
+     "piece": ".",
+     "text": ".",
+     "start": 34,
+     "end": 35,
+     "special": false
+    }
+   ],
+   "roundtrip_ok": true
+  },
+  {
+   "text": "研究人员打开了笔记本。",
+   "note": "Chinese: Qwen's vocabulary has many multi-character Chinese tokens.",
+   "n_chars": 11,
+   "n_words": 1,
+   "n_tokens": 4,
+   "tokens": [
+    {
+     "id": 113299,
+     "piece": "çłĶç©¶äººåĳĺ",
+     "text": "研究人员",
+     "start": 0,
+     "end": 4,
+     "special": false
+    },
+    {
+     "id": 112934,
+     "piece": "æīĵå¼ĢäºĨ",
+     "text": "打开了",
+     "start": 4,
+     "end": 7,
+     "special": false
+    },
+    {
+     "id": 110412,
+     "piece": "ç¬Ķè®°æľ¬",
+     "text": "笔记本",
+     "start": 7,
+     "end": 10,
+     "special": false
+    },
+    {
+     "id": 1773,
+     "piece": "ãĢĤ",
+     "text": "。",
+     "start": 10,
+     "end": 11,
+     "special": false
+    }
+   ],
+   "roundtrip_ok": true
+  },
+  {
+   "text": "<|endoftext|>",
+   "note": "A special token written as text is recognised as one special token id.",
+   "n_chars": 13,
+   "n_words": 1,
+   "n_tokens": 1,
+   "tokens": [
+    {
+     "id": 151643,
+     "piece": "<|endoftext|>",
+     "text": "<|endoftext|>",
+     "start": 0,
+     "end": 13,
+     "special": true
+    }
+   ],
+   "roundtrip_ok": true
+  }
+ ],
+ "embedding": {
+  "tensor": "model.embed_tokens.weight",
+  "shape": [
+   151936,
+   4096
+  ],
+  "dtype_stored": "bfloat16",
+  "text": "The researcher opened the notebook",
+  "tokens": [
+   {
+    "id": 785,
+    "piece": "The",
+    "text": "The",
+    "dim": 4096,
+    "rms": 0.029385,
+    "l2": 1.880639,
+    "mean": 0.000297,
+    "std": 0.029387,
+    "min": -0.357422,
+    "max": 0.347656,
+    "first_coords": [
+     -0.03857,
+     0.01648,
+     -0.00304,
+     0.02246,
+     -0.02563,
+     0.01929,
+     0.0062,
+     0.04248
+    ]
+   },
+   {
+    "id": 31085,
+    "piece": "Ġresearcher",
+    "text": " researcher",
+    "dim": 4096,
+    "rms": 0.027255,
+    "l2": 1.744335,
+    "mean": 0.000258,
+    "std": 0.027257,
+    "min": -0.101562,
+    "max": 0.095703,
+    "first_coords": [
+     0.01562,
+     -0.01978,
+     -0.02649,
+     -0.08008,
+     0.00751,
+     -0.02527,
+     0.02954,
+     -0.01587
+    ]
+   },
+   {
+    "id": 8930,
+    "piece": "Ġopened",
+    "text": " opened",
+    "dim": 4096,
+    "rms": 0.026943,
+    "l2": 1.724356,
+    "mean": -2.2e-05,
+    "std": 0.026946,
+    "min": -0.085938,
+    "max": 0.089355,
+    "first_coords": [
+     0.0166,
+     0.00818,
+     0.04175,
+     -0.00273,
+     -0.0097,
+     0.02307,
+     -0.005,
+     -0.06079
+    ]
+   },
+   {
+    "id": 279,
+    "piece": "Ġthe",
+    "text": " the",
+    "dim": 4096,
+    "rms": 0.025358,
+    "l2": 1.622922,
+    "mean": 0.000383,
+    "std": 0.025358,
+    "min": -0.636719,
+    "max": 0.820312,
+    "first_coords": [
+     0.01453,
+     -0.00206,
+     -0.00094,
+     0.00583,
+     -0.00137,
+     -0.00215,
+     -0.01123,
+     0.00439
+    ]
+   },
+   {
+    "id": 37166,
+    "piece": "Ġnotebook",
+    "text": " notebook",
+    "dim": 4096,
+    "rms": 0.026791,
+    "l2": 1.71465,
+    "mean": -0.000232,
+    "std": 0.026794,
+    "min": -0.097656,
+    "max": 0.089844,
+    "first_coords": [
+     0.01489,
+     -0.00769,
+     0.00934,
+     -0.01495,
+     -0.02124,
+     -0.00885,
+     -0.00403,
+     0.00105
+    ]
+   }
+  ],
+  "cosine": [
+   [
+    1.0,
+    0.0351,
+    0.0543,
+    0.4315,
+    0.0162
+   ],
+   [
+    0.0351,
+    1.0,
+    0.0329,
+    0.0349,
+    0.0607
+   ],
+   [
+    0.0543,
+    0.0329,
+    1.0,
+    0.0478,
+    0.0202
+   ],
+   [
+    0.4315,
+    0.0349,
+    0.0478,
+    1.0,
+    0.0231
+   ],
+   [
+    0.0162,
+    0.0607,
+    0.0202,
+    0.0231,
+    1.0
+   ]
+  ]
+ },
+ "provenance": {
+  "git_commit": "66f82840720896724ee1b32a8f734461913342fa-dirty",
+  "timestamp": "2026-10-15T22:41:38+00:00",
+  "versions": {
+   "python": "3.13.14",
+   "torch": "2.14.1+cu126",
+   "transformers": "5.18.0",
+   "tokenizers": "0.23.2",
+   "safetensors": "0.8.0",
+   "numpy": "2.5.3",
+   "scikit-learn": "1.9.1",
+   "pandas": "3.0.6"
+  },
+  "hardware": {
+   "platform": "Windows-11-10.0.26300-SP0",
+   "machine": "AMD64",
+   "node": "BrahmaVishnuShiva",
+   "gpu": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+   "gpu_memory_gib": 4.0
+  },
+  "script": "scripts/latentlens/build_tokenizer_examples.py"
+ }
+}
