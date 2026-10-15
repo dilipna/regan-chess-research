@@ -1,8 +1,8 @@
 {
  "schema": "latentlens.metadata/1",
  "experiment_id": "latentlens-qwen3-8b",
- "exported": "2026-10-15T23:00:44+00:00",
- "git_commit": "07d89106eb32f9efab669f3a8f41bb1c0524b7d9-dirty",
+ "exported": "2026-10-15T23:33:10+00:00",
+ "git_commit": "f59e3c0da407a2425a04077b4f8bc24bf98d3910-dirty",
  "model_id": "Qwen/Qwen3-8B-Base",
  "model_revision": "49e3418fbbbca6ecbdf9608b4d22e5a407081db4",
  "tokenizer_id": "Qwen/Qwen3-8B-Base",

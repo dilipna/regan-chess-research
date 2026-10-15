@@ -93,6 +93,7 @@ def main():
 
     seed_everything(args.seed)
     docs, report = load_docs(args)
+    print(f"[{args.split}] dataset report: {json.dumps(report)}", flush=True)
     tag = Path(args.dataset.replace("hf:", "")).name.replace(".jsonl", "")
     out = Path(args.out) if args.out else DATA / "reps" / f"{model_slug(args.model)}-{tag}"
     sdir = out / args.split
