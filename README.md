@@ -342,3 +342,99 @@ Run locally:
 uvicorn analyzer.api.main:app --app-dir services --port 8077
 cd apps/web && echo NEXT_PUBLIC_API_URL=http://localhost:8077 > .env.local && npm run dev
 ```
+
+## Version 2: LatentLens
+
+**Website:** `/latent` (Overview, Learn, Research, Recall, Methods, Professor Demo), linked from the main navigation as
+"V2 · Model Internals". Version 1 above is unchanged; its routes, data and results are preserved (snapshot tag
+`v1-baseline`).
+
+### Motivation and relation to Version 1
+
+Version 1 asked *what does the model output?*: it compared a Regan-inspired statistical baseline, Maia-3 and
+Qwen3-8B-Base through their output probabilities on chess decisions. LatentLens asks the next question: *what is
+happening inside the model that produces those outputs?* It opens the same Qwen3-8B-Base checkpoint
+(`Qwen/Qwen3-8B-Base @ 49e3418f`) and studies its residual stream, normalization, attention and MLP computations.
+
+### What is in it
+
+- **Verified architecture.** `scripts/latentlens/inspect_qwen_architecture.py` instantiates the model on the meta device,
+  compares every parameter shape with the safetensors headers, checks 13 order-of-operation facts in the installed
+  transformers source, and reads the learned RMSNorm gains. Result: 36 blocks, d = 4096, MLP 12288, 32 query / 8 KV
+  heads of 128, RMSNorm eps 1e-6 plus Q/K RMSNorm, RoPE theta 1e6, SwiGLU, no biases, untied LM head, 8,190,735,360
+  parameters (`results/latentlens/qwen3-8b/architecture.json`).
+- **Learn Mode.** Follow one token from text to next token (real tokenizer, real embedding rows, one real forward pass),
+  an interactive transformer block, labs for RMSNorm, Q/K/V, GQA, Q/K RMSNorm, RoPE, causal attention, SwiGLU, logits
+  and decoding, the KV cache, training and backpropagation, and teach-back questions. Toy examples are labelled.
+- **Recall Microscope.** Teacher-forced next-token recall with the true token's rank traced through all 37 depths by an
+  intermediate diagnostic projection. Measured on Qwen3-8B-Base (bf16): Gettysburg Address top-1 recall 76.9%
+  (316 tokens), an unpublished control paragraph 34.6% (162 tokens). In fp32: 76.6% and 31.5% (1 and 5 top-1 decisions
+  flip).
+- **Research Mode: human vs AI.** Where inside Qwen does information that distinguishes human-written from fully
+  AI-generated text become linearly accessible? Hidden-state extraction at every depth and at seven sites inside
+  selected blocks, layerwise logistic-regression probes with validation-only selection and a one-time test, shuffled
+  labels, length, token-count, perplexity and stylometry controls, held-out generator and domain splits, block RMSNorm
+  and magnitude studies, attention-vs-MLP comparisons, PCA. **Status: pending.** The EditLens dataset
+  (`pangram/editlens_iclr`) is gated and access has not been granted yet; no human-vs-AI number exists, and the site
+  shows "Experiment pending".
+
+### How the 8B model runs on a 4 GB laptop GPU
+
+`latentlens/streaming.py` builds each real `Qwen3DecoderLayer` from the checkpoint config, loads only that layer's
+weights, runs every sequence through it and frees it. Tests show it reproduces the ordinary forward pass within 1e-4 in
+float32 (Qwen3-0.6B-Base); on Qwen3-8B in bf16 it agrees with an independent offloaded transformers run on 18 of 20
+top-1 tokens (differences are bf16 near-ties). Hidden states are read with explicit hooks because in transformers 5.18
+`output_hidden_states[-1]` is post-final-norm while the other entries are pre-norm.
+
+### Scripts (`scripts/latentlens/`)
+
+| Script | Purpose |
+|---|---|
+| `inspect_qwen_architecture.py` | verified architecture JSON |
+| `build_tokenizer_examples.py` | real tokenizations and embedding-row statistics |
+| `trace_one_token.py` | one forward pass for Learn Mode |
+| `run_recall_analysis.py` | Recall Microscope (any text file; `--no-store-text` for copyrighted inputs) |
+| `compare_recall_models.py` | compare recall artifacts of different models by relative depth |
+| `extract_hidden_states.py` | pooled hidden states for a dataset split (resumable) |
+| `train_layer_probes.py` | layerwise probes, controls, one-time test |
+| `probe_rmsnorm.py`, `probe_components.py`, `build_pca_artifacts.py` | normalization, attention-vs-MLP, PCA |
+| `verify_streaming.py` | streamed vs offloaded full-model check on the real 8B |
+| `export_web_artifacts.py` | validate, write pending placeholders, copy compact JSON to the website |
+
+Environment: `uv venv .venv-latent` and `pip install -r scripts/latentlens/requirements.txt` (torch 2.14.1 first). The
+V1 environments are untouched.
+
+### Reproduce (laptop)
+
+```bash
+.venv-latent/Scripts/python scripts/latentlens/inspect_qwen_architecture.py --model Qwen/Qwen3-8B-Base
+.venv-latent/Scripts/python scripts/latentlens/build_tokenizer_examples.py
+.venv-latent/Scripts/python scripts/latentlens/trace_one_token.py --loader stream
+.venv-latent/Scripts/python scripts/latentlens/run_recall_analysis.py --loader stream \
+  --input scripts/latentlens/passages/gettysburg_address.txt --name "Gettysburg Address (public domain)" \
+  --input scripts/latentlens/passages/control_original.txt --name "Original control paragraph (unpublished)"
+.venv-latent/Scripts/python scripts/latentlens/export_web_artifacts.py
+.venv-latent/Scripts/python -m pytest tests/latentlens && (cd apps/web && npm test && npm run build)
+```
+
+GPU workflow on the CSE machines: [docs/LATENTLENS_CSE_RUNBOOK.md](docs/LATENTLENS_CSE_RUNBOOK.md).
+
+### Documentation
+
+- [docs/QWEN3_FROM_ZERO_TO_INTERNALS.md](docs/QWEN3_FROM_ZERO_TO_INTERNALS.md): 42-topic study guide
+- [docs/LLM_MASTERY_CHECKLIST.md](docs/LLM_MASTERY_CHECKLIST.md) and [answers](docs/LLM_MASTERY_ANSWERS.md)
+- [docs/LATENTLENS_PROFESSOR_DEMO.md](docs/LATENTLENS_PROFESSOR_DEMO.md): 5- and 10-minute demo scripts, likely questions
+- [docs/LATENTLENS_IMPLEMENTATION_PLAN.md](docs/LATENTLENS_IMPLEMENTATION_PLAN.md): audit and design
+
+### Limitations
+
+One model so far. The trace and the two recall passages are illustrations on real data, not samples for general
+claims. Diagnostic projections show linear readability, not intermediate decisions. Probe results, when they exist,
+will describe linear accessibility of label-correlated information in one dataset; they cannot establish causal
+mechanisms or authorship. Black-box API models are never internally probed.
+
+### Future work
+
+Run the human-vs-AI study on EditLens (CSE GPU); compare recall trajectories of the 14B and ~27B Qwen models Professor
+Regan used (same text, same script, bf16 and fp32); add adapters for further open-weight families only after the Qwen
+pipeline has produced results.

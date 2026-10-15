@@ -1,0 +1,13 @@
+# LatentLens environment (versions used for every artifact in results/latentlens/).
+# Install torch first from the index that matches the machine's CUDA, e.g.
+#   pip install torch==2.14.1 --index-url https://download.pytorch.org/whl/cu126
+transformers==5.18.0
+tokenizers==0.23.2
+safetensors==0.8.0
+huggingface_hub==1.33.0
+accelerate==1.15.0
+numpy==2.5.3
+pandas==3.0.6
+pyarrow==25.0.1
+scikit-learn==1.9.1
+pytest

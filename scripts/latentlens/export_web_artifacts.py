@@ -79,7 +79,10 @@ def main():
     status = {}
     for name, spec in PENDING.items():
         p = res / name
-        if not p.exists() or read_json(p).get("status") == "pending":
+        old = read_json(p) if p.exists() else None
+        unchanged = old is not None and old.get("status") == "pending" and old.get("reason") == spec["reason"] \
+            and old.get("how_to_run") == spec["how_to_run"]
+        if (old is None or old.get("status") == "pending") and not unchanged:
             write_json(p, {"schema": spec["schema"], "status": "pending", "model_id": args.model,
                            "reason": spec["reason"], "how_to_run": spec["how_to_run"], "written": now_iso()})
     if (res / "recall_probe.json").exists() and (res / "recall_probe_fp32.json").exists():

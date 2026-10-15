@@ -92,7 +92,6 @@ def source_checks(mod) -> list[dict]:
 def norm_gain_stats(root: Path, weight_map: dict, n_layers: int) -> dict:
     """Summary statistics of the learned RMSNorm gain vectors g (read from the stored weights)."""
     from safetensors import safe_open
-    import torch
 
     def get(name):
         with safe_open(str(root / weight_map[name]), framework="pt") as fh:
@@ -110,7 +109,6 @@ def norm_gain_stats(root: Path, weight_map: dict, n_layers: int) -> dict:
                         ("k_norm", f"model.layers.{i}.self_attn.k_norm.weight")):
             out[k].append({"layer": i, **stats(get(name))})
     out["final_norm"] = stats(get("model.norm.weight"))
-    _ = torch
     return out
 
 

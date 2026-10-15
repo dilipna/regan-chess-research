@@ -18,7 +18,6 @@ CSE GPU:
 from __future__ import annotations
 
 import argparse
-import math
 import sys
 import time
 from pathlib import Path
@@ -173,7 +172,6 @@ def main():
     print(f"next-token top 5 after {args.text!r}: {[(d['text'], round(d['p'], 4)) for d in final['top'][:5]]}")
     print(f"sentence loss {res['sentence_loss_nats']:.3f} nats; {res['runtime_s']}s -> {out}")
     a.cleanup()
-    _ = math
 
 
 if __name__ == "__main__":
