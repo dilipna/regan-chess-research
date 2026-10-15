@@ -6,5 +6,5 @@
  "how_to_run": [
   "python scripts/latentlens/probe_rmsnorm.py --representations data/latentlens/reps/qwen3-8b-editlens_iclr"
  ],
- "written": "2026-10-15T22:51:38+00:00"
+ "written": "2026-10-15T23:00:43+00:00"
 }

@@ -11,5 +11,5 @@
   "python scripts/latentlens/extract_hidden_states.py --model Qwen/Qwen3-8B-Base --dataset hf:pangram/editlens_iclr --split test_enron --limit 1000 --loader full --device cuda --dtype bfloat16 --batch-size 8",
   "python scripts/latentlens/train_layer_probes.py --representations data/latentlens/reps/qwen3-8b-editlens_iclr --extra-test test_llama --extra-test test_enron"
  ],
- "written": "2026-10-15T22:51:38+00:00"
+ "written": "2026-10-15T23:00:43+00:00"
 }

@@ -1,0 +1,52 @@
+{
+ "schema": "latentlens.recall_precision/1",
+ "status": "ok",
+ "model_id": "Qwen/Qwen3-8B-Base",
+ "compared": [
+  "bfloat16",
+  "float32"
+ ],
+ "passages": [
+  {
+   "name": "Gettysburg Address (public domain)",
+   "n_scored": 316,
+   "top1_rate": {
+    "bfloat16": 0.76899,
+    "float32": 0.76582
+   },
+   "top1_flips": 1
+  },
+  {
+   "name": "Original control paragraph (unpublished)",
+   "n_scored": 162,
+   "top1_rate": {
+    "bfloat16": 0.34568,
+    "float32": 0.31481
+   },
+   "top1_flips": 5
+  }
+ ],
+ "note": "Same model, same text, same code; only the compute dtype differs. Top-1 decisions that flip are near-ties, so recall rates of two models should be compared with this numerical noise in mind.",
+ "provenance": {
+  "git_commit": "07d89106eb32f9efab669f3a8f41bb1c0524b7d9",
+  "timestamp": "2026-10-15T23:00:04+00:00",
+  "versions": {
+   "python": "3.13.14",
+   "torch": "2.14.1+cu126",
+   "transformers": "5.18.0",
+   "tokenizers": "0.23.2",
+   "safetensors": "0.8.0",
+   "numpy": "2.5.3",
+   "scikit-learn": "1.9.1",
+   "pandas": "3.0.6"
+  },
+  "hardware": {
+   "platform": "Windows-11-10.0.26300-SP0",
+   "machine": "AMD64",
+   "node": "BrahmaVishnuShiva",
+   "gpu": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+   "gpu_memory_gib": 4.0
+  },
+  "script": "scripts/latentlens/run_recall_analysis.py"
+ }
+}

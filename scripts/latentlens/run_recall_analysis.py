@@ -104,11 +104,11 @@ def main():
     ap.add_argument("--local-files-only", action="store_true")
     args = ap.parse_args()
 
-    from latentlens.adapter import Qwen3Adapter
+    from latentlens.adapter import make_adapter
     seed_everything(0)
     names = args.name or []
     t0 = time.time()
-    a = Qwen3Adapter(args.model, revision=args.revision, device=args.device, dtype=args.dtype, loader=args.loader,
+    a = make_adapter(args.model, revision=args.revision, device=args.device, dtype=args.dtype, loader=args.loader,
                      local_files_only=args.local_files_only)
     a.load_model()
     passages = []
@@ -123,7 +123,7 @@ def main():
               f"median rank {s['median_rank']:.0f}, median stabilization depth {res['median_stabilization_depth']}")
     out = {"schema": "latentlens.recall/1", "status": "ok", "model_id": a.model_id, "revision": a.revision,
            "model_slug": model_slug(a.model_id), "n_layers": a.get_layer_count(), "dtype": args.dtype, "loader": args.loader,
-           "prefix": "<|endoftext|>", "scoring": "teacher forcing; every token after the prefix is scored",
+           "prefix": a.tokenizer.convert_ids_to_tokens(a.doc_prefix_id), "scoring": "teacher forcing; every token after the prefix is scored",
            "diagnostic_projection": "final RMSNorm (model.norm) + LM head applied to the residual stream after each block",
            "passages": passages, "runtime_s": round(time.time() - t0, 1),
            "provenance": provenance(script="scripts/latentlens/run_recall_analysis.py")}

@@ -80,6 +80,8 @@ def causal_mask(T: int, device, dtype) -> torch.Tensor:
 class Qwen3Adapter(ModelProbeAdapter):
     """Qwen3 decoder-only models (Qwen3ForCausalLM). Hooks follow transformers' Qwen3DecoderLayer module names."""
 
+    MODEL_TYPES = ("qwen3",)
+
     NORMS = {"block_attn": "model.layers.{i}.input_layernorm", "block_mlp": "model.layers.{i}.post_attention_layernorm",
              "q_norm": "model.layers.{i}.self_attn.q_norm", "k_norm": "model.layers.{i}.self_attn.k_norm",
              "final": "model.norm"}
@@ -119,16 +121,21 @@ class Qwen3Adapter(ModelProbeAdapter):
             self.stream = StreamedQwen3(self.model_id, self.revision, self.device, self.dtype,
                                         attn_implementation=self.attn_implementation, local_files_only=self.local_files_only)
             self.config = self.stream.config
-        if getattr(self.config, "model_type", None) != "qwen3":
-            raise ValueError(f"Qwen3Adapter needs model_type 'qwen3', got {getattr(self.config, 'model_type', None)!r}")
+        mt = getattr(self.config, "model_type", None)
+        if mt not in self.MODEL_TYPES or (self.loader == "stream" and mt != "qwen3"):
+            raise ValueError(f"{type(self).__name__} with loader={self.loader!r} does not support model_type {mt!r}")
 
     def tokenize(self, text: str) -> list[int]:
         return self.tokenizer(text, add_special_tokens=False)["input_ids"]
 
     @property
     def doc_prefix_id(self) -> int:
-        """<|endoftext|>, the document separator Qwen base models see between pretraining documents."""
-        return int(self.tokenizer.convert_tokens_to_ids("<|endoftext|>"))
+        """<|endoftext|>, the document separator Qwen base models see between pretraining documents (other families:
+        their BOS token, else EOS)."""
+        tid = self.tokenizer.convert_tokens_to_ids("<|endoftext|>")
+        if isinstance(tid, int) and tid != self.tokenizer.unk_token_id and tid is not None:
+            return int(tid)
+        return int(self.tokenizer.bos_token_id if self.tokenizer.bos_token_id is not None else self.tokenizer.eos_token_id)
 
     def get_layer_count(self) -> int:
         return int(self.config.num_hidden_layers)
@@ -226,13 +233,26 @@ def make_batches(token_lists: Sequence[Sequence[int]], batch_size: int, pad_id: 
     return out
 
 
-def load_adapter(model_id: str, **kw) -> ModelProbeAdapter:
-    """Factory. Only Qwen3 is implemented; other open-weight families get their own adapter class."""
+class LlamaStyleAdapter(Qwen3Adapter):
+    """Other pre-norm decoders with the same module names (model.layers[i].input_layernorm / self_attn /
+    post_attention_layernorm / mlp, model.norm, lm_head), e.g. Qwen2/Qwen2.5 and Llama. Full loader only: the residual,
+    RMSNorm, attention and MLP sites are read at the same module boundaries. These models have no q_norm/k_norm."""
+
+    MODEL_TYPES = ("qwen2", "llama", "mistral")
+
+
+def make_adapter(model_id: str, **kw) -> ModelProbeAdapter:
+    """Pick the adapter class from the checkpoint's model_type (the model is not loaded yet)."""
     from transformers import AutoConfig
     cfg = AutoConfig.from_pretrained(model_id, revision=kw.get("revision") or PINNED_REVISIONS.get(model_id),
                                      local_files_only=kw.get("local_files_only", False))
-    if cfg.model_type == "qwen3":
-        a = Qwen3Adapter(model_id, **kw)
-        a.load_model()
-        return a
-    raise NotImplementedError(f"no LatentLens adapter for model_type={cfg.model_type!r} yet")
+    for cls in (Qwen3Adapter, LlamaStyleAdapter):
+        if cfg.model_type in cls.MODEL_TYPES:
+            return cls(model_id, **kw)
+    raise NotImplementedError(f"no LatentLens adapter for model_type={cfg.model_type!r} yet; write one before probing it")
+
+
+def load_adapter(model_id: str, **kw) -> ModelProbeAdapter:
+    a = make_adapter(model_id, **kw)
+    a.load_model()
+    return a
