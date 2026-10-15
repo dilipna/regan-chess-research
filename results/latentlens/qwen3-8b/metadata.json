@@ -1,8 +1,8 @@
 {
  "schema": "latentlens.metadata/1",
  "experiment_id": "latentlens-qwen3-8b",
- "exported": "2026-10-15T22:51:38+00:00",
- "git_commit": "66f82840720896724ee1b32a8f734461913342fa-dirty",
+ "exported": "2026-10-15T23:00:44+00:00",
+ "git_commit": "07d89106eb32f9efab669f3a8f41bb1c0524b7d9-dirty",
  "model_id": "Qwen/Qwen3-8B-Base",
  "model_revision": "49e3418fbbbca6ecbdf9608b4d22e5a407081db4",
  "tokenizer_id": "Qwen/Qwen3-8B-Base",
@@ -14,6 +14,7 @@
   "component_probe.json": "pending",
   "layer_probe.json": "pending",
   "pca/index.json": "pending",
+  "recall_precision_check.json": "ok",
   "recall_probe.json": "ok",
   "rmsnorm_probe.json": "pending",
   "streaming_check.json": "ok",

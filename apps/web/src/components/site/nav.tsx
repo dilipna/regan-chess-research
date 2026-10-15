@@ -49,6 +49,10 @@ export function Nav() {
             className={cn("shrink-0 rounded px-2 py-1.5 text-[12.5px] whitespace-nowrap text-ink-3 hover:text-ink", path === "/methodology" && "text-ink")}>
             Methods
           </Link>
+          <Link href="/latent" aria-current={path.startsWith("/latent") ? "page" : undefined}
+            className={cn("shrink-0 rounded border border-rule-strong px-2 py-1 text-[12.5px] whitespace-nowrap text-ink-3 hover:text-ink", path.startsWith("/latent") && "border-ink text-ink")}>
+            V2 · Model Internals
+          </Link>
         </nav>
       </div>
     </header>

@@ -82,10 +82,24 @@ def main():
         if not p.exists() or read_json(p).get("status") == "pending":
             write_json(p, {"schema": spec["schema"], "status": "pending", "model_id": args.model,
                            "reason": spec["reason"], "how_to_run": spec["how_to_run"], "written": now_iso()})
+    if (res / "recall_probe.json").exists() and (res / "recall_probe_fp32.json").exists():
+        a16, a32 = read_json(res / "recall_probe.json"), read_json(res / "recall_probe_fp32.json")
+        rows = []
+        for p, q in zip(a16["passages"], a32["passages"]):
+            assert p["name"] == q["name"] and p["n_scored"] == q["n_scored"]
+            flips = sum(x["top1"] != y["top1"] for x, y in zip(p["positions"], q["positions"]))
+            rows.append({"name": p["name"], "n_scored": p["n_scored"], "top1_rate": {a16["dtype"]: p["summary"]["top1_rate"],
+                         a32["dtype"]: q["summary"]["top1_rate"]}, "top1_flips": flips})
+        write_json(res / "recall_precision_check.json", {
+            "schema": "latentlens.recall_precision/1", "status": "ok", "model_id": a16["model_id"],
+            "compared": [a16["dtype"], a32["dtype"]], "passages": rows,
+            "note": "Same model, same text, same code; only the compute dtype differs. Top-1 decisions that flip are "
+                    "near-ties, so recall rates of two models should be compared with this numerical noise in mind.",
+            "provenance": a32["provenance"]})
     problems = {}
     for p in sorted(res.rglob("*.json")):
         rel = p.relative_to(res).as_posix()
-        if rel == "metadata.json":
+        if rel in ("metadata.json", "recall_probe_fp32.json"):
             continue
         a = read_json(p)
         errs = validate(p.name, a)
