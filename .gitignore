@@ -13,3 +13,10 @@ apps/web/.env.local
 .vercel
 .venv-qwen/
 .venv-modal/
+
+# LatentLens (V2): large or local-only material
+.venv-latent/
+data/latentlens/
+tools/cloudflared/
+*.safetensors
+*.npz

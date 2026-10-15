@@ -1,0 +1,1 @@
+{"schema":"latentlens.pca_index/1","status":"pending","model_id":"Qwen/Qwen3-8B-Base","reason":"Runs on the same extraction as the layer probes; fitted on train, shows validation documents.","how_to_run":["python scripts/latentlens/build_pca_artifacts.py --representations data/latentlens/reps/qwen3-8b-editlens_iclr"],"written":"2026-10-15T22:51:38+00:00"}

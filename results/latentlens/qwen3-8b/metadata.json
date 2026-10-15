@@ -1,0 +1,59 @@
+{
+ "schema": "latentlens.metadata/1",
+ "experiment_id": "latentlens-qwen3-8b",
+ "exported": "2026-10-15T22:51:38+00:00",
+ "git_commit": "66f82840720896724ee1b32a8f734461913342fa-dirty",
+ "model_id": "Qwen/Qwen3-8B-Base",
+ "model_revision": "49e3418fbbbca6ecbdf9608b4d22e5a407081db4",
+ "tokenizer_id": "Qwen/Qwen3-8B-Base",
+ "tokenizer_revision": "49e3418fbbbca6ecbdf9608b4d22e5a407081db4",
+ "transformers_version": "5.18.0",
+ "torch_version": "2.14.1+cu126",
+ "artifacts": {
+  "architecture.json": "ok",
+  "component_probe.json": "pending",
+  "layer_probe.json": "pending",
+  "pca/index.json": "pending",
+  "recall_probe.json": "ok",
+  "rmsnorm_probe.json": "pending",
+  "streaming_check.json": "ok",
+  "token_trace.json": "ok",
+  "tokenizer_examples.json": "ok"
+ },
+ "learn_mode": {
+  "architecture": "ok",
+  "tokenizer_examples": "ok",
+  "token_trace": "ok",
+  "trace_dtype": "bfloat16",
+  "trace_loader": "stream"
+ },
+ "recall": {
+  "status": "ok",
+  "dtype": "bfloat16",
+  "loader": "stream",
+  "passages": [
+   "Gettysburg Address (public domain)",
+   "Original control paragraph (unpublished)"
+  ]
+ },
+ "human_vs_ai": {
+  "status": "pending",
+  "dataset": "pangram/editlens_iclr (access pending)",
+  "train_count": null,
+  "validation_count": null,
+  "test_count": null,
+  "pooling_strategy": "chosen on validation from {mean, last} (pending)",
+  "probe_classifier": "StandardScaler + L2 logistic regression (class-balanced), C by grouped CV on train",
+  "random_seed": 0
+ },
+ "dtype": "bfloat16",
+ "device": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+ "hardware": {
+  "platform": "Windows-11-10.0.26300-SP0",
+  "machine": "AMD64",
+  "node": "BrahmaVishnuShiva",
+  "gpu": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+  "gpu_memory_gib": 4.0
+ },
+ "timestamp": "2026-10-15T22:45:38+00:00"
+}

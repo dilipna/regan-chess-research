@@ -1,0 +1,10 @@
+{
+ "schema": "latentlens.rmsnorm_probe/1",
+ "status": "pending",
+ "model_id": "Qwen/Qwen3-8B-Base",
+ "reason": "Runs on the same extraction as the layer probes (component captures at the default layers).",
+ "how_to_run": [
+  "python scripts/latentlens/probe_rmsnorm.py --representations data/latentlens/reps/qwen3-8b-editlens_iclr"
+ ],
+ "written": "2026-10-15T22:51:38+00:00"
+}
