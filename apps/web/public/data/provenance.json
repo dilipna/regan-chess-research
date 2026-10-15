@@ -1,0 +1,242 @@
+{
+ "generated_utc": "2026-10-04T21:15:15Z",
+ "repository": {
+  "url": null,
+  "commit": null,
+  "note": "The local git repository has no commits and no remote, so no commit hash can be cited for this code."
+ },
+ "run_id": {
+  "value": null,
+  "note": "The pipeline does not record a run ID. The file hashes and modification times below identify the artifacts used."
+ },
+ "dataset_selection": {
+  "source_url": "https://database.lichess.org/standard/lichess_db_standard_rated_2026-08.pgn.zst",
+  "byte_range": "0-419430399",
+  "raw_file_bytes": 419430400,
+  "raw_file_bytes_matches_range": true,
+  "rules": [
+   "rated standard games; estimated duration base + 40·increment ≥ 480 s",
+   "termination Normal or Time forfeit",
+   "both ratings in [1000, 2700)",
+   "≥ 50 plies",
+   "at most one game per player name",
+   "stratified by mean-rating band (600 per band requested)"
+  ],
+  "n_games_selected": 2230,
+  "games_by_band": {
+   "1000-1399": 600,
+   "1400-1799": 600,
+   "1800-2199": 600,
+   "2200-2699": 430
+  }
+ },
+ "splits": {
+  "games_assigned": {
+   "test": 448,
+   "train": 1352,
+   "val": 430
+  },
+  "source_games_with_player_games": {
+   "train": 943,
+   "val": 297,
+   "test": 321
+  },
+  "player_games": {
+   "train": 1788,
+   "val": 567,
+   "test": 605
+  },
+  "rows_including_originals": {
+   "train": 28608,
+   "val": 9072,
+   "test": 9680
+  },
+  "injected_variants": {
+   "train": 26820,
+   "val": 8505,
+   "test": 9075
+  },
+  "note": "Games are assigned to splits first; a source game contributes player-games only for players with ≥ 10 eligible decisions. Each player-game yields 1 original + 15 substituted rows, so rows from the same source game are strongly dependent; the effective sample size is closer to the number of source games."
+ },
+ "checkpoint": {
+  "maia3_commit": "1e13597c42d4858b7cfd7cfdae01e297263364b2",
+  "maia3_checkpoint": "UofTCSSLab/Maia3-5M",
+  "revision": "b6559de2398d7140b985f28fd2c19fb5e47ddabe",
+  "revision_note": "Hugging Face snapshot hash in the local cache used for inference"
+ },
+ "engine": {
+  "name": "Stockfish 19",
+  "binary_sha256": "45bc8e4969147db9c2eb533810637994619bff0eacc81ccfd9854394901bcbd0",
+  "note": "SHA-256 of the Windows binary used for offline analysis; the Docker image downloads the official Linux sf_19 release."
+ },
+ "environment": {
+  "python": "3.13.7",
+  "lockfile": "services/analyzer/requirements-lock.txt",
+  "lockfile_sha256": "686bbcd84f0bc33d1ed2dc16f8846c1ae467b8d686330a660a52739e20cff932",
+  "note": "pip-freeze snapshot of the research environment; see header of the lockfile."
+ },
+ "consistency_checks": [
+  {
+   "name": "Saved test predictions reproduce exported ROC-AUC",
+   "passed": true,
+   "detail": "max |difference| over 5 systems = 0.0e+00"
+  },
+  {
+   "name": "Current variants.parquet equals the evaluated test feature table",
+   "passed": true,
+   "detail": "48 columns × 9680 test rows compared exactly"
+  },
+  {
+   "name": "Raw dump prefix has the documented size",
+   "passed": true,
+   "detail": "419430400 bytes on disk; range 0–419430399 = 419430400 bytes"
+  },
+  {
+   "name": "Lockfile versions match versions recorded in the export",
+   "passed": true,
+   "detail": "xgboost, scikit-learn, shap, python-chess, torch, maia3 commit"
+  }
+ ],
+ "files": [
+  {
+   "path": "data/raw/lichess_2026-08_head.pgn.zst",
+   "bytes": 419430400,
+   "sha256": "71bf78f7c2f26274be706f444b0607ba0af43fd77097c4aef20f7f7b4a92cc32",
+   "modified_utc": "2026-10-04T00:26:33Z"
+  },
+  {
+   "path": "data/interim/games.jsonl",
+   "bytes": 16503916,
+   "sha256": "2880dd848547852ee2cc3b7bf5c3a3009c5ed68c0ba93945d6b9db04549ebea7",
+   "modified_utc": "2026-10-04T00:29:00Z"
+  },
+  {
+   "path": "data/processed/splits.json",
+   "bytes": 54445,
+   "sha256": "b4cb777d5afb82e817ac638c2acee75e5ada2e2b5211bc4c4fb2e82cd01c9f5f",
+   "modified_utc": "2026-10-04T19:22:03Z"
+  },
+  {
+   "path": "data/processed/variants.parquet",
+   "bytes": 6911577,
+   "sha256": "8baa1b4d0cafcff781d11dbcac1adda43e07758fa0562227c4f59884152797e6",
+   "modified_utc": "2026-10-04T19:24:35Z"
+  },
+  {
+   "path": "data/artifacts/projection.json",
+   "bytes": 9814,
+   "sha256": "6e2e0923f3fd2cebe4f2c0fbe6ef16add5405615a83b5e0028693dbddd6a75e6",
+   "modified_utc": "2026-10-04T19:23:58Z"
+  },
+  {
+   "path": "data/artifacts/model_A_stat.pkl",
+   "bytes": 2260,
+   "sha256": "9578b9a620079fb7d16574f99b9c981ffa939f56965d7e941b7c771108416ad9",
+   "modified_utc": "2026-10-04T02:08:22Z"
+  },
+  {
+   "path": "data/artifacts/model_B_sf.pkl",
+   "bytes": 1269834,
+   "sha256": "d120a865b94d79e9042f1a593d7e1a66eded8a773bb63e7db0584eae656d4580",
+   "modified_utc": "2026-10-04T02:08:22Z"
+  },
+  {
+   "path": "data/artifacts/model_C_sf_maia.pkl",
+   "bytes": 1221328,
+   "sha256": "a8421a7bfe73cbcb75d7d0dba0bee0fb39a1132178079800c6a8dadcf471f084",
+   "modified_utc": "2026-10-04T02:08:22Z"
+  },
+  {
+   "path": "data/artifacts/model_D_sf_maia_seq.pkl",
+   "bytes": 1210022,
+   "sha256": "cb267d7dda4967217411cb3dd627f2e93e554c151056277accf7bed23583eebe",
+   "modified_utc": "2026-10-04T02:08:22Z"
+  },
+  {
+   "path": "data/artifacts/decision_model.pkl",
+   "bytes": 382305,
+   "sha256": "19e00f1edf97438ef77efdd029def34e21e92cf80742e5f9cc8480d9b8662a6b",
+   "modified_utc": "2026-10-04T02:08:41Z"
+  },
+  {
+   "path": "data/artifacts/test_predictions.parquet",
+   "bytes": 1929327,
+   "sha256": "07db35613fb926925ae617519404581698d24f05c237c2685f800a373f5467e9",
+   "modified_utc": "2026-10-04T02:08:22Z"
+  },
+  {
+   "path": "data/artifacts/metrics.json",
+   "bytes": 64562,
+   "sha256": "9da1aa1be1f6299c365ef387850258d75df012201cff6467346d755c6609b4b2",
+   "modified_utc": "2026-10-04T02:08:22Z"
+  },
+  {
+   "path": "data/artifacts/paired_bootstrap.json",
+   "bytes": 2098,
+   "sha256": "abb053c80425a06a2e129803f994ce1a1b90db3b655e90b2737e8020944ebf46",
+   "modified_utc": "2026-10-04T21:05:31Z"
+  },
+  {
+   "path": "apps/web/public/data/metrics.json",
+   "bytes": 42789,
+   "sha256": "7cd2519271aafba3e854ee6350af18c039dce57be490bdda57694c7f55d65c9f",
+   "modified_utc": "2026-10-04T21:14:48Z"
+  },
+  {
+   "path": "apps/web/public/data/demos.json",
+   "bytes": 1122,
+   "sha256": "ed155f9f16f53549ab4f38543d2c4ba5625a40976530eedb2f7200aa28453751",
+   "modified_utc": "2026-10-04T21:14:39Z"
+  },
+  {
+   "path": "apps/web/public/data/simulator.json",
+   "bytes": 90015,
+   "sha256": "fc13f5f2a949f1a3fcf71c54cc8dea65f252722c35daca8ca44625e535aa9d2b",
+   "modified_utc": "2026-10-04T21:14:39Z"
+  },
+  {
+   "path": "apps/web/public/data/roc_curves.json",
+   "bytes": 8592,
+   "sha256": "18c982cb1ea7e486ed624af65e2c27327185def60b189631a65aff8d7982b11f",
+   "modified_utc": "2026-10-04T02:08:54Z"
+  },
+  {
+   "path": "services/analyzer/requirements.txt",
+   "bytes": 565,
+   "sha256": "889415d47fab336cc6c10211e275a514c44e6e60e830565f3400c9377e769670",
+   "modified_utc": "2026-10-04T01:44:18Z"
+  },
+  {
+   "path": "services/analyzer/requirements-lock.txt",
+   "bytes": 1778,
+   "sha256": "686bbcd84f0bc33d1ed2dc16f8846c1ae467b8d686330a660a52739e20cff932",
+   "modified_utc": "2026-10-04T21:13:27Z"
+  },
+  {
+   "path": "apps/web/package-lock.json",
+   "bytes": 427654,
+   "sha256": "086087558a760124227029db7e6606166fb1b827b8bff2cbcfb199466a25087e",
+   "modified_utc": "2026-10-04T01:40:30Z"
+  }
+ ],
+ "commands": [
+  "curl -r 0-419430399 -o data/raw/lichess_2026-08_head.pgn.zst https://database.lichess.org/standard/lichess_db_standard_rated_2026-08.pgn.zst",
+  "python experiments/01_select_games.py --per-band 600 --max-bytes 4000000000",
+  "python experiments/02_stockfish.py --workers 16",
+  "python experiments/03_maia.py",
+  "python experiments/04_build_dataset.py",
+  "python experiments/05_train_eval.py",
+  "python experiments/05b_decision_model.py",
+  "python experiments/06_export_web.py",
+  "python experiments/07_results_md.py",
+  "python experiments/08_figures.py",
+  "python experiments/09_paired_bootstrap.py",
+  "python experiments/10_provenance.py",
+  "pytest tests"
+ ],
+ "caveats": [
+  "No end-to-end re-run of the pipeline was performed when this record was written; it documents the existing artifacts.",
+  "data/processed/* were rebuilt after training (EV-match display addition); check 2 confirms the test features are unchanged.",
+  "Training used a CUDA torch wheel for Maia-3; the live analyzer image uses the CPU wheel of the same version."
+ ]
+}

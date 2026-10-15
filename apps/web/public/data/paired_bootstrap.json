@@ -1,0 +1,91 @@
+{
+ "method": "Paired cluster bootstrap over test source games (resampled with replacement; the same resample for every model). Balanced-weight ROC-AUC as in the main evaluation. Percentile 95% interval of the paired difference. Post hoc analysis of saved held-out predictions; no refitting or tuning.",
+ "n_boot": 2000,
+ "seed": 20261012,
+ "cluster": "game_id (source game)",
+ "n_clusters": 321,
+ "n_rows": 9680,
+ "n_player_games": 605,
+ "n_positive_rows": 9075,
+ "source": "data/artifacts/test_predictions.parquet",
+ "reproduced_auc": {
+  "A0_zt1": 0.784661976640876,
+  "A_stat": 0.8196617717368437,
+  "B_sf": 0.8262254399744398,
+  "C_sf_maia": 0.8730267058260507,
+  "D_sf_maia_seq": 0.8797408191607514
+ },
+ "comparisons": [
+  {
+   "from": "A0_zt1",
+   "to": "A_stat",
+   "delta": 0.034999795095967734,
+   "ci95": [
+    0.029119611977339928,
+    0.04054946753282318
+   ],
+   "share_le_0": 0.0
+  },
+  {
+   "from": "A_stat",
+   "to": "B_sf",
+   "delta": 0.006563668237596021,
+   "ci95": [
+    0.0025631790652331263,
+    0.01046388902615696
+   ],
+   "share_le_0": 0.001
+  },
+  {
+   "from": "B_sf",
+   "to": "C_sf_maia",
+   "delta": 0.04680126585161093,
+   "ci95": [
+    0.03953605310239546,
+    0.053611929921174986
+   ],
+   "share_le_0": 0.0
+  },
+  {
+   "from": "C_sf_maia",
+   "to": "D_sf_maia_seq",
+   "delta": 0.006714113334700733,
+   "ci95": [
+    0.0024570432946765587,
+    0.01104081882203409
+   ],
+   "share_le_0": 0.001
+  },
+  {
+   "from": "A_stat",
+   "to": "C_sf_maia",
+   "delta": 0.05336493408920695,
+   "ci95": [
+    0.04579870379389862,
+    0.060715526138076806
+   ],
+   "share_le_0": 0.0
+  },
+  {
+   "from": "A_stat",
+   "to": "D_sf_maia_seq",
+   "delta": 0.06007904742390768,
+   "ci95": [
+    0.05157485504290428,
+    0.06814395005533837
+   ],
+   "share_le_0": 0.0
+  },
+  {
+   "from": "B_sf",
+   "to": "D_sf_maia_seq",
+   "delta": 0.05351537918631166,
+   "ci95": [
+    0.045090050361770884,
+    0.061200921926922065
+   ],
+   "share_le_0": 0.0
+  }
+ ],
+ "generated_utc": "2026-10-04T21:05:31Z"
+}

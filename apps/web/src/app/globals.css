@@ -1,0 +1,298 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * ChessAssistLens design tokens.
+ * Paper / ink neutrals + three semantic data colors used consistently in every figure:
+ *   --engine  Stockfish (what is objectively strong)
+ *   --human   Maia-3 (what a human of this rating would probably play)
+ *   --flag    flags and synthetic substitutions
+ *   --llm     Qwen3-8B-Base (general-purpose LLM scored through token likelihoods)
+ * Model ramp (--m-*) is a single-hue ordinal ramp for the nested ablation A0 < A < B < C < D.
+ * Palettes validated (categorical all-pairs + ordinal) for light and dark surfaces.
+ */
+:root {
+  --viz-1: #2f6fb0;   /* validated pair (light surface #f6f3ec): CVD dE >= 20, contrast >= 3:1 */
+  --viz-2: #c8642c;
+  --paper: #f6f3ec;
+  --paper-2: #efebe1;
+  --paper-3: #e5e0d3;
+  --ink: #202020;
+  --ink-2: #46443f;
+  --ink-3: #6e6a62;
+  --ink-4: #9a968c;
+  --rule: #dfd9cc;
+  --rule-strong: #c9c2b2;
+
+  --engine: #4a6a8a;
+  --human: #2f5d46;
+  --flag: #8e3b2e;
+  /* provenance families: Regan = blue/slate (statistical foundation), ours = teal, findings = restrained olive */
+  --prov-regan: #3c4b5c;
+  --prov-ours: #0f6f69;
+  --prov-finding: #5a6b1f;
+  --tint-regan: color-mix(in oklab, var(--prov-regan) 5%, var(--paper));
+  --tint-ours: color-mix(in oklab, var(--prov-ours) 5%, var(--paper));
+  --tint-finding: color-mix(in oklab, var(--prov-finding) 5%, var(--paper));
+  --engine-soft: color-mix(in oklab, var(--engine) 12%, var(--paper));
+  --human-soft: color-mix(in oklab, var(--human) 14%, var(--paper));
+  --flag-soft: color-mix(in oklab, var(--flag) 10%, var(--paper));
+  --llm: #7a2e3b;
+  --llm-soft: color-mix(in oklab, var(--llm) 11%, var(--paper));
+  --tint-llm: color-mix(in oklab, var(--llm) 5%, var(--paper));
+
+  --m-a0: #9aa3b2;
+  --m-a: #7a8597;
+  --m-b: #5b677c;
+  --m-c: #3d4961;
+  --m-d: #1f2a44;
+
+  --board-light: #ece6d6;
+  --board-dark: #a8987a;
+
+  /* shadcn mapping */
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: var(--paper);
+  --card-foreground: var(--ink);
+  --popover: var(--paper);
+  --popover-foreground: var(--ink);
+  --primary: var(--ink);
+  --primary-foreground: var(--paper);
+  --secondary: var(--paper-2);
+  --secondary-foreground: var(--ink);
+  --muted: var(--paper-3);
+  --muted-foreground: var(--ink-3);
+  --accent: var(--paper-2);
+  --accent-foreground: var(--ink);
+  --destructive: var(--flag);
+  --border: var(--rule);
+  --input: var(--rule-strong);
+  --ring: var(--ink-4);
+  --radius: 0.375rem;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-figures);
+  --font-serif: var(--font-display);
+  --font-heading: var(--font-display);
+
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-paper-3: var(--paper-3);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-ink-4: var(--ink-4);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --color-engine: var(--engine);
+  --color-human: var(--human);
+  --color-flag: var(--flag);
+  --color-engine-soft: var(--engine-soft);
+  --color-human-soft: var(--human-soft);
+  --color-flag-soft: var(--flag-soft);
+  --color-regan: var(--prov-regan);
+  --color-ours: var(--prov-ours);
+  --color-finding: var(--prov-finding);
+  --color-tint-regan: var(--tint-regan);
+  --color-tint-ours: var(--tint-ours);
+  --color-tint-finding: var(--tint-finding);
+  --color-llm: var(--llm);
+  --color-llm-soft: var(--llm-soft);
+  --color-tint-llm: var(--tint-llm);
+
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-feature-settings: "kern";
+  }
+  ::selection {
+    background: color-mix(in oklab, var(--engine) 22%, transparent);
+  }
+}
+
+@layer components {
+  .num {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.005em;
+  }
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+  .eyebrow {
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    font-weight: 500;
+  }
+  .hairline {
+    border-color: var(--rule);
+  }
+  .prose-lab p {
+    color: var(--ink-2);
+    line-height: 1.7;
+  }
+  .prose-lab p + p {
+    margin-top: 0.85rem;
+  }
+  .prose-lab strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .prose-lab code {
+    font-family: var(--font-figures), ui-monospace, monospace;
+    font-size: 0.85em;
+    background: var(--paper-2);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 0 0.25em;
+  }
+  .table-lab {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8125rem;
+  }
+  .table-lab th {
+    text-align: left;
+    font-weight: 500;
+    color: var(--ink-3);
+    font-size: 0.6875rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid var(--rule-strong);
+    white-space: nowrap;
+  }
+  .table-lab td,
+  .table-lab tbody th {
+    padding: 0.55rem 0.75rem;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  .table-lab tbody th {
+    text-transform: none;
+    letter-spacing: normal;
+    font-size: inherit;
+    color: inherit;
+    white-space: normal;
+  }
+  .table-lab tr:last-child th {
+    border-bottom: 0;
+  }
+  .table-lab tr:last-child td {
+    border-bottom: 0;
+  }
+  .table-lab th.r,
+  .table-lab td.r {
+    text-align: right;
+  }
+  /* subtle entrance for disclosed content; disabled for reduced motion */
+  .reveal {
+    animation: reveal 220ms ease-out both;
+  }
+  @keyframes reveal {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      animation: none;
+    }
+  }
+  .scroll-x {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+}
+
+/* Recharts: keep axes recessive and text in ink tokens */
+.recharts-cartesian-axis-tick-value {
+  fill: var(--ink-3);
+  font-size: 11px;
+  font-family: var(--font-figures), ui-monospace, monospace;
+}
+.recharts-cartesian-grid line {
+  stroke: var(--rule);
+}
+.recharts-surface:focus,
+.recharts-wrapper:focus,
+.recharts-wrapper *:focus {
+  outline: none;
+}
+
+/* Figurine algebraic notation: chess glyphs must render as text, never as emoji. */
+.fig {
+  font-family: var(--font-body), "Segoe UI Symbol", "DejaVu Sans", "Noto Sans Symbols 2", "Apple Symbols", sans-serif;
+  font-variant-emoji: text;
+}
+/* Checkered rule used between sections (an 8-square strip, like the edge of a board). */
+.checker-rule {
+  height: 6px;
+  background: repeating-linear-gradient(90deg, var(--board-dark) 0 6px, var(--board-light) 6px 12px);
+  opacity: 0.7;
+}
+.board-pattern {
+  background-image: conic-gradient(var(--board-dark) 25%, transparent 0 50%, var(--board-dark) 0 75%, transparent 0);
+  background-size: 56px 56px;
+}
+
+/* Real italic face for the display serif (loaded separately; avoids synthetic slanting). */
+.font-serif.italic {
+  font-family: var(--font-display-italic), var(--font-display), serif;
+}
+
+/* Garamond defaults to old-style numerals; research figures must use lining figures. */
+.font-serif,
+.num {
+  font-variant-numeric: lining-nums tabular-nums;
+}

@@ -1,0 +1,431 @@
+{
+ "record_id": "d77fcb8b-7dc8-4e90-8b5e-f185f8a0f84a",
+ "record_id_note": "Identifies this provenance record. The experiment scripts themselves do not assign run IDs.",
+ "generated_utc": "2026-10-06T01:58:58Z",
+ "repository_commit": null,
+ "repository_note": "The local git repository has no commits; no commit hash can be cited.",
+ "analysis_plan": {
+  "script": "experiments/14_three_model_eval.py",
+  "plan_version": "three-model-plan.v1",
+  "plan_sha256": "58637622b3a881238d122acd0b73718f992123c038cb5b925baac23c1f9d9d36",
+  "generated_utc": "2026-10-05T06:28:41Z"
+ },
+ "models": {
+  "qwen": {
+   "model_id": "Qwen/Qwen3-8B-Base",
+   "revision": "49e3418fbbbca6ecbdf9608b4d22e5a407081db4",
+   "tokenizer_revision": "49e3418fbbbca6ecbdf9608b4d22e5a407081db4",
+   "status": "pending (not yet run; requires a GPU with >= 24 GB, planned on Modal)",
+   "runtime_by_split": null,
+   "dtype": null,
+   "quantization": null,
+   "gpu": null,
+   "pipeline_check_model": {
+    "model_id": "Qwen/Qwen3-0.6B-Base",
+    "revision": "da87bfb608c14b7cf20ba1ce41287e8de496c0cd",
+    "use": "automated tests and pipeline checks only; never reported as a result"
+   }
+  },
+  "maia3_79m": {
+   "checkpoint": "UofTCSSLab/Maia3-79M",
+   "revision_pinned": "a107d6ceb7b298cb04ae1da4edffe2939858b894",
+   "revision_in_local_cache": "a107d6ceb7b298cb04ae1da4edffe2939858b894",
+   "package_commit": "1e13597c42d4858b7cfd7cfdae01e297263364b2"
+  },
+  "maia3_5m": {
+   "checkpoint": "UofTCSSLab/Maia3-5M",
+   "revision_in_local_cache": "b6559de2398d7140b985f28fd2c19fb5e47ddabe",
+   "note": "existing pipeline checkpoint; outputs reused from data/interim/maia/ (unchanged)"
+  },
+  "stockfish": {
+   "version": "Stockfish 19",
+   "binary_sha256": "45bc8e4969147db9c2eb533810637994619bff0eacc81ccfd9854394901bcbd0",
+   "depth": 12,
+   "multipv": 5,
+   "note": "offline analysis reused unchanged"
+  }
+ },
+ "prompts": {
+  "regan_aligned": {
+   "version": "chessassistlens.qwen-prompt.v1",
+   "condition": "regan_aligned",
+   "template": "Chess move prediction. The position below is from a rated online game (Lichess, rapid or classical time control).\n\nPlayer Elo: {elo}\nOpponent Elo: {opp_elo}\nSide to move: {side}\n\nPosition FEN:\n{fen}\n\nEngine analysis: {engine}. engine_eval is the evaluation in pawns from the point of view of the side to move; n/a means the move is not among the engine's top lines.\n\nLegal candidate moves:\n{candidates}\n\nPredict the move most likely to be chosen by a human player of approximately this strength.\n\nMove:",
+   "line_format": "{uci} | engine_eval={ev}",
+   "candidate_format": " {uci}\n",
+   "engine": "Stockfish 19, fixed depth 12, MultiPV 5",
+   "eval_rule": "clip(cp, -1000, 1000) / 100, formatted %+.2f; moves outside MultiPV -> n/a",
+   "move_order": "lexicographic UCI",
+   "few_shot_examples": 0,
+   "sha256": "7f4373cf34140539dfeb24c4a1aa3f2d50cfe16a91bf3ad0e5387a5dcaed377f"
+  },
+  "position_only": {
+   "version": "chessassistlens.qwen-prompt.v1",
+   "condition": "position_only",
+   "template": "Chess move prediction. The position below is from a rated online game (Lichess, rapid or classical time control).\n\nPlayer Elo: {elo}\nOpponent Elo: {opp_elo}\nSide to move: {side}\n\nPosition FEN:\n{fen}\n\nLegal candidate moves:\n{candidates}\n\nPredict the move most likely to be chosen by a human player of approximately this strength.\n\nMove:",
+   "line_format": "{uci}",
+   "candidate_format": " {uci}\n",
+   "engine": null,
+   "eval_rule": "clip(cp, -1000, 1000) / 100, formatted %+.2f; moves outside MultiPV -> n/a",
+   "move_order": "lexicographic UCI",
+   "few_shot_examples": 0,
+   "sha256": "ba79104a5919a07344052908c02a551346fa41841887c5504e957f23b2debcc1"
+  }
+ },
+ "validated_artifacts_unchanged": [
+  {
+   "path": "data/processed/splits.json",
+   "exists": true,
+   "bytes": 54445,
+   "sha256": "b4cb777d5afb82e817ac638c2acee75e5ada2e2b5211bc4c4fb2e82cd01c9f5f",
+   "modified_utc": "2026-10-04T19:22:03Z"
+  },
+  {
+   "path": "data/processed/variants.parquet",
+   "exists": true,
+   "bytes": 6911577,
+   "sha256": "8baa1b4d0cafcff781d11dbcac1adda43e07758fa0562227c4f59884152797e6",
+   "modified_utc": "2026-10-04T19:24:35Z"
+  },
+  {
+   "path": "data/processed/decisions.pkl",
+   "exists": true,
+   "bytes": 126931982,
+   "sha256": "0111e69d04da01aee35a5f990ad67b1740d9232da54440c535b7cdd884f8b627",
+   "modified_utc": "2026-10-04T19:24:38Z"
+  },
+  {
+   "path": "data/processed/variant_choices.pkl",
+   "exists": true,
+   "bytes": 7532677,
+   "sha256": "a0bad15127d01f1b020f2b85ca9b7aa33ab35d354060724e629944c6b4204a06",
+   "modified_utc": "2026-10-04T19:24:35Z"
+  },
+  {
+   "path": "data/artifacts/test_predictions.parquet",
+   "exists": true,
+   "bytes": 1929327,
+   "sha256": "07db35613fb926925ae617519404581698d24f05c237c2685f800a373f5467e9",
+   "modified_utc": "2026-10-04T02:08:22Z"
+  },
+  {
+   "path": "data/artifacts/metrics.json",
+   "exists": true,
+   "bytes": 64562,
+   "sha256": "9da1aa1be1f6299c365ef387850258d75df012201cff6467346d755c6609b4b2",
+   "modified_utc": "2026-10-04T02:08:22Z"
+  },
+  {
+   "path": "data/artifacts/projection.json",
+   "exists": true,
+   "bytes": 9814,
+   "sha256": "6e2e0923f3fd2cebe4f2c0fbe6ef16add5405615a83b5e0028693dbddd6a75e6",
+   "modified_utc": "2026-10-04T19:23:58Z"
+  },
+  {
+   "path": "data/artifacts/paired_bootstrap.json",
+   "exists": true,
+   "bytes": 2098,
+   "sha256": "abb053c80425a06a2e129803f994ce1a1b90db3b655e90b2737e8020944ebf46",
+   "modified_utc": "2026-10-04T21:05:31Z"
+  },
+  {
+   "path": "data/artifacts/provenance.json",
+   "exists": true,
+   "bytes": 8570,
+   "sha256": "248383a0208cc077934f4b847635f04df42ff300f7498b9f7e070cd01bbe4d11",
+   "modified_utc": "2026-10-04T21:15:16Z"
+  },
+  {
+   "path": "apps/web/public/data/metrics.json",
+   "exists": true,
+   "bytes": 42789,
+   "sha256": "7cd2519271aafba3e854ee6350af18c039dce57be490bdda57694c7f55d65c9f",
+   "modified_utc": "2026-10-04T21:14:48Z"
+  },
+  {
+   "path": "apps/web/public/data/demos.json",
+   "exists": true,
+   "bytes": 1122,
+   "sha256": "ed155f9f16f53549ab4f38543d2c4ba5625a40976530eedb2f7200aa28453751",
+   "modified_utc": "2026-10-04T21:14:39Z"
+  },
+  {
+   "path": "apps/web/public/data/provenance.json",
+   "exists": true,
+   "bytes": 8570,
+   "sha256": "248383a0208cc077934f4b847635f04df42ff300f7498b9f7e070cd01bbe4d11",
+   "modified_utc": "2026-10-04T21:15:16Z"
+  }
+ ],
+ "new_artifacts": [
+  {
+   "path": "data/interim/three_model/positions_test.jsonl",
+   "exists": true,
+   "bytes": 3021111,
+   "sha256": "2876ee1464b9861262af1bf663cdf57ff1d946410844b11fcac23cecf8e55e04",
+   "modified_utc": "2026-10-05T06:21:25Z"
+  },
+  {
+   "path": "data/interim/three_model/positions_val.jsonl",
+   "exists": true,
+   "bytes": 2804535,
+   "sha256": "01c3f1ac5999d5db7e29b44ebd6b9d8a1d15fd689df9fc7f089db7f63dd582fa",
+   "modified_utc": "2026-10-05T06:21:27Z"
+  },
+  {
+   "path": "data/interim/three_model/positions_train.jsonl",
+   "exists": true,
+   "bytes": 8993097,
+   "sha256": "95278f2a86ce26588344b0d4f6362080019e8d0d58c0de53d91304e09701c9f2",
+   "modified_utc": "2026-10-05T06:21:32Z"
+  },
+  {
+   "path": "data/interim/three_model/targets_test.parquet",
+   "exists": true,
+   "bytes": 684777,
+   "sha256": "4adf0f1ec54356ecabdb665d6ed450e256c3888558007724d22302800b65699b",
+   "modified_utc": "2026-10-05T06:21:25Z"
+  },
+  {
+   "path": "data/interim/three_model/targets_val.parquet",
+   "exists": true,
+   "bytes": 636858,
+   "sha256": "59d73b2180a68c7b0b9d2a4188b0742a2baded1b8984aa5d5d75ef5f3bc7189b",
+   "modified_utc": "2026-10-05T06:21:27Z"
+  },
+  {
+   "path": "data/artifacts/three_model_move_prediction.json",
+   "exists": true,
+   "bytes": 8439,
+   "sha256": "1cd61bd065619c3da735eec0e78503b8bbe41714d916850ec35cbff4f3acca86",
+   "modified_utc": "2026-10-05T06:28:41Z"
+  },
+  {
+   "path": "data/artifacts/three_model_assistance_results.json",
+   "exists": true,
+   "bytes": 9164,
+   "sha256": "8ee6870ae3d970592895a7f4b26e60c213fb3db7e78e71302ae0cce2876a0c12",
+   "modified_utc": "2026-10-05T06:28:41Z"
+  },
+  {
+   "path": "data/artifacts/three_model_bootstrap.json",
+   "exists": true,
+   "bytes": 6622,
+   "sha256": "405239498e1e52d934e5cabd7633000f2c8e43018007c3fe3b8ce251471d2a27",
+   "modified_utc": "2026-10-05T06:28:41Z"
+  },
+  {
+   "path": "data/artifacts/maia_move_scores.parquet",
+   "exists": true,
+   "bytes": 1647911,
+   "sha256": "40bc25c2de8229f4978c97b5953c58786737b6754d45a42fc9a331443f093b6d",
+   "modified_utc": "2026-10-05T06:28:42Z"
+  },
+  {
+   "path": "data/artifacts/prepared_three_model_demo.json",
+   "exists": true,
+   "bytes": 243118,
+   "sha256": "7acbc7cb52d142fcb1f21133a18e78d733535e07ae356dfecc1043b1656d15f3",
+   "modified_utc": "2026-10-05T06:36:02Z"
+  },
+  {
+   "path": "data/artifacts/qwen_move_scores.parquet",
+   "exists": false
+  },
+  {
+   "path": "data/artifacts/qwen_candidate_distributions.parquet",
+   "exists": false
+  },
+  {
+   "path": "data/artifacts/qwen_provenance.json",
+   "exists": false
+  },
+  {
+   "path": "data/artifacts/hybrid_E_results.json",
+   "exists": false
+  },
+  {
+   "path": "data/interim/qwen/regan_aligned/test.jsonl",
+   "exists": false
+  },
+  {
+   "path": "data/interim/qwen/regan_aligned/val.jsonl",
+   "exists": false
+  },
+  {
+   "path": "data/interim/qwen/regan_aligned/train.jsonl",
+   "exists": false
+  },
+  {
+   "path": "data/interim/qwen/position_only/test.jsonl",
+   "exists": false
+  },
+  {
+   "path": "docs/THREE_MODEL_RESULTS.md",
+   "exists": true,
+   "bytes": 5470,
+   "sha256": "2d51f253b66f4cf3204fee7bc130b894dd57a12edc965dd2f3000484916d45d5",
+   "modified_utc": "2026-10-06T01:58:23Z"
+  }
+ ],
+ "scripts": [
+  {
+   "path": "experiments/three_model_plan.py",
+   "exists": true,
+   "bytes": 3870,
+   "sha256": "e91002c6280c4a1a69bcb880038d2a0d6263141d041a5d5b355f4209d6ab53f2",
+   "modified_utc": "2026-10-05T06:25:22Z"
+  },
+  {
+   "path": "experiments/11_export_positions.py",
+   "exists": true,
+   "bytes": 3770,
+   "sha256": "c119674b95b551bd7642fc77c6792016e0e5f134deab6f54743dfb618c165987",
+   "modified_utc": "2026-10-05T06:21:17Z"
+  },
+  {
+   "path": "experiments/12_maia79.py",
+   "exists": true,
+   "bytes": 2667,
+   "sha256": "1dcf047daf74c5536c9ddf6f228ff05a1adc7388faf0d4b988d630ebbd0deb85",
+   "modified_utc": "2026-10-05T06:24:43Z"
+  },
+  {
+   "path": "experiments/13_qwen_score.py",
+   "exists": true,
+   "bytes": 2689,
+   "sha256": "a4f168c36f0836f42768f766053b4a7c64b6dbcdcf3e231a7bed5f162f73dc9e",
+   "modified_utc": "2026-10-05T06:29:21Z"
+  },
+  {
+   "path": "experiments/14_three_model_eval.py",
+   "exists": true,
+   "bytes": 21757,
+   "sha256": "8a91792d588e6aba1f221ce777777961ded4d32eae7c838e1d5a529637487469",
+   "modified_utc": "2026-10-05T06:27:14Z"
+  },
+  {
+   "path": "experiments/15_qwen_artifacts.py",
+   "exists": true,
+   "bytes": 6785,
+   "sha256": "fbc453b748aaf3310d4353f4393798a0c0ee28774d70e3d4515292602fe16210",
+   "modified_utc": "2026-10-05T06:29:22Z"
+  },
+  {
+   "path": "experiments/16_export_three_model_demo.py",
+   "exists": true,
+   "bytes": 9899,
+   "sha256": "38779119da1b49706b6787b6290b7b0475c054b270a1a63460f2f2d70e3f5329",
+   "modified_utc": "2026-10-05T06:35:55Z"
+  },
+  {
+   "path": "experiments/17_hybrid_qwen.py",
+   "exists": true,
+   "bytes": 7875,
+   "sha256": "67b8871e3079f95f20b96754551ef729a45b34bb9f0886a5af790ffabc1e8dcb",
+   "modified_utc": "2026-10-05T06:49:16Z"
+  },
+  {
+   "path": "experiments/18_three_model_provenance.py",
+   "exists": true,
+   "bytes": 8536,
+   "sha256": "10b72ef331e623b60cbb1cbe01902491184ff9963838653577b002c696926be6",
+   "modified_utc": "2026-10-06T01:58:56Z"
+  },
+  {
+   "path": "experiments/19_three_model_results_md.py",
+   "exists": true,
+   "bytes": 6976,
+   "sha256": "6f82006a25ffa466992bbe7c2f2fb704640c746a4afe26cd520656217a3514bd",
+   "modified_utc": "2026-10-06T01:58:22Z"
+  },
+  {
+   "path": "services/analyzer/qwen/prompt.py",
+   "exists": true,
+   "bytes": 6058,
+   "sha256": "f88722160da362c01fec36ab0344fc53bf510c8acad1559b8476748acd66cd63",
+   "modified_utc": "2026-10-05T06:19:45Z"
+  },
+  {
+   "path": "services/analyzer/qwen/scorer.py",
+   "exists": true,
+   "bytes": 9533,
+   "sha256": "8baa8b732b2c73169d13d1a3762bb3311f2269d9c5267cd6de532d9c3ad8a345",
+   "modified_utc": "2026-10-05T06:20:32Z"
+  },
+  {
+   "path": "services/analyzer/qwen/cache.py",
+   "exists": true,
+   "bytes": 2380,
+   "sha256": "51b2236647b4b6ffcb5f3a2c7fea8e169bf0a2bc83eee23863023d09a4e644da",
+   "modified_utc": "2026-10-05T06:20:42Z"
+  },
+  {
+   "path": "services/analyzer/qwen/runner.py",
+   "exists": true,
+   "bytes": 2219,
+   "sha256": "780438a58880d4d60e22a8a638e53d1ec5e8221e1e9ae7b7fb6d733d8a21c9b0",
+   "modified_utc": "2026-10-05T06:21:16Z"
+  },
+  {
+   "path": "services/analyzer/compare/dists.py",
+   "exists": true,
+   "bytes": 3536,
+   "sha256": "0519ec5700bad7e24c9a590712f0918a4f864a12dbb0f3b850cbad1047d36104",
+   "modified_utc": "2026-10-05T06:25:49Z"
+  },
+  {
+   "path": "services/analyzer/compare/live.py",
+   "exists": true,
+   "bytes": 7695,
+   "sha256": "6e273c70f6b14ae20a253df5bab731fd3b884bf3ba4d669eb413b91807a3f749",
+   "modified_utc": "2026-10-05T06:37:02Z"
+  },
+  {
+   "path": "deploy/modal_app.py",
+   "exists": true,
+   "bytes": 9215,
+   "sha256": "66ad5e231754d636c093529ac6b560da046869e8726a04ccdeb13d58fa57e365",
+   "modified_utc": "2026-10-05T21:31:06Z"
+  }
+ ],
+ "dependency_locks": [
+  {
+   "path": "services/analyzer/requirements-lock.txt",
+   "exists": true,
+   "bytes": 1778,
+   "sha256": "686bbcd84f0bc33d1ed2dc16f8846c1ae467b8d686330a660a52739e20cff932",
+   "modified_utc": "2026-10-04T21:13:27Z"
+  },
+  {
+   "path": "services/analyzer/requirements-qwen-lock.txt",
+   "exists": true,
+   "bytes": 978,
+   "sha256": "4467d3be9dac5b62be9600e7297a2b7aa3e7796c206466467ff6e05d5f3a9560",
+   "modified_utc": "2026-10-05T07:01:30Z"
+  },
+  {
+   "path": "apps/web/package-lock.json",
+   "exists": true,
+   "bytes": 475069,
+   "sha256": "3b146dadd9bd570dbd741b1c61d5d8f96bcb03702e44a43c49fa8cd401935c62",
+   "modified_utc": "2026-10-05T07:00:03Z"
+  }
+ ],
+ "environment": {
+  "python": "3.13.7",
+  "platform": "Windows-11-10.0.26300-SP0"
+ },
+ "commands": [
+  "python experiments/11_export_positions.py",
+  "python experiments/12_maia79.py",
+  "modal run deploy/modal_app.py::score --split test   (also --split val, --split train; --condition position_only for P1)",
+  "python experiments/15_qwen_artifacts.py",
+  "python experiments/14_three_model_eval.py",
+  "python experiments/16_export_three_model_demo.py",
+  "python experiments/17_hybrid_qwen.py",
+  "python experiments/18_three_model_provenance.py",
+  "python experiments/19_three_model_results_md.py",
+  "pytest tests  (+ .venv-qwen: pytest tests/test_qwen.py);  cd apps/web && npm test && npm run typecheck && npm run lint && npm run build"
+ ]
+}

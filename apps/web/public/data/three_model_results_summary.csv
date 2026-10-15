@@ -1,0 +1,106 @@
+table,model_or_comparison,metric,estimate,ci95_low,ci95_high,status,source
+task1_move_prediction,Regan-inspired reconstruction,top1_accuracy,,,,not_defined,three_model_move_prediction.json
+task1_move_prediction,Regan-inspired reconstruction,top3_accuracy,,,,not_defined,three_model_move_prediction.json
+task1_move_prediction,Regan-inspired reconstruction,mean_nll,,,,not_defined,three_model_move_prediction.json
+task1_move_prediction,Regan-inspired reconstruction,brier_multiclass,,,,not_defined,three_model_move_prediction.json
+task1_move_prediction,Regan-inspired reconstruction,mean_rank,,,,not_defined,three_model_move_prediction.json
+task1_move_prediction,Regan-inspired reconstruction,t1_event_logloss,0.5878987621067446,0.5799187715186733,0.5965839434959006,ok,three_model_move_prediction.json
+task1_move_prediction,Regan-inspired reconstruction,t1_event_brier,0.2007048919366821,0.1971634807820497,0.20459664425810303,ok,three_model_move_prediction.json
+task1_move_prediction,Regan-inspired reconstruction,t3_event_logloss,0.5927675538019839,0.5842417013824363,0.6010334974925536,ok,three_model_move_prediction.json
+task1_move_prediction,Regan-inspired reconstruction,t3_event_brier,0.2049751889894624,0.20135909347759223,0.20841674586236836,ok,three_model_move_prediction.json
+task1_move_prediction,Qwen3-8B-Base,top1_accuracy,,,,pending,three_model_move_prediction.json
+task1_move_prediction,Qwen3-8B-Base,top3_accuracy,,,,pending,three_model_move_prediction.json
+task1_move_prediction,Qwen3-8B-Base,mean_nll,,,,pending,three_model_move_prediction.json
+task1_move_prediction,Qwen3-8B-Base,brier_multiclass,,,,pending,three_model_move_prediction.json
+task1_move_prediction,Qwen3-8B-Base,mean_rank,,,,pending,three_model_move_prediction.json
+task1_move_prediction,Qwen3-8B-Base,t1_event_logloss,,,,pending,three_model_move_prediction.json
+task1_move_prediction,Qwen3-8B-Base,t1_event_brier,,,,pending,three_model_move_prediction.json
+task1_move_prediction,Qwen3-8B-Base,t3_event_logloss,,,,pending,three_model_move_prediction.json
+task1_move_prediction,Qwen3-8B-Base,t3_event_brier,,,,pending,three_model_move_prediction.json
+task1_move_prediction,Qwen3-8B-Base,median_rank,,,,pending,three_model_move_prediction.json
+task1_move_prediction,Qwen3-8B-Base,,,,,pending,three_model_move_prediction.json
+task1_move_prediction,Qwen3-8B-Base (position-only ablation),top1_accuracy,,,,pending,three_model_move_prediction.json
+task1_move_prediction,Qwen3-8B-Base (position-only ablation),top3_accuracy,,,,pending,three_model_move_prediction.json
+task1_move_prediction,Qwen3-8B-Base (position-only ablation),mean_nll,,,,pending,three_model_move_prediction.json
+task1_move_prediction,Qwen3-8B-Base (position-only ablation),brier_multiclass,,,,pending,three_model_move_prediction.json
+task1_move_prediction,Qwen3-8B-Base (position-only ablation),mean_rank,,,,pending,three_model_move_prediction.json
+task1_move_prediction,Qwen3-8B-Base (position-only ablation),t1_event_logloss,,,,pending,three_model_move_prediction.json
+task1_move_prediction,Qwen3-8B-Base (position-only ablation),t1_event_brier,,,,pending,three_model_move_prediction.json
+task1_move_prediction,Qwen3-8B-Base (position-only ablation),t3_event_logloss,,,,pending,three_model_move_prediction.json
+task1_move_prediction,Qwen3-8B-Base (position-only ablation),t3_event_brier,,,,pending,three_model_move_prediction.json
+task1_move_prediction,Qwen3-8B-Base (position-only ablation),median_rank,,,,pending,three_model_move_prediction.json
+task1_move_prediction,Qwen3-8B-Base (position-only ablation),,,,,pending,three_model_move_prediction.json
+task1_move_prediction,Maia-3 79M,top1_accuracy,0.5693850579180596,0.5596850848692518,0.5792920191530658,ok,three_model_move_prediction.json
+task1_move_prediction,Maia-3 79M,top3_accuracy,0.8438933374795926,0.8364744983294716,0.8513879826706915,ok,three_model_move_prediction.json
+task1_move_prediction,Maia-3 79M,mean_nll,1.2798484787812183,1.250935736376125,1.3087480742035156,ok,three_model_move_prediction.json
+task1_move_prediction,Maia-3 79M,brier_multiclass,0.5586745961246925,0.5488384885088472,0.5686572866791366,ok,three_model_move_prediction.json
+task1_move_prediction,Maia-3 79M,mean_rank,2.234859675036928,2.182411520022295,2.2910110348416155,ok,three_model_move_prediction.json
+task1_move_prediction,Maia-3 79M,t1_event_logloss,0.4224938075569124,0.40924638310357186,0.43676923876518164,ok,three_model_move_prediction.json
+task1_move_prediction,Maia-3 79M,t1_event_brier,0.13517787661135416,0.13085535053241706,0.13983081506445466,ok,three_model_move_prediction.json
+task1_move_prediction,Maia-3 79M,t3_event_logloss,0.4226857887229042,0.4127660431302018,0.43229663039861677,ok,three_model_move_prediction.json
+task1_move_prediction,Maia-3 79M,t3_event_brier,0.13987266077897975,0.13621867208674976,0.14348226992677557,ok,three_model_move_prediction.json
+task1_move_prediction,Maia-3 79M,median_rank,1.0,,,ok,three_model_move_prediction.json
+task1_move_prediction,Maia-3 79M,mean_entropy,1.2660095520917982,,,ok,three_model_move_prediction.json
+task1_move_prediction,Maia-3 5M,top1_accuracy,0.5554691751535412,0.5451524254474203,0.5651894876383764,ok,three_model_move_prediction.json
+task1_move_prediction,Maia-3 5M,top3_accuracy,0.8248464588354194,0.8173982484690333,0.8324571216339112,ok,three_model_move_prediction.json
+task1_move_prediction,Maia-3 5M,mean_nll,1.3501596768028683,1.3202778153412702,1.3790900929024164,ok,three_model_move_prediction.json
+task1_move_prediction,Maia-3 5M,brier_multiclass,0.578607917937292,0.5687203302626375,0.588701601578859,ok,three_model_move_prediction.json
+task1_move_prediction,Maia-3 5M,mean_rank,2.368265567907953,2.307284894705213,2.4275690358022515,ok,three_model_move_prediction.json
+task1_move_prediction,Maia-3 5M,t1_event_logloss,0.4414609244227981,0.4271768717507915,0.45706906158431,ok,three_model_move_prediction.json
+task1_move_prediction,Maia-3 5M,t1_event_brier,0.14114516568630273,0.13639794552042292,0.1463079941402938,ok,three_model_move_prediction.json
+task1_move_prediction,Maia-3 5M,t3_event_logloss,0.4407341000205279,0.43133230054646987,0.44991868039294475,ok,three_model_move_prediction.json
+task1_move_prediction,Maia-3 5M,t3_event_brier,0.14609762034313645,0.14254079904306963,0.149619388295698,ok,three_model_move_prediction.json
+task1_move_prediction,Maia-3 5M,median_rank,1.0,,,ok,three_model_move_prediction.json
+task1_move_prediction,Maia-3 5M,mean_entropy,1.3394349940055066,,,ok,three_model_move_prediction.json
+task2_substitutions,Regan-inspired reconstruction,roc_auc,0.784661976640876,0.775996742537648,0.7932950414144438,ok,three_model_assistance_results.json
+task2_substitutions,Regan-inspired reconstruction,pr_auc,0.8177734194499356,,,ok,three_model_assistance_results.json
+task2_substitutions,Regan-inspired reconstruction,recall_at_target_fpr_0.01_realized_fpr_0.0116,0.314931129476584,,,ok,three_model_assistance_results.json
+task2_substitutions,Regan-inspired reconstruction,recall_at_target_fpr_0.05_realized_fpr_0.0612,0.43922865013774104,,,ok,three_model_assistance_results.json
+task2_substitutions,Qwen3-8B-Base,roc_auc,,,,pending,three_model_assistance_results.json
+task2_substitutions,Qwen3-8B-Base (position-only ablation),roc_auc,,,,pending,three_model_assistance_results.json
+task2_substitutions,Maia-3 79M,roc_auc,0.689070054413343,0.6747617481556031,0.7042980762006094,ok,three_model_assistance_results.json
+task2_substitutions,Maia-3 79M,pr_auc,0.6920240020250599,,,ok,three_model_assistance_results.json
+task2_substitutions,Maia-3 79M,recall_at_target_fpr_0.01_realized_fpr_0.0033,0.03239669421487603,,,ok,three_model_assistance_results.json
+task2_substitutions,Maia-3 79M,recall_at_target_fpr_0.05_realized_fpr_0.0413,0.18534435261707988,,,ok,three_model_assistance_results.json
+task2_substitutions,Maia-3 5M,roc_auc,0.6763900462171819,0.661593290368125,0.691421912872166,ok,three_model_assistance_results.json
+task2_substitutions,Maia-3 5M,pr_auc,0.672138070764339,,,ok,three_model_assistance_results.json
+task2_substitutions,Maia-3 5M,recall_at_target_fpr_0.01_realized_fpr_0.0033,0.03019283746556474,,,ok,three_model_assistance_results.json
+task2_substitutions,Maia-3 5M,recall_at_target_fpr_0.05_realized_fpr_0.0562,0.17024793388429751,,,ok,three_model_assistance_results.json
+paired_difference_task1,Q -> M,top1_accuracy,,,,pending,three_model_bootstrap.json
+paired_difference_task1,Q -> M,top3_accuracy,,,,pending,three_model_bootstrap.json
+paired_difference_task1,Q -> M,mean_nll,,,,pending,three_model_bootstrap.json
+paired_difference_task1,Q -> M,brier_multiclass,,,,pending,three_model_bootstrap.json
+paired_difference_task1,Q -> M,mean_rank,,,,pending,three_model_bootstrap.json
+paired_difference_task1,Q -> M5,top1_accuracy,,,,pending,three_model_bootstrap.json
+paired_difference_task1,Q -> M5,top3_accuracy,,,,pending,three_model_bootstrap.json
+paired_difference_task1,Q -> M5,mean_nll,,,,pending,three_model_bootstrap.json
+paired_difference_task1,Q -> M5,brier_multiclass,,,,pending,three_model_bootstrap.json
+paired_difference_task1,Q -> M5,mean_rank,,,,pending,three_model_bootstrap.json
+paired_difference_task1,M5 -> M,top1_accuracy,0.013915882764518384,0.008291403385044128,0.019312689930405424,ok,three_model_bootstrap.json
+paired_difference_task1,M5 -> M,top3_accuracy,0.019046878644173204,0.015266314900001892,0.02280315771272737,ok,three_model_bootstrap.json
+paired_difference_task1,M5 -> M,mean_nll,-0.07031119802164998,-0.07767804681614879,-0.06293913868141178,ok,three_model_bootstrap.json
+paired_difference_task1,M5 -> M,brier_multiclass,-0.019933321812599547,-0.022865128720081507,-0.017045515340261504,ok,three_model_bootstrap.json
+paired_difference_task1,M5 -> M,mean_rank,-0.13340589287102533,-0.15305739528033604,-0.11215304498665019,ok,three_model_bootstrap.json
+paired_difference_task1,R -> Q,t1_event_logloss,,,,pending,three_model_bootstrap.json
+paired_difference_task1,R -> Q,t1_event_brier,,,,pending,three_model_bootstrap.json
+paired_difference_task1,R -> Q,t3_event_logloss,,,,pending,three_model_bootstrap.json
+paired_difference_task1,R -> Q,t3_event_brier,,,,pending,three_model_bootstrap.json
+paired_difference_task1,R -> M,t1_event_logloss,-0.16540495454983223,-0.17771908401543834,-0.1523317607352374,ok,three_model_bootstrap.json
+paired_difference_task1,R -> M,t1_event_brier,-0.06552701532532793,-0.06988146083690366,-0.061170842353130826,ok,three_model_bootstrap.json
+paired_difference_task1,R -> M,t3_event_logloss,-0.17008176507907968,-0.18017289864249256,-0.15933764824373195,ok,three_model_bootstrap.json
+paired_difference_task1,R -> M,t3_event_brier,-0.06510252821048265,-0.06927376865665925,-0.06089260704767376,ok,three_model_bootstrap.json
+paired_difference_task1,Q -> M,t1_event_logloss,,,,pending,three_model_bootstrap.json
+paired_difference_task1,Q -> M,t1_event_brier,,,,pending,three_model_bootstrap.json
+paired_difference_task1,Q -> M,t3_event_logloss,,,,pending,three_model_bootstrap.json
+paired_difference_task1,Q -> M,t3_event_brier,,,,pending,three_model_bootstrap.json
+paired_difference_task2,R -> Q,roc_auc,,,,pending,three_model_bootstrap.json
+paired_difference_task2,R -> M,roc_auc,-0.09559192222753299,-0.11167897912231153,-0.07838285842250384,ok,three_model_bootstrap.json
+paired_difference_task2,Q -> M,roc_auc,,,,pending,three_model_bootstrap.json
+paired_difference_task2,M5 -> M,roc_auc,0.012680008196161108,0.008481425186917349,0.01662867959514635,ok,three_model_bootstrap.json
+paired_difference_hybrid_abcd,A0_zt1 -> A_stat,roc_auc,0.034999795095967734,0.029119611977339928,0.04054946753282318,ok,paired_bootstrap.json
+paired_difference_hybrid_abcd,A_stat -> B_sf,roc_auc,0.006563668237596021,0.0025631790652331263,0.01046388902615696,ok,paired_bootstrap.json
+paired_difference_hybrid_abcd,B_sf -> C_sf_maia,roc_auc,0.04680126585161093,0.03953605310239546,0.053611929921174986,ok,paired_bootstrap.json
+paired_difference_hybrid_abcd,C_sf_maia -> D_sf_maia_seq,roc_auc,0.006714113334700733,0.0024570432946765587,0.01104081882203409,ok,paired_bootstrap.json
+paired_difference_hybrid_abcd,A_stat -> C_sf_maia,roc_auc,0.05336493408920695,0.04579870379389862,0.060715526138076806,ok,paired_bootstrap.json
+paired_difference_hybrid_abcd,A_stat -> D_sf_maia_seq,roc_auc,0.06007904742390768,0.05157485504290428,0.06814395005533837,ok,paired_bootstrap.json
+paired_difference_hybrid_abcd,B_sf -> D_sf_maia_seq,roc_auc,0.05351537918631166,0.045090050361770884,0.061200921926922065,ok,paired_bootstrap.json

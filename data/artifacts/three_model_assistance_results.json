@@ -1,0 +1,376 @@
+{
+ "generator": {
+  "script": "experiments/14_three_model_eval.py",
+  "plan_version": "three-model-plan.v1",
+  "plan_sha256": "58637622b3a881238d122acd0b73718f992123c038cb5b925baac23c1f9d9d36",
+  "generated_utc": "2026-10-05T06:28:41Z"
+ },
+ "task": "Task 2 \u2014 response to controlled decision-level substitutions, held-out test split",
+ "data": {
+  "rows": 9680,
+  "positives": 9075,
+  "source_games": 321,
+  "val_original_player_games_for_thresholds": 567
+ },
+ "plan": {
+  "data": "all 9,680 test rows of the existing controlled benchmark (605 originals + 9,075 decision-level substitutions)",
+  "label": "intervention label (level > 0)",
+  "score_distribution_models": "mean surprisal -log max(P_model(chosen move), 1e-6) over the player-game's eligible decisions; higher = flagged (orientation fixed a priori)",
+  "secondary_score_distribution_models": "mean excess surprisal (surprisal - model entropy at that position); higher = flagged",
+  "score_R": "z(top-1) of the existing reconstruction (A0 column z_t1); higher = flagged",
+  "metrics": [
+   "roc_auc (balanced weights, as in the existing evaluation)",
+   "pr_auc (balanced weights)",
+   "recall at 1% and 5% target FPR with thresholds from VALIDATION original player-games; realized test FPR reported",
+   "roc_auc per strategy x level"
+  ],
+  "calibration": "not reported: none of these scores is a probability of intervention"
+ },
+ "models": {
+  "R": {
+   "label": "Regan-inspired reconstruction",
+   "status": "ok",
+   "score": "z(top-1) of the Regan-inspired reconstruction",
+   "score_column": "z_t1",
+   "roc_auc": 0.784661976640876,
+   "pr_auc": 0.8177734194499356,
+   "tpr_at_fpr": [
+    {
+     "target_fpr": 0.01,
+     "threshold": 2.4613570912395444,
+     "tpr": 0.314931129476584,
+     "test_fpr": 0.011570247933884297
+    },
+    {
+     "target_fpr": 0.05,
+     "threshold": 1.7109743679557587,
+     "tpr": 0.43922865013774104,
+     "test_fpr": 0.06115702479338843
+    }
+   ],
+   "by_cell": [
+    {
+     "strategy": "random",
+     "level": 0.05,
+     "roc_auc": 0.6355686087015915
+    },
+    {
+     "strategy": "random",
+     "level": 0.1,
+     "roc_auc": 0.7187350590806638
+    },
+    {
+     "strategy": "random",
+     "level": 0.2,
+     "roc_auc": 0.8677494706645721
+    },
+    {
+     "strategy": "random",
+     "level": 0.4,
+     "roc_auc": 0.9836677822553105
+    },
+    {
+     "strategy": "random",
+     "level": 0.7,
+     "roc_auc": 0.9994809097739226
+    },
+    {
+     "strategy": "selective",
+     "level": 0.05,
+     "roc_auc": 0.6355686087015915
+    },
+    {
+     "strategy": "selective",
+     "level": 0.1,
+     "roc_auc": 0.7187350590806638
+    },
+    {
+     "strategy": "selective",
+     "level": 0.2,
+     "roc_auc": 0.8677494706645721
+    },
+    {
+     "strategy": "selective",
+     "level": 0.4,
+     "roc_auc": 0.9836677822553105
+    },
+    {
+     "strategy": "selective",
+     "level": 0.7,
+     "roc_auc": 0.9994809097739226
+    },
+    {
+     "strategy": "subtle",
+     "level": 0.05,
+     "roc_auc": 0.5410436445597979
+    },
+    {
+     "strategy": "subtle",
+     "level": 0.1,
+     "roc_auc": 0.5704664981900143
+    },
+    {
+     "strategy": "subtle",
+     "level": 0.2,
+     "roc_auc": 0.6286278259681716
+    },
+    {
+     "strategy": "subtle",
+     "level": 0.4,
+     "roc_auc": 0.7492070213783211
+    },
+    {
+     "strategy": "subtle",
+     "level": 0.7,
+     "roc_auc": 0.8701809985656717
+    }
+   ],
+   "roc_auc_ci95": [
+    0.775996742537648,
+    0.7932950414144438
+   ]
+  },
+  "Q": {
+   "label": "Qwen3-8B-Base",
+   "status": "pending",
+   "score": "mean surprisal of the chosen moves"
+  },
+  "Q0": {
+   "label": "Qwen3-8B-Base (position-only ablation)",
+   "status": "pending",
+   "score": "mean surprisal of the chosen moves"
+  },
+  "M": {
+   "label": "Maia-3 79M",
+   "status": "ok",
+   "score": "mean surprisal of the chosen moves",
+   "score_column": "ms_M",
+   "roc_auc": 0.689070054413343,
+   "pr_auc": 0.6920240020250599,
+   "tpr_at_fpr": [
+    {
+     "target_fpr": 0.01,
+     "threshold": 2.535307366856831,
+     "tpr": 0.03239669421487603,
+     "test_fpr": 0.003305785123966942
+    },
+    {
+     "target_fpr": 0.05,
+     "threshold": 1.9794576704760203,
+     "tpr": 0.18534435261707988,
+     "test_fpr": 0.04132231404958678
+    }
+   ],
+   "by_cell": [
+    {
+     "strategy": "random",
+     "level": 0.05,
+     "roc_auc": 0.5413783211529267
+    },
+    {
+     "strategy": "random",
+     "level": 0.1,
+     "roc_auc": 0.5718571135851377
+    },
+    {
+     "strategy": "random",
+     "level": 0.2,
+     "roc_auc": 0.6277030257496072
+    },
+    {
+     "strategy": "random",
+     "level": 0.4,
+     "roc_auc": 0.7321631036131413
+    },
+    {
+     "strategy": "random",
+     "level": 0.7,
+     "roc_auc": 0.7950331261525851
+    },
+    {
+     "strategy": "selective",
+     "level": 0.05,
+     "roc_auc": 0.5642947886073356
+    },
+    {
+     "strategy": "selective",
+     "level": 0.1,
+     "roc_auc": 0.5993634314595998
+    },
+    {
+     "strategy": "selective",
+     "level": 0.2,
+     "roc_auc": 0.670123625435421
+    },
+    {
+     "strategy": "selective",
+     "level": 0.4,
+     "roc_auc": 0.7756683286660746
+    },
+    {
+     "strategy": "selective",
+     "level": 0.7,
+     "roc_auc": 0.7982569496619084
+    },
+    {
+     "strategy": "subtle",
+     "level": 0.05,
+     "roc_auc": 0.5689529403729254
+    },
+    {
+     "strategy": "subtle",
+     "level": 0.1,
+     "roc_auc": 0.614102861826378
+    },
+    {
+     "strategy": "subtle",
+     "level": 0.2,
+     "roc_auc": 0.7115005805614372
+    },
+    {
+     "strategy": "subtle",
+     "level": 0.4,
+     "roc_auc": 0.8344593948500785
+    },
+    {
+     "strategy": "subtle",
+     "level": 0.7,
+     "roc_auc": 0.9311932245065228
+    }
+   ],
+   "secondary_excess_surprisal": {
+    "roc_auc": 0.7146581062312928,
+    "pr_auc": 0.7295074890179299
+   },
+   "roc_auc_ci95": [
+    0.6747617481556031,
+    0.7042980762006094
+   ]
+  },
+  "M5": {
+   "label": "Maia-3 5M",
+   "status": "ok",
+   "score": "mean surprisal of the chosen moves",
+   "score_column": "ms_M5",
+   "roc_auc": 0.6763900462171819,
+   "pr_auc": 0.672138070764339,
+   "tpr_at_fpr": [
+    {
+     "target_fpr": 0.01,
+     "threshold": 2.5446377947929766,
+     "tpr": 0.03019283746556474,
+     "test_fpr": 0.003305785123966942
+    },
+    {
+     "target_fpr": 0.05,
+     "threshold": 2.0369593254417144,
+     "tpr": 0.17024793388429751,
+     "test_fpr": 0.05619834710743802
+    }
+   ],
+   "by_cell": [
+    {
+     "strategy": "random",
+     "level": 0.05,
+     "roc_auc": 0.5358131275186121
+    },
+    {
+     "strategy": "random",
+     "level": 0.1,
+     "roc_auc": 0.5637620381121508
+    },
+    {
+     "strategy": "random",
+     "level": 0.2,
+     "roc_auc": 0.6130373608360085
+    },
+    {
+     "strategy": "random",
+     "level": 0.4,
+     "roc_auc": 0.7149047196229765
+    },
+    {
+     "strategy": "random",
+     "level": 0.7,
+     "roc_auc": 0.7753705347995355
+    },
+    {
+     "strategy": "selective",
+     "level": 0.05,
+     "roc_auc": 0.5562379618878492
+    },
+    {
+     "strategy": "selective",
+     "level": 0.1,
+     "roc_auc": 0.5897875828153815
+    },
+    {
+     "strategy": "selective",
+     "level": 0.2,
+     "roc_auc": 0.6540263643193771
+    },
+    {
+     "strategy": "selective",
+     "level": 0.4,
+     "roc_auc": 0.7573854244928625
+    },
+    {
+     "strategy": "selective",
+     "level": 0.7,
+     "roc_auc": 0.7800095621883751
+    },
+    {
+     "strategy": "subtle",
+     "level": 0.05,
+     "roc_auc": 0.5653288709787583
+    },
+    {
+     "strategy": "subtle",
+     "level": 0.1,
+     "roc_auc": 0.6082494365138993
+    },
+    {
+     "strategy": "subtle",
+     "level": 0.2,
+     "roc_auc": 0.6990396830817567
+    },
+    {
+     "strategy": "subtle",
+     "level": 0.4,
+     "roc_auc": 0.8154880131138583
+    },
+    {
+     "strategy": "subtle",
+     "level": 0.7,
+     "roc_auc": 0.9174100129772557
+    }
+   ],
+   "secondary_excess_surprisal": {
+    "roc_auc": 0.6983444664525909,
+    "pr_auc": 0.7065951838263473
+   },
+   "roc_auc_ci95": [
+    0.661593290368125,
+    0.691421912872166
+   ]
+  }
+ },
+ "caveats": [
+  "Source games are presumed human; their absence of real assistance is not established.",
+  "Substitutions are controlled decision-level substitutions evaluated in the original positions; games are not replayed.",
+  "Bootstrap resamples source games with the fitted/frozen models held fixed; refit variability is not captured.",
+  "Several comparisons are reported; no multiplicity correction is applied.",
+  "The Regan-inspired reconstruction is not Professor Regan's analyzer and outputs no per-move distribution."
+ ],
+ "consistency_checks": [
+  {
+   "name": "R z(top-1) AUC equals exported A0",
+   "passed": true
+  },
+  {
+   "name": "Maia-3 5M mean surprisal equals evaluated feature",
+   "passed": true,
+   "max_abs_dev": 0.0
+  }
+ ]
+}

@@ -1,0 +1,31 @@
+{
+ "features": [
+  "sf_rank",
+  "cpl",
+  "gap12",
+  "near_opt",
+  "difficulty",
+  "n_legal",
+  "abs_eval",
+  "maia_p",
+  "maia_rank",
+  "surprisal",
+  "maia_entropy",
+  "maia_p_best",
+  "maia_sf_agree",
+  "elo"
+ ],
+ "levels_used": [
+  0.0,
+  0.2,
+  0.4
+ ],
+ "test_roc_auc": 0.9261451232694033,
+ "test_pr_auc": 0.8082780755602702,
+ "test_pos_rate": 0.2557723703646117,
+ "by_strategy": {
+  "random": 0.9205670886683579,
+  "selective": 0.9497132863638518,
+  "subtle": 0.9152240705185265
+ }
+}
