@@ -1,0 +1,332 @@
+{
+ "generator": {
+  "script": "experiments/14_three_model_eval.py",
+  "plan_version": "three-model-plan.v1",
+  "plan_sha256": "58637622b3a881238d122acd0b73718f992123c038cb5b925baac23c1f9d9d36",
+  "generated_utc": "2026-10-05T06:28:41Z"
+ },
+ "method": "Paired source-game cluster bootstrap; the same resamples for every model; percentile 95% intervals; conditional on frozen/fitted models (no refit); no multiplicity correction.",
+ "n_boot": 2000,
+ "seed_task1": 20261017,
+ "seed_task2": 20261018,
+ "n_clusters_task1": 321,
+ "n_clusters_task2": 321,
+ "comparisons": [
+  {
+   "task": "task1",
+   "from": "Q",
+   "to": "M",
+   "metric": "top1_accuracy",
+   "status": "pending"
+  },
+  {
+   "task": "task1",
+   "from": "Q",
+   "to": "M",
+   "metric": "top3_accuracy",
+   "status": "pending"
+  },
+  {
+   "task": "task1",
+   "from": "Q",
+   "to": "M",
+   "metric": "mean_nll",
+   "status": "pending"
+  },
+  {
+   "task": "task1",
+   "from": "Q",
+   "to": "M",
+   "metric": "brier_multiclass",
+   "status": "pending"
+  },
+  {
+   "task": "task1",
+   "from": "Q",
+   "to": "M",
+   "metric": "mean_rank",
+   "status": "pending"
+  },
+  {
+   "task": "task1",
+   "from": "Q",
+   "to": "M5",
+   "metric": "top1_accuracy",
+   "status": "pending"
+  },
+  {
+   "task": "task1",
+   "from": "Q",
+   "to": "M5",
+   "metric": "top3_accuracy",
+   "status": "pending"
+  },
+  {
+   "task": "task1",
+   "from": "Q",
+   "to": "M5",
+   "metric": "mean_nll",
+   "status": "pending"
+  },
+  {
+   "task": "task1",
+   "from": "Q",
+   "to": "M5",
+   "metric": "brier_multiclass",
+   "status": "pending"
+  },
+  {
+   "task": "task1",
+   "from": "Q",
+   "to": "M5",
+   "metric": "mean_rank",
+   "status": "pending"
+  },
+  {
+   "task": "task1",
+   "from": "M5",
+   "to": "M",
+   "metric": "top1_accuracy",
+   "status": "ok",
+   "a": 0.5554691751535412,
+   "b": 0.5693850579180596,
+   "delta": 0.013915882764518384,
+   "ci95": [
+    0.008291403385044128,
+    0.019312689930405424
+   ],
+   "share_le_0": 0.0,
+   "lower_is_better": false
+  },
+  {
+   "task": "task1",
+   "from": "M5",
+   "to": "M",
+   "metric": "top3_accuracy",
+   "status": "ok",
+   "a": 0.8248464588354194,
+   "b": 0.8438933374795926,
+   "delta": 0.019046878644173204,
+   "ci95": [
+    0.015266314900001892,
+    0.02280315771272737
+   ],
+   "share_le_0": 0.0,
+   "lower_is_better": false
+  },
+  {
+   "task": "task1",
+   "from": "M5",
+   "to": "M",
+   "metric": "mean_nll",
+   "status": "ok",
+   "a": 1.3501596768028683,
+   "b": 1.2798484787812183,
+   "delta": -0.07031119802164998,
+   "ci95": [
+    -0.07767804681614879,
+    -0.06293913868141178
+   ],
+   "share_le_0": 1.0,
+   "lower_is_better": true
+  },
+  {
+   "task": "task1",
+   "from": "M5",
+   "to": "M",
+   "metric": "brier_multiclass",
+   "status": "ok",
+   "a": 0.578607917937292,
+   "b": 0.5586745961246925,
+   "delta": -0.019933321812599547,
+   "ci95": [
+    -0.022865128720081507,
+    -0.017045515340261504
+   ],
+   "share_le_0": 1.0,
+   "lower_is_better": true
+  },
+  {
+   "task": "task1",
+   "from": "M5",
+   "to": "M",
+   "metric": "mean_rank",
+   "status": "ok",
+   "a": 2.368265567907953,
+   "b": 2.234859675036928,
+   "delta": -0.13340589287102533,
+   "ci95": [
+    -0.15305739528033604,
+    -0.11215304498665019
+   ],
+   "share_le_0": 1.0,
+   "lower_is_better": true
+  },
+  {
+   "task": "task1",
+   "from": "R",
+   "to": "Q",
+   "metric": "t1_event_logloss",
+   "status": "pending"
+  },
+  {
+   "task": "task1",
+   "from": "R",
+   "to": "Q",
+   "metric": "t1_event_brier",
+   "status": "pending"
+  },
+  {
+   "task": "task1",
+   "from": "R",
+   "to": "Q",
+   "metric": "t3_event_logloss",
+   "status": "pending"
+  },
+  {
+   "task": "task1",
+   "from": "R",
+   "to": "Q",
+   "metric": "t3_event_brier",
+   "status": "pending"
+  },
+  {
+   "task": "task1",
+   "from": "R",
+   "to": "M",
+   "metric": "t1_event_logloss",
+   "status": "ok",
+   "a": 0.5878987621067446,
+   "b": 0.4224938075569124,
+   "delta": -0.16540495454983223,
+   "ci95": [
+    -0.17771908401543834,
+    -0.1523317607352374
+   ],
+   "share_le_0": 1.0,
+   "lower_is_better": true
+  },
+  {
+   "task": "task1",
+   "from": "R",
+   "to": "M",
+   "metric": "t1_event_brier",
+   "status": "ok",
+   "a": 0.2007048919366821,
+   "b": 0.13517787661135416,
+   "delta": -0.06552701532532793,
+   "ci95": [
+    -0.06988146083690366,
+    -0.061170842353130826
+   ],
+   "share_le_0": 1.0,
+   "lower_is_better": true
+  },
+  {
+   "task": "task1",
+   "from": "R",
+   "to": "M",
+   "metric": "t3_event_logloss",
+   "status": "ok",
+   "a": 0.5927675538019839,
+   "b": 0.4226857887229042,
+   "delta": -0.17008176507907968,
+   "ci95": [
+    -0.18017289864249256,
+    -0.15933764824373195
+   ],
+   "share_le_0": 1.0,
+   "lower_is_better": true
+  },
+  {
+   "task": "task1",
+   "from": "R",
+   "to": "M",
+   "metric": "t3_event_brier",
+   "status": "ok",
+   "a": 0.2049751889894624,
+   "b": 0.13987266077897975,
+   "delta": -0.06510252821048265,
+   "ci95": [
+    -0.06927376865665925,
+    -0.06089260704767376
+   ],
+   "share_le_0": 1.0,
+   "lower_is_better": true
+  },
+  {
+   "task": "task1",
+   "from": "Q",
+   "to": "M",
+   "metric": "t1_event_logloss",
+   "status": "pending"
+  },
+  {
+   "task": "task1",
+   "from": "Q",
+   "to": "M",
+   "metric": "t1_event_brier",
+   "status": "pending"
+  },
+  {
+   "task": "task1",
+   "from": "Q",
+   "to": "M",
+   "metric": "t3_event_logloss",
+   "status": "pending"
+  },
+  {
+   "task": "task1",
+   "from": "Q",
+   "to": "M",
+   "metric": "t3_event_brier",
+   "status": "pending"
+  },
+  {
+   "task": "task2",
+   "from": "R",
+   "to": "Q",
+   "metric": "roc_auc",
+   "status": "pending"
+  },
+  {
+   "task": "task2",
+   "from": "R",
+   "to": "M",
+   "metric": "roc_auc",
+   "status": "ok",
+   "a": 0.784661976640876,
+   "b": 0.689070054413343,
+   "delta": -0.09559192222753299,
+   "ci95": [
+    -0.11167897912231153,
+    -0.07838285842250384
+   ],
+   "share_le_0": 1.0,
+   "lower_is_better": false
+  },
+  {
+   "task": "task2",
+   "from": "Q",
+   "to": "M",
+   "metric": "roc_auc",
+   "status": "pending"
+  },
+  {
+   "task": "task2",
+   "from": "M5",
+   "to": "M",
+   "metric": "roc_auc",
+   "status": "ok",
+   "a": 0.6763900462171819,
+   "b": 0.689070054413343,
+   "delta": 0.012680008196161108,
+   "ci95": [
+    0.008481425186917349,
+    0.01662867959514635
+   ],
+   "share_le_0": 0.0,
+   "lower_is_better": false
+  }
+ ]
+}

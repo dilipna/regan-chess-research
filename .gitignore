@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+data/raw/
+data/interim/
+data/processed/
+data/artifacts/test_predictions.parquet
+tools/stockfish/
+node_modules/
+.next/
+apps/web/.env.local
+.vercel
+.venv-qwen/
+.venv-modal/

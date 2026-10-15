@@ -1,0 +1,18 @@
+# Runtime requirements for the analyzer API (pinned to the versions used to train the models,
+# because the trained artifacts are pickled scikit-learn / XGBoost objects).
+# torch is installed separately (CPU wheel in Docker, CUDA wheel for local GPU use).
+chess==1.11.2
+numpy==2.5.3
+pandas==3.0.6
+pyarrow==25.0.1
+scikit-learn==1.9.1
+scipy==1.18.1
+xgboost==3.4.1
+shap==0.52.0
+numba==0.68.0
+fastapi==0.142.2
+uvicorn==0.54.0
+pydantic==2.13.5
+python-multipart==0.0.32
+huggingface-hub
+maia3 @ git+https://github.com/CSSLab/maia3@1e13597c42d4858b7cfd7cfdae01e297263364b2

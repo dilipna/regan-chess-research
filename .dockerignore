@@ -1,0 +1,17 @@
+.venv
+.git
+apps
+tools
+tests
+experiments
+docs
+data/raw
+data/interim
+data/processed
+data/artifacts/test_predictions.parquet
+**/__pycache__
+**/*.pyc
+**/node_modules
+.venv-qwen
+.venv-modal
+deploy
