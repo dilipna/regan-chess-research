@@ -15,7 +15,7 @@ import { KvCacheLab, TeachBack, TrainingSection } from "@/components/latent/trai
 import { blockParts, pipelineParts } from "@/lib/latent/parts";
 import { QUESTIONS } from "@/lib/latent/questions";
 import {
-  backpropStep, causalAttention, dot2, layernorm, probsWithNormalizer, rmsnormSteps, rotate2, softmax, topKMask, topPMask,
+  backpropStep, causalAttention, dot2, fmtProb, layernorm, probsWithNormalizer, rmsnormSteps, rotate2, softmax, topKMask, topPMask,
 } from "@/lib/latent/toy";
 import type { Architecture, LayerProbe, Metadata, Pending, Recall, RecallPrecision, StreamingCheck, TokenizerExamples, TokenTrace } from "@/lib/latent/types";
 
@@ -69,6 +69,11 @@ describe("toy mathematics used in Learn Mode", () => {
     expect(topKMask(p, 2)).toEqual([true, true, false, false]);
     expect(topPMask(p, p[0] + 1e-9)).toEqual([true, true, false, false]);
     expect(topPMask(p, p[0] - 1e-9)).toEqual([true, false, false, false]);
+  });
+  it("probabilities rounded to zero are never shown as an exact value", () => {
+    expect(fmtProb(0)).toBe("< 1e-5");
+    expect(fmtProb(0.162)).toBe("0.162");
+    expect(fmtProb(2.1e-5)).toBe("2.1e-5");
   });
   it("backprop gradients match finite differences", () => {
     const f = (w1: number, w2: number) => (w2 * w1 * 1.5 - 3) ** 2;
@@ -189,6 +194,12 @@ describe("Version 1 preservation and copy rules", () => {
     expect(readFileSync(path.join(WEB, "src", "components", "site", "nav.tsx"), "utf-8")).toContain("V2 · Model Internals");
     const sm = readFileSync(path.join(WEB, "src", "app", "sitemap.ts"), "utf-8");
     for (const r of ["/latent", "/latent/learn", "/latent/research", "/latent/recall", "/latent/methods", "/latent/demo"]) expect(sm).toContain(`"${r}"`);
+  });
+  it("the dark theme is scoped to LatentLens pages and leaves Version 1 light", () => {
+    const css = readFileSync(path.join(WEB, "src", "app", "latent", "latent.css"), "utf-8");
+    expect(readFileSync(path.join(WEB, "src", "app", "latent", "layout.tsx"), "utf-8")).toContain('data-latent-theme="observatory"');
+    for (const rule of css.match(/^[^\s@/*}][^{]*\{/gm) ?? []) expect(rule).toMatch(/data-latent-theme|^\s*(0%|50%|100%)/);
+    expect(readFileSync(path.join(WEB, "src", "app", "globals.css"), "utf-8")).not.toContain("data-latent-theme");
   });
   it("LatentLens public copy uses no em dashes", () => {
     const files: string[] = [];

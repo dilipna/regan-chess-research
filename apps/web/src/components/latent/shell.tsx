@@ -19,7 +19,7 @@ const SUBNAV = [
 export function LatentSubNav() {
   const path = usePathname();
   return (
-    <div className="border-b border-rule bg-paper-2/60">
+    <div className="border-b border-rule bg-paper-2/60 backdrop-blur">
       <div className="mx-auto flex h-11 max-w-[1180px] items-center gap-3 px-4 sm:px-6">
         <Link href="/latent" className="shrink-0 font-serif text-[16px] font-semibold tracking-tight text-ink">LatentLens</Link>
         <span aria-hidden className="h-4 w-px shrink-0 bg-rule-strong" />
@@ -154,7 +154,7 @@ export function Callout({ children, tone = "neutral" }: { children: React.ReactN
 
 export function Panel({ title, badge, children, className }: { title?: string; badge?: React.ReactNode; children: React.ReactNode; className?: string }) {
   return (
-    <section className={cn("min-w-0 rounded-md border border-rule bg-paper p-4 sm:p-5", className)}>
+    <section className={cn("ll-panel min-w-0 rounded-md border border-rule bg-paper p-4 sm:p-5", className)}>
       {(title || badge) && (
         <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
           {title && <h3 className="text-[13.5px] font-medium text-ink">{title}</h3>}

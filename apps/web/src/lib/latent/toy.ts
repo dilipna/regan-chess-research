@@ -133,7 +133,7 @@ export function fmtBytes(b: number) {
 }
 export function fmtProb(p: number) {
   if (p >= 0.01) return p.toFixed(3);
-  if (p <= 0) return "0";
+  if (p <= 0) return "< 1e-5"; // artifacts store probabilities rounded to 5 decimals
   const e = Math.floor(Math.log10(p));
   return `${(p / 10 ** e).toFixed(1)}e${e}`;
 }

@@ -69,7 +69,7 @@ function PositionTrajectory({ p, t, nLayers }: { p: RecallPassage; t: number; nL
               <td className="num">{d}{d === nLayers && " · output"}</td>
               <td className="font-mono text-[12px] whitespace-pre">{showTok(tokText(p, p.depth_top_id?.[d][t] ?? null))}</td>
               <td className="num r">{fmtInt(r)}</td>
-              <td className="num r">{fmtProb(10 ** p.depth_log10_p_true[d][t])}</td>
+              <td className="num r">{p.depth_log10_p_true[d][t] <= -29 ? "< 1e-5" : fmtProb(10 ** p.depth_log10_p_true[d][t])}</td>
             </tr>
           ))}</tbody>
         </table>
