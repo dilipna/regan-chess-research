@@ -1,5 +1,5 @@
 import { preload } from "@/lib/server-data";
-import type { Architecture, ComponentProbe, LayerProbe, Metadata, Pending, PcaIndex, RecallPrecision, RmsnormProbe, StreamingCheck, TokenizerExamples, TokenTrace } from "./types";
+import type { Architecture, ComponentProbe, GenerationSteps, LayerProbe, Metadata, Pending, PcaIndex, RecallPrecision, RmsnormProbe, StreamingCheck, TokenizerExamples, TokenTrace } from "./types";
 
 export { BASE, MODEL_SLUG, PATHS } from "./paths";
 import { PATHS } from "./paths";
@@ -29,6 +29,7 @@ export async function loadLatent() {
     pca: (d[PATHS.pca] as PcaIndex | Pending | undefined) ?? pending("pca"),
     streaming: d[PATHS.streaming] as StreamingCheck | undefined,
     recallPrecision: d[PATHS.recallPrecision] as RecallPrecision | undefined,
+    generation: d[PATHS.generation] as GenerationSteps | undefined,
     metadata: d[PATHS.metadata] as Metadata | undefined,
   };
 }

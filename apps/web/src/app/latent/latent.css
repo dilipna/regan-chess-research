@@ -1,146 +1,103 @@
 /*
- * LatentLens "Observatory" dark theme.
- * Scoped to pages that render [data-latent-theme] (the /latent layout), so every Version 1 page keeps its light theme.
- * The site-wide tokens from globals.css are redefined here; components keep using the same token names.
- * Chart series pair validated for the dark card surface #0f1730: --viz-1 #2b9fc4, --viz-2 #c47e2a
- * (lightness band, chroma, CVD separation, normal-vision floor, contrast: all pass).
+ * LatentLens "museum" theme: warm off-white, deep ink, four role colours, large readable labels.
+ * Scoped to pages that render [data-latent-theme] (the /latent layout), so every Version 1 page keeps its own look.
+ *
+ * Role colours (validated as a categorical set on #fbf8f2: lightness band, chroma, all-pairs CVD separation,
+ * normal-vision floor, contrast; all pass). They always appear together with a text label and an icon.
+ *   --role-resid  #1f5fae  residual stream and vectors   (icon: ═)
+ *   --role-norm   #00a08a  normalization                 (icon: ⇕)
+ *   --role-attn   #a274e2  attention                     (icon: ⇄)
+ *   --role-mlp    #c47a00  MLP                           (icon: ◆)
+ * The -ink variants are darker shades of the same hues used for text (WCAG AA on the background).
  */
 html:has([data-latent-theme]) {
-  color-scheme: dark;
-  background: #080c19;
+  background: #fbf8f2;
 }
 
 body:has([data-latent-theme]) {
-  --viz-1: #2b9fc4;
-  --viz-2: #c47e2a;
+  --role-resid: #1f5fae;
+  --role-norm: #00a08a;
+  --role-attn: #a274e2;
+  --role-mlp: #c47a00;
+  --role-resid-ink: #1a4f92;
+  --role-norm-ink: #006b5d;
+  --role-attn-ink: #6b3fb5;
+  --role-mlp-ink: #8a5600;
+  --role-resid-soft: color-mix(in oklab, var(--role-resid) 11%, #fffdf8);
+  --role-norm-soft: color-mix(in oklab, var(--role-norm) 11%, #fffdf8);
+  --role-attn-soft: color-mix(in oklab, var(--role-attn) 13%, #fffdf8);
+  --role-mlp-soft: color-mix(in oklab, var(--role-mlp) 12%, #fffdf8);
 
-  --paper: #0f1730;
-  --paper-2: #151f3b;
-  --paper-3: #1d2948;
-  --ink: #e8ecf5;
-  --ink-2: #c4cbdb;
-  --ink-3: #8f9ab4;
-  --ink-4: #66718d;
-  --rule: #233050;
-  --rule-strong: #33436a;
+  --viz-1: var(--role-resid);
+  --viz-2: var(--role-mlp);
 
-  --engine: #8fb3d9;
-  --human: #7cc4a0;
-  --flag: #f08c7a;
-  --prov-regan: #a9b8cf;
-  --prov-ours: #6fd0ec;
-  --prov-finding: #c2cc78;
-  --llm: #f2b45a;
-  --tint-regan: color-mix(in oklab, var(--prov-regan) 10%, var(--paper));
-  --tint-ours: color-mix(in oklab, var(--prov-ours) 10%, var(--paper));
-  --tint-finding: color-mix(in oklab, var(--prov-finding) 10%, var(--paper));
-  --engine-soft: color-mix(in oklab, var(--engine) 14%, var(--paper));
-  --human-soft: color-mix(in oklab, var(--human) 14%, var(--paper));
-  --flag-soft: color-mix(in oklab, var(--flag) 14%, var(--paper));
-  --llm-soft: color-mix(in oklab, var(--llm) 13%, var(--paper));
-  --tint-llm: color-mix(in oklab, var(--llm) 8%, var(--paper));
-
-  --board-light: #2a3656;
-  --board-dark: #6fd0ec;
+  --paper: #fffdf8;
+  --paper-2: #f5f0e6;
+  --paper-3: #ebe4d6;
+  --ink: #1b1e27;
+  --ink-2: #393d49;
+  --ink-3: #5c6170;
+  --ink-4: #868b98;
+  --rule: #e4ddcf;
+  --rule-strong: #cbc2b0;
+  --llm: var(--role-attn-ink);
+  --llm-soft: var(--role-attn-soft);
+  --prov-ours: var(--role-norm-ink);
+  --tint-ours: var(--role-norm-soft);
 
   --background: var(--paper);
   --foreground: var(--ink);
-  --card: var(--paper);
-  --card-foreground: var(--ink);
-  --popover: var(--paper-2);
-  --popover-foreground: var(--ink);
-  --primary: var(--ink);
-  --primary-foreground: var(--paper);
-  --secondary: var(--paper-2);
-  --secondary-foreground: var(--ink);
-  --muted: var(--paper-3);
-  --muted-foreground: var(--ink-3);
-  --accent: var(--paper-2);
-  --accent-foreground: var(--ink);
-  --destructive: var(--flag);
   --border: var(--rule);
-  --input: var(--rule-strong);
-  --ring: var(--prov-ours);
+  --ring: var(--role-resid);
 
-  /* the night sky: two faint glows over a fine instrument grid that fades out toward the bottom */
-  background:
-    radial-gradient(1100px 520px at 12% -6%, rgba(43, 159, 196, 0.16), transparent 62%),
-    radial-gradient(900px 480px at 92% 4%, rgba(196, 126, 42, 0.10), transparent 60%),
-    linear-gradient(rgba(120, 150, 210, 0.045) 1px, transparent 1px) 0 0 / 44px 44px,
-    linear-gradient(90deg, rgba(120, 150, 210, 0.045) 1px, transparent 1px) 0 0 / 44px 44px,
-    #080c19;
-  background-attachment: fixed;
+  background: #fbf8f2;
   color: var(--ink);
 }
 
 body:has([data-latent-theme]) ::selection {
-  background: rgba(43, 159, 196, 0.35);
+  background: color-mix(in oklab, var(--role-resid) 22%, transparent);
 }
 
-/* panels: a faint top light and a soft shadow, like instrument cards */
+/* visible keyboard focus everywhere inside LatentLens */
+[data-latent-theme] :is(a, button, input, select, summary, [tabindex]:not([tabindex="-1"])):focus-visible {
+  outline: 3px solid var(--role-resid);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
 [data-latent-theme] .ll-panel {
-  background: linear-gradient(180deg, rgba(150, 190, 255, 0.035), transparent 45%), var(--paper);
-  box-shadow: 0 1px 0 rgba(150, 190, 255, 0.05) inset, 0 18px 40px -26px rgba(0, 0, 0, 0.9);
+  background: var(--paper);
+  box-shadow: 0 1px 0 rgba(27, 30, 39, 0.03), 0 8px 24px -18px rgba(27, 30, 39, 0.25);
 }
 
-/* primary / selected controls: a cyan lens instead of a white slab */
-[data-latent-theme] .bg-ink,
-body:has([data-latent-theme]) header .bg-ink {
-  background: linear-gradient(180deg, #3cb6dc, #2b9fc4);
-  color: #06101f;
-  box-shadow: 0 0 0 1px rgba(111, 208, 236, 0.35), 0 0 18px -4px rgba(43, 159, 196, 0.65);
-}
-[data-latent-theme] .bg-ink.text-paper,
-[data-latent-theme] .bg-ink .text-paper,
-[data-latent-theme] .bg-ink[class*="text-paper"] {
-  color: #06101f;
-}
-[data-latent-theme] .hover\:bg-ink-2:hover {
-  background: linear-gradient(180deg, #52c4e6, #33a9d1);
-}
+/* role-coloured surfaces used by the diagrams */
+[data-latent-theme] .role-resid { --role: var(--role-resid); --role-ink: var(--role-resid-ink); --role-soft: var(--role-resid-soft); }
+[data-latent-theme] .role-norm { --role: var(--role-norm); --role-ink: var(--role-norm-ink); --role-soft: var(--role-norm-soft); }
+[data-latent-theme] .role-attn { --role: var(--role-attn); --role-ink: var(--role-attn-ink); --role-soft: var(--role-attn-soft); }
+[data-latent-theme] .role-mlp { --role: var(--role-mlp); --role-ink: var(--role-mlp-ink); --role-soft: var(--role-mlp-soft); }
 
-/* the residual stream rail and its addition nodes glow */
-[data-latent-theme] .ll-rail {
-  background: linear-gradient(180deg, #6fd0ec, #2b9fc4);
-  box-shadow: 0 0 10px rgba(111, 208, 236, 0.55);
+/* changes are communicated, not decorated: short transitions only, none for reduced motion */
+[data-latent-theme] .ll-anim {
+  transition: transform 420ms cubic-bezier(.2, .7, .2, 1), opacity 300ms ease, width 420ms cubic-bezier(.2, .7, .2, 1),
+    height 420ms cubic-bezier(.2, .7, .2, 1), background-color 300ms ease, fill 300ms ease, x 420ms ease, y 420ms ease;
 }
-[data-latent-theme] .ll-node {
-  border-color: #f2b45a;
-  color: #f2b45a;
-  background: #0f1730;
-  box-shadow: 0 0 12px rgba(242, 180, 90, 0.45);
+[data-latent-theme] .ll-pop {
+  animation: ll-pop 360ms cubic-bezier(.2, .8, .2, 1) both;
 }
-[data-latent-theme] .ll-dot {
-  background: #6fd0ec;
-  box-shadow: 0 0 10px rgba(111, 208, 236, 0.8);
+@keyframes ll-pop {
+  from { opacity: 0; transform: translateY(6px) scale(.98); }
+  to { opacity: 1; transform: none; }
 }
-
-/* the title: starlight on ink */
-[data-latent-theme] .ll-title {
-  display: inline-block;
-  background: linear-gradient(100deg, #f4f6fb 10%, #9fdcf0 55%, #f2c27a 95%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+[data-latent-theme][data-speed="slow"] .ll-anim { transition-duration: 900ms; }
+[data-latent-theme][data-speed="slow"] .ll-pop { animation-duration: 800ms; }
+@media (prefers-reduced-motion: reduce) {
+  [data-latent-theme] .ll-anim { transition: none; }
+  [data-latent-theme] .ll-pop { animation: none; }
 }
-
-/* equations and code read like a terminal on the instrument */
-[data-latent-theme] [role="math"] {
-  background: rgba(8, 12, 25, 0.65);
-  border-color: var(--rule-strong);
-  color: #d9f1fa;
-}
+[data-latent-theme][data-motion="off"] .ll-anim { transition: none; }
+[data-latent-theme][data-motion="off"] .ll-pop { animation: none; }
 
 [data-latent-theme] input[type="range"] {
-  accent-color: #2b9fc4;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  [data-latent-theme] .ll-rail {
-    animation: ll-flow 3.2s ease-in-out infinite;
-  }
-  @keyframes ll-flow {
-    0%, 100% { box-shadow: 0 0 8px rgba(111, 208, 236, 0.45); }
-    50% { box-shadow: 0 0 16px rgba(111, 208, 236, 0.85); }
-  }
+  accent-color: var(--role-resid);
+  min-height: 28px;
 }
