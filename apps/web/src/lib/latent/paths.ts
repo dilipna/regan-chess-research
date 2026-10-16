@@ -13,5 +13,6 @@ export const PATHS = {
   pca: `${BASE}/pca/index.json`,
   streaming: `${BASE}/streaming_check.json`,
   recallPrecision: `${BASE}/recall_precision_check.json`,
+  generation: `${BASE}/generation_steps.json`,
   metadata: `${BASE}/metadata.json`,
 } as const;

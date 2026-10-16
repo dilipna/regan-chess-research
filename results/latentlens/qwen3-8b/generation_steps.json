@@ -1,0 +1,588 @@
+{
+ "schema": "latentlens.generation_steps/1",
+ "status": "ok",
+ "model_id": "Qwen/Qwen3-8B-Base",
+ "revision": "49e3418fbbbca6ecbdf9608b4d22e5a407081db4",
+ "dtype": "bfloat16",
+ "loader": "stream",
+ "prompt": "The researcher opened the notebook",
+ "prefix": "<|endoftext|>",
+ "procedure": "one forward pass per sequence; the appended token is one of the top candidates of step 1; no sampling happens inside the model",
+ "step1": {
+  "top": [
+   {
+    "id": 13,
+    "text": ".",
+    "logit": 32.0,
+    "p": 0.143795
+   },
+   {
+    "id": 624,
+    "text": ".\n",
+    "logit": 31.625,
+    "p": 0.098829
+   },
+   {
+    "id": 323,
+    "text": " and",
+    "logit": 31.5,
+    "p": 0.087216
+   },
+   {
+    "id": 11,
+    "text": ",",
+    "logit": 31.375,
+    "p": 0.076968
+   },
+   {
+    "id": 311,
+    "text": " to",
+    "logit": 31.25,
+    "p": 0.067924
+   },
+   {
+    "id": 198,
+    "text": "\n",
+    "logit": 31.125,
+    "p": 0.059943
+   },
+   {
+    "id": 576,
+    "text": " The",
+    "logit": 30.625,
+    "p": 0.036357
+   },
+   {
+    "id": 369,
+    "text": " for",
+    "logit": 30.5,
+    "p": 0.032085
+   },
+   {
+    "id": 271,
+    "text": "\n\n",
+    "logit": 30.375,
+    "p": 0.028315
+   },
+   {
+    "id": 279,
+    "text": " the",
+    "logit": 30.375,
+    "p": 0.028315
+   },
+   {
+    "id": 382,
+    "text": ".\n\n",
+    "logit": 30.25,
+    "p": 0.024988
+   },
+   {
+    "id": 8930,
+    "text": " opened",
+    "logit": 29.875,
+    "p": 0.017174
+   },
+   {
+    "id": 389,
+    "text": " on",
+    "logit": 29.75,
+    "p": 0.015156
+   },
+   {
+    "id": 594,
+    "text": "'s",
+    "logit": 29.75,
+    "p": 0.015156
+   },
+   {
+    "id": 37166,
+    "text": " notebook",
+    "logit": 29.375,
+    "p": 0.010416
+   },
+   {
+    "id": 3837,
+    "text": "，",
+    "logit": 29.25,
+    "p": 0.009192
+   },
+   {
+    "id": 304,
+    "text": " in",
+    "logit": 29.25,
+    "p": 0.009192
+   },
+   {
+    "id": 25,
+    "text": ":",
+    "logit": 29.0,
+    "p": 0.007159
+   },
+   {
+    "id": 315,
+    "text": " of",
+    "logit": 29.0,
+    "p": 0.007159
+   },
+   {
+    "id": 448,
+    "text": " with",
+    "logit": 29.0,
+    "p": 0.007159
+   }
+  ],
+  "logsumexp_by_temperature": {
+   "0.25": 128.426285,
+   "0.5": 65.03495,
+   "0.7": 47.108803,
+   "1.0": 33.939426,
+   "1.5": 24.628242,
+   "2.0": 20.78561
+  },
+  "top_mass": 0.782498,
+  "entropy": 4.016858
+ },
+ "step2": [
+  {
+   "appended": {
+    "id": 13,
+    "text": "."
+   },
+   "context": "The researcher opened the notebook.",
+   "top": [
+    {
+     "id": 576,
+     "text": " The",
+     "logit": 32.25,
+     "p": 0.421811
+    },
+    {
+     "id": 3555,
+     "text": " What",
+     "logit": 29.625,
+     "p": 0.030556
+    },
+    {
+     "id": 220,
+     "text": " ",
+     "logit": 29.25,
+     "p": 0.021001
+    },
+    {
+     "id": 362,
+     "text": " A",
+     "logit": 29.125,
+     "p": 0.018533
+    },
+    {
+     "id": 1446,
+     "text": " You",
+     "logit": 29.0,
+     "p": 0.016355
+    },
+    {
+     "id": 358,
+     "text": " I",
+     "logit": 29.0,
+     "p": 0.016355
+    },
+    {
+     "id": 715,
+     "text": " \n",
+     "logit": 28.875,
+     "p": 0.014434
+    },
+    {
+     "id": 2932,
+     "text": " She",
+     "logit": 28.75,
+     "p": 0.012738
+    },
+    {
+     "id": 758,
+     "text": " In",
+     "logit": 28.75,
+     "p": 0.012738
+    },
+    {
+     "id": 2585,
+     "text": " How",
+     "logit": 28.625,
+     "p": 0.011241
+    },
+    {
+     "id": 5264,
+     "text": " Open",
+     "logit": 28.5,
+     "p": 0.00992
+    },
+    {
+     "id": 15920,
+     "text": " Which",
+     "logit": 28.5,
+     "p": 0.00992
+    },
+    {
+     "id": 1096,
+     "text": " This",
+     "logit": 28.5,
+     "p": 0.00992
+    },
+    {
+     "id": 1260,
+     "text": " He",
+     "logit": 28.375,
+     "p": 0.008754
+    },
+    {
+     "id": 3197,
+     "text": " When",
+     "logit": 28.25,
+     "p": 0.007726
+    },
+    {
+     "id": 10236,
+     "text": " �",
+     "logit": 28.0,
+     "p": 0.006017
+    },
+    {
+     "id": 1084,
+     "text": " It",
+     "logit": 28.0,
+     "p": 0.006017
+    },
+    {
+     "id": 3070,
+     "text": " **",
+     "logit": 28.0,
+     "p": 0.006017
+    },
+    {
+     "id": 2379,
+     "text": " They",
+     "logit": 28.0,
+     "p": 0.006017
+    },
+    {
+     "id": 1416,
+     "text": " If",
+     "logit": 27.875,
+     "p": 0.00531
+    }
+   ],
+   "logsumexp_by_temperature": {
+    "0.25": 129.000046,
+    "0.5": 64.521965,
+    "0.7": 46.238407,
+    "1.0": 33.113251,
+    "1.5": 24.323093,
+    "2.0": 20.649439
+   },
+   "top_mass": 0.651378,
+   "entropy": 4.176885
+  },
+  {
+   "appended": {
+    "id": 624,
+    "text": ".\n"
+   },
+   "context": "The researcher opened the notebook.\n",
+   "top": [
+    {
+     "id": 785,
+     "text": "The",
+     "logit": 32.0,
+     "p": 0.508077
+    },
+    {
+     "id": 32,
+     "text": "A",
+     "logit": 28.875,
+     "p": 0.022323
+    },
+    {
+     "id": 40,
+     "text": "I",
+     "logit": 28.5,
+     "p": 0.015343
+    },
+    {
+     "id": 3838,
+     "text": "What",
+     "logit": 28.375,
+     "p": 0.01354
+    },
+    {
+     "id": 27428,
+     "text": "Research",
+     "logit": 28.25,
+     "p": 0.011949
+    },
+    {
+     "id": 641,
+     "text": "In",
+     "logit": 28.25,
+     "p": 0.011949
+    },
+    {
+     "id": 1986,
+     "text": "This",
+     "logit": 28.125,
+     "p": 0.010545
+    },
+    {
+     "id": 334,
+     "text": "**",
+     "logit": 28.125,
+     "p": 0.010545
+    },
+    {
+     "id": 2610,
+     "text": "You",
+     "logit": 27.875,
+     "p": 0.008212
+    },
+    {
+     "id": 4498,
+     "text": "When",
+     "logit": 27.75,
+     "p": 0.007247
+    },
+    {
+     "id": 4340,
+     "text": "How",
+     "logit": 27.75,
+     "p": 0.007247
+    },
+    {
+     "id": 14374,
+     "text": "###",
+     "logit": 27.75,
+     "p": 0.007247
+    },
+    {
+     "id": 7941,
+     "text": "She",
+     "logit": 27.75,
+     "p": 0.007247
+    },
+    {
+     "id": 2,
+     "text": "#",
+     "logit": 27.75,
+     "p": 0.007247
+    },
+    {
+     "id": 565,
+     "text": "##",
+     "logit": 27.5,
+     "p": 0.005644
+    },
+    {
+     "id": 1782,
+     "text": "the",
+     "logit": 27.5,
+     "p": 0.005644
+    },
+    {
+     "id": 1519,
+     "text": "He",
+     "logit": 27.5,
+     "p": 0.005644
+    },
+    {
+     "id": 9112,
+     "text": "Note",
+     "logit": 27.375,
+     "p": 0.004981
+    },
+    {
+     "id": 2679,
+     "text": "If",
+     "logit": 27.375,
+     "p": 0.004981
+    },
+    {
+     "id": 2121,
+     "text": "As",
+     "logit": 27.375,
+     "p": 0.004981
+    }
+   ],
+   "logsumexp_by_temperature": {
+    "0.25": 128.0,
+    "0.5": 64.008904,
+    "0.7": 45.810963,
+    "1.0": 32.677197,
+    "1.5": 23.929461,
+    "2.0": 20.2999
+   },
+   "top_mass": 0.680594,
+   "entropy": 3.734135
+  },
+  {
+   "appended": {
+    "id": 323,
+    "text": " and"
+   },
+   "context": "The researcher opened the notebook and",
+   "top": [
+    {
+     "id": 6139,
+     "text": " wrote",
+     "logit": 31.375,
+     "p": 0.085347
+    },
+    {
+     "id": 7877,
+     "text": " closed",
+     "logit": 31.125,
+     "p": 0.066468
+    },
+    {
+     "id": 279,
+     "text": " the",
+     "logit": 31.125,
+     "p": 0.066468
+    },
+    {
+     "id": 1349,
+     "text": " read",
+     "logit": 31.0,
+     "p": 0.058658
+    },
+    {
+     "id": 6009,
+     "text": " began",
+     "logit": 30.875,
+     "p": 0.051765
+    },
+    {
+     "id": 3855,
+     "text": " started",
+     "logit": 30.5,
+     "p": 0.035578
+    },
+    {
+     "id": 8930,
+     "text": " opened",
+     "logit": 30.375,
+     "p": 0.031397
+    },
+    {
+     "id": 8570,
+     "text": " continued",
+     "logit": 30.0,
+     "p": 0.021579
+    },
+    {
+     "id": 4588,
+     "text": " asked",
+     "logit": 29.875,
+     "p": 0.019043
+    },
+    {
+     "id": 1221,
+     "text": " then",
+     "logit": 29.75,
+     "p": 0.016806
+    },
+    {
+     "id": 1053,
+     "text": " said",
+     "logit": 29.75,
+     "p": 0.016806
+    },
+    {
+     "id": 19910,
+     "text": " clicked",
+     "logit": 29.625,
+     "p": 0.014831
+    },
+    {
+     "id": 6519,
+     "text": " turned",
+     "logit": 29.5,
+     "p": 0.013088
+    },
+    {
+     "id": 6966,
+     "text": " looked",
+     "logit": 29.5,
+     "p": 0.013088
+    },
+    {
+     "id": 21926,
+     "text": " reviewed",
+     "logit": 29.25,
+     "p": 0.010193
+    },
+    {
+     "id": 3867,
+     "text": " took",
+     "logit": 29.125,
+     "p": 0.008995
+    },
+    {
+     "id": 12864,
+     "text": " marked",
+     "logit": 28.875,
+     "p": 0.007006
+    },
+    {
+     "id": 10636,
+     "text": " entered",
+     "logit": 28.875,
+     "p": 0.007006
+    },
+    {
+     "id": 5927,
+     "text": " returned",
+     "logit": 28.875,
+     "p": 0.007006
+    },
+    {
+     "id": 1483,
+     "text": " used",
+     "logit": 28.875,
+     "p": 0.007006
+    }
+   ],
+   "logsumexp_by_temperature": {
+    "0.25": 126.26783,
+    "0.5": 64.083565,
+    "0.7": 46.564869,
+    "1.0": 33.836109,
+    "1.5": 24.732315,
+    "2.0": 20.772564
+   },
+   "top_mass": 0.558133,
+   "entropy": 5.043738
+  }
+ ],
+ "runtime_s": 120.2,
+ "provenance": {
+  "git_commit": "0f4fd281b51be26d7aa4e5b5a074d79b36ab7001-dirty",
+  "timestamp": "2026-10-16T03:51:14+00:00",
+  "versions": {
+   "python": "3.13.14",
+   "torch": "2.14.1+cu126",
+   "transformers": "5.18.0",
+   "tokenizers": "0.23.2",
+   "safetensors": "0.8.0",
+   "numpy": "2.5.3",
+   "scikit-learn": "1.9.1",
+   "pandas": "3.0.6"
+  },
+  "hardware": {
+   "platform": "Windows-11-10.0.26300-SP0",
+   "machine": "AMD64",
+   "node": "BrahmaVishnuShiva",
+   "gpu": "NVIDIA GeForce RTX 3050 Ti Laptop GPU",
+   "gpu_memory_gib": 4.0
+  },
+  "script": "scripts/latentlens/record_generation_steps.py",
+  "loader": "stream"
+ }
+}

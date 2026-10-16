@@ -1,35 +1,33 @@
 # LatentLens: professor demo guide
 
-For the meeting with Professor Kenneth W. Regan. Open `/latent/demo` (locally: `cd apps/web && npm run build && npx next start`,
-then http://localhost:3000/latent/demo; or the deployed site's `/latent/demo`). Keyboard: right and left arrows move between
-steps. "Presenter notes" shows the cues below on screen.
+For the meeting with Professor Kenneth W. Regan. Open `/latent/demo`
+(locally: `cd apps/web && npm run build && npx next start`, then http://localhost:3000/latent/demo).
 
-## Exact order and clicks (5 minutes)
+**Controls.** ← / → (or PageUp / PageDown, or the Back and Next buttons) move between the five steps. **N** shows presenter
+notes, **D** opens the optional deeper sections, **↺ Reset** returns to step 1. Nothing advances automatically, so you can
+stop at any point for questions; "Motion: off" removes transitions. Every panel carries a label: *Toy calculation*,
+*Recorded Qwen measurement* or *Experiment pending*.
 
-| Time | Step on screen | Say (verbatim) | Click / point at |
+## Five-minute route
+
+| Time | Step | Say | Do |
 |---|---|---|---|
-| 0:00 | 1 From outputs to internals | "Last time I analyzed Qwen mainly from its outputs. After our discussion, I wanted to understand what is happening inside the model." | The pipeline strip, then the numbers: 36 blocks, 4,096-wide residual stream, 32 query heads and 8 KV heads. "Every number is verified against the checkpoint and the transformers code, not taken from memory." |
-| 0:45 | 2 One complete block | "Here is one complete Qwen transformer block." | Let the walk-through run (RMSNorm, Q/K/V, Q/K normalization, RoPE, attention, residual, RMSNorm, MLP, residual). Point at the rail: "the residual stream is only ever added to." Pause on Q/K RMSNorm: "128 numbers per head, before RoPE." |
-| 2:00 | 3 Normalization | "This is the normalization operation we discussed." | Walk the toy vector [2, −1, 4, 1]: squares, mean 5.5, RMS 2.345, divide, gain. Click **Scale x by 10** (no change), then **Add 5 to every entry** (changes, unlike LayerNorm). |
-| 3:00 | 4 Freezing Qwen and probing | "Now I freeze Qwen and inspect what information is available at each layer." | If the panel says *Experiment pending*: "The pipeline is built and tested; the run waits for access to Pangram's EditLens data. I am not showing a curve because none has been measured." |
-| 3:45 | 5 Recall | "This connects directly to the recall experiments. Rather than only measuring whether the final next token is correct, we can trace how the true token's rank changes through the model." | Gettysburg 76.9% vs unpublished control paragraph 34.6% (bf16). The rank-by-depth chart: the true token reaches median rank 1 around depth 34 on Gettysburg. |
-| 4:40 | 6 Closing | "The goal is not merely to classify AI text. I want to understand where the distinction becomes encoded inside the transformer and which computations strengthen it." | Then ask about his recall scripts on turing/cerf. |
+| 0:00 | 1 Follow one token | "Last time I analyzed Qwen mainly from its outputs. After our discussion, I wanted to understand what is happening inside the model. Here is one sentence, followed token by token." | Click "␣notebook" (pos 5): id 37166, real tokenizer output. Point at the starting vector: a toy 8-number stand-in for 4,096 numbers. |
+| 0:50 | 2 One complete block | "Here is one complete Qwen transformer block, step by step." | Press "Next step" six times: RMSNorm copy, attention update, add, RMSNorm copy, MLP update, add. "The blue line, the residual stream, is only ever added to." |
+| 1:50 | 3 RMSNorm vs LayerNorm | "This is the normalization operation we discussed." | Scale × 10: RMSNorm output unchanged. Offset +2: RMSNorm changes, LayerNorm does not. Point at the gains: learned weights, separate from the input-dependent denominator. |
+| 3:00 | 4 Recall evidence | "This connects to the recall experiments. Instead of only checking the final next token, we can trace the true token's rank through the model." | 76.9% vs 34.6% (bfloat16, teacher forcing). Rank-by-depth chart: "diagnostic projections, not the model's output at those layers." |
+| 4:00 | 5 Human vs AI | "Next, I want to measure whether these representations carry information that separates human from AI writing, and where. The plan is ready; the data access is pending." | Point at "Experiment pending" and the commands. Close with the final sentence on screen. |
 
-## 10-minute expanded version
+## Optional deeper sections (10-minute version)
 
-Add these between the steps above:
-
-1. After step 1, open **Overview** and show the "Order of operations, checked in the installed source (13/13)" panel;
-   expand one item to show the evidence lines.
-2. After step 2, open **Learn → Follow one token** and click **Residual stream**: the measured chart shows the residual
-   growing from RMS 0.027 to about 33, with a massive activation at position 0 (one coordinate near 1,800).
-3. After step 3, **Learn → RMSNorm lab**: "the stream grows by orders of magnitude; the normalized copy follows the
-   learned gain". Then the table that separates block RMSNorm from Q/K RMSNorm.
-4. After step 5, **Recall** page: click a token in the Gettysburg text and show its rank trajectory and the top
-   projected token at each depth. Mention the precision check: changing bf16 to fp32 flips 1 of 316 top-1 decisions on
-   Gettysburg and 5 of 162 on the control paragraph, so two recall rates near 86.3% should be compared with that noise
-   in mind.
-5. End on **Recall → Comparing model sizes**: the 14B vs ~27B comparison is prepared, not run.
+- Step 2, **D**: the exact verified Qwen3 block order (input_layernorm → q/k/v → q_norm/k_norm → RoPE → causal GQA →
+  o_proj → add → post_attention_layernorm → SwiGLU → add).
+- Step 3, **D**: the recorded Qwen RMSNorm gains by block appear in the RMSNorm lab (`/latent/labs/rmsnorm`).
+- Step 5, **D**: the full research plan (question, hypothesis, data access, representation, leakage controls, probes and
+  baselines, metrics, limitations).
+- Outside the demo: `/latent/journey?s=4&level=research` (real attention probabilities for one head),
+  `/latent/journey?s=6&level=research` (any of the 36 blocks, recorded values), `/latent/recall` (click any token of the
+  Gettysburg Address for its rank trajectory), `/latent/labs/kv-cache` (cache size by dtype, batch and length).
 
 ## Likely questions and short answers
 

@@ -195,9 +195,9 @@ describe("Version 1 preservation and copy rules", () => {
     const sm = readFileSync(path.join(WEB, "src", "app", "sitemap.ts"), "utf-8");
     for (const r of ["/latent", "/latent/learn", "/latent/research", "/latent/recall", "/latent/methods", "/latent/demo"]) expect(sm).toContain(`"${r}"`);
   });
-  it("the dark theme is scoped to LatentLens pages and leaves Version 1 light", () => {
+  it("the LatentLens theme is scoped to LatentLens pages and leaves Version 1 unchanged", () => {
     const css = readFileSync(path.join(WEB, "src", "app", "latent", "latent.css"), "utf-8");
-    expect(readFileSync(path.join(WEB, "src", "app", "latent", "layout.tsx"), "utf-8")).toContain('data-latent-theme="observatory"');
+    expect(readFileSync(path.join(WEB, "src", "app", "latent", "layout.tsx"), "utf-8")).toContain('data-latent-theme="museum"');
     for (const rule of css.match(/^[^\s@/*}][^{]*\{/gm) ?? []) expect(rule).toMatch(/data-latent-theme|^\s*(0%|50%|100%)/);
     expect(readFileSync(path.join(WEB, "src", "app", "globals.css"), "utf-8")).not.toContain("data-latent-theme");
   });
