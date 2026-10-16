@@ -8,7 +8,7 @@ export function Hero() {
   return (
     <div className="border-b border-rule pb-10">
       <div className="eyebrow mb-3">Version 2 of MoveLens · Model internals</div>
-      <h1 className="font-serif text-[40px] leading-[1.05] font-semibold tracking-tight text-ink sm:text-[54px]">LatentLens</h1>
+      <h1 className="ll-title font-serif text-[40px] leading-[1.05] font-semibold tracking-tight text-ink sm:text-[54px]">LatentLens</h1>
       <p className="mt-4 max-w-3xl font-serif text-[22px] leading-snug text-ink sm:text-[25px]">Tracing human and machine writing through transformer layers.</p>
       <p className="mt-4 max-w-3xl text-[15.5px] leading-relaxed text-ink-2">
         The original project studied model behavior from the outside. LatentLens looks inside the transformer. It starts with one

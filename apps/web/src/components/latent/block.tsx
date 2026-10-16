@@ -36,9 +36,9 @@ export function BlockDiagram({ arch, selected, onSelect, highlight }: { arch: Ar
         return (
           <li key={p.id} className="grid grid-cols-[46px_1fr] items-stretch">
             <div aria-hidden className="relative flex justify-center">
-              <div className={cn("absolute w-[2px] bg-ink-3", r.rail === "start" ? "top-1/2 bottom-[-6px]" : r.rail === "end" ? "top-[-6px] bottom-1/2" : "top-[-6px] bottom-[-6px]")} />
-              {r.rail === "add" && <div className="relative z-10 flex h-6 w-6 items-center justify-center self-center rounded-full border-2 border-ink bg-paper text-[15px] leading-none font-semibold text-ink">+</div>}
-              {(r.rail === "start" || r.rail === "end") && <div className="relative z-10 h-2.5 w-2.5 self-center rounded-full bg-ink" />}
+              <div className={cn("ll-rail absolute w-[2px] bg-ink-3", r.rail === "start" ? "top-1/2 bottom-[-6px]" : r.rail === "end" ? "top-[-6px] bottom-1/2" : "top-[-6px] bottom-[-6px]")} />
+              {r.rail === "add" && <div className="ll-node relative z-10 flex h-6 w-6 items-center justify-center self-center rounded-full border-2 border-ink bg-paper text-[15px] leading-none font-semibold text-ink">+</div>}
+              {(r.rail === "start" || r.rail === "end") && <div className="ll-dot relative z-10 h-2.5 w-2.5 self-center rounded-full bg-ink-3" />}
             </div>
             <div className={cn("relative",
               r.group && "border-x border-dashed px-2", r.group === "attn" && "border-[var(--viz-1)]/40 bg-[color-mix(in_oklab,var(--viz-1)_4%,var(--paper))]",
