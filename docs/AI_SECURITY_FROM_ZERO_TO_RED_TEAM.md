@@ -642,7 +642,7 @@ Route: `/latent/security/learn/defenses`
 
 **Interview (level 6).** Why can't a guardrail model alone secure an agent?
 
-## Frameworks (verified 17 October 2026)
+## Frameworks (verified 2026-10-17)
 
 - **OWASP Top 10 for LLM Applications** (OWASP GenAI Security Project), 2026 edition (announced 1 to 2 September 2026); 2025 edition still listed on the project page. The ten most critical risks for applications that use LLMs as components. Source: https://genai.owasp.org/llm-top-10/ Note: The 2025 list was read from OWASP's own page. The 2026 order below comes from OWASP's announcement plus the Cloud Security Alliance research note, because the 2026 list page was not retrievable at check time.
 - **OWASP Top 10 for Agentic Applications** (OWASP GenAI Security Project), 2026 edition, published 9 December 2025. Risks specific to autonomous and tool-using agents (ASI01 to ASI10). Source: https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/ Note: Release date read from OWASP's page; entry names consistent across several independent guides. One source mentions a later 2.01 revision; unconfirmed.
