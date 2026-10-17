@@ -7,6 +7,7 @@ import { LEVELS, topicBySlug, topicHref } from "@/lib/latent/mastery";
 import { ConceptCard, FactBadge, MasteryBadge, QuizCard, RevealOutline, TeachBackPrompt } from "../learn/primitives";
 import { saveAnswer, saveTeachBack, useConceptStatus, useLearn } from "../learn/progress-hook";
 import { TenQuestions } from "./ten-questions";
+import { TopicDiagram } from "./diagrams";
 import { TopicConnections } from "./topic-connections";
 
 export function MasteryTopic({ slug, defaultOpen = false }: { slug: string; defaultOpen?: boolean }) {
@@ -36,7 +37,7 @@ export function MasteryTopic({ slug, defaultOpen = false }: { slug: string; defa
       {open && (
         <>
           <TenQuestions t={t} c={c} />
-          <ConceptCard k="B" title="Where it sits"><p>{t.where}</p></ConceptCard>
+          <ConceptCard k="B" title="Where it sits"><p>{t.where}</p><TopicDiagram slug={slug} /></ConceptCard>
           <ConceptCard k="C" title="Exact mechanism">
             <ol className="list-decimal space-y-1.5 pl-5">{t.mechanism.map((m) => <li key={m}>{m}</li>)}</ol>
             {t.eq && <div role="math" className="scroll-x mt-3 rounded-md border border-rule bg-paper-2/70 px-4 py-3 font-mono text-[13.5px] leading-relaxed text-ink">{t.eq.map((e) => <div key={e}>{e}</div>)}</div>}
