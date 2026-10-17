@@ -158,6 +158,7 @@ describe("storybook pages", () => {
       if (c.slug === "timeline") expect(h).not.toContain("Recorded Qwen measurement");
       if (["pieces", "dice", "careful"].includes(c.slug)) expect(h, c.slug).toContain("Recorded Qwen measurement");
       if (["counting", "practice", "thinking", "agents"].includes(c.slug)) expect(h, c.slug).toContain("Toy calculation");
+      expect(h, c.slug).toContain("Ready for the real mechanism?");
     }
   });
 
