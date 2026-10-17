@@ -42,8 +42,8 @@ export function ProfessorMode({ glassbox, layerProbe, versions }: { glassbox?: G
     return () => window.removeEventListener("keydown", onKey);
   }, []);
   return (
-    <div className="grid gap-6 lg:grid-cols-[15rem_1fr]">
-      <nav aria-label="Sections" className="lg:sticky lg:top-6 lg:self-start">
+    <div className="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[15rem_minmax(0,1fr)]">
+      <nav aria-label="Sections" className="min-w-0 lg:sticky lg:top-6 lg:self-start">
         <ol className="flex gap-1 overflow-x-auto lg:grid lg:overflow-visible">
           {PROF_SECTIONS.map((x, k) => (
             <li key={x.id}><button type="button" onClick={() => setI(k)} aria-current={k === i ? "step" : undefined}
