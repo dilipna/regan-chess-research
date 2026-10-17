@@ -32,6 +32,7 @@ export default function SecurityHome() {
 
       <section aria-labelledby="more" className="grid gap-3 sm:grid-cols-2">
         <h2 id="more" className="sr-only">More</h2>
+        <Link href="/latent/security/labs" className="ll-panel rounded-xl border-2 border-ink bg-paper p-4 hover:border-ink-3 sm:col-span-2"><span className="block text-[16px] font-semibold text-ink">Labs</span><span className="mt-1 block text-[14px] text-ink-2">Local, simulated labs with fixed synthetic fixtures: system, trust boundary, failure, root cause, defense, retest, residual risk.</span></Link>
         <Link href="/latent/security/frameworks" className="ll-panel rounded-xl border border-rule bg-paper p-4 hover:border-ink-3"><span className="block text-[16px] font-semibold text-ink">Frameworks</span><span className="mt-1 block text-[14px] text-ink-2">OWASP, NIST, MITRE ATLAS, SAIF and the MCP specification, with editions, verification dates and mapped topics.</span></Link>
         <Link href="/latent/mastery/request" className="ll-panel rounded-xl border border-rule bg-paper p-4 hover:border-ink-3"><span className="block text-[16px] font-semibold text-ink">Follow one request: security view</span><span className="mt-1 block text-[14px] text-ink-2">Every trust boundary in a real email-assistant request.</span></Link>
       </section>
