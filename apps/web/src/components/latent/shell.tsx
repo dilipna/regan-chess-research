@@ -10,6 +10,7 @@ import { Prov } from "./kit";
 
 const SUBNAV = [
   { href: "/latent", label: "Overview" },
+  { href: "/latent/story", label: "Storybook" },
   { href: "/latent/journey", label: "Journey" },
   { href: "/latent/labs", label: "Labs" },
   { href: "/latent/glassbox", label: "Glass Box" },
