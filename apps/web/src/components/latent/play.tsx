@@ -67,14 +67,14 @@ function Game({ data, versions }: { data: Recall; versions?: RecallVersions }) {
       </div>
       <div className="grid gap-4 sm:grid-cols-3">
         <div className="rounded-2xl bg-ink p-4 text-paper"><div className="text-[13px] opacity-75">You</div><div className="num font-serif text-[40px]">{you}<span className="text-[20px] opacity-60"> / {answers.length}</span></div></div>
-        <div className="rounded-2xl bg-[var(--role-resid)] p-4 text-white"><div className="text-[13px] opacity-80">Qwen3-8B-Base (recorded)</div><div className="num font-serif text-[40px]">{qwen}<span className="text-[20px] opacity-70"> / {answers.length}</span></div></div>
+        <div className="rounded-2xl bg-[var(--role-resid)] p-4 text-[var(--on-role)]"><div className="text-[13px] opacity-80">Qwen3-8B-Base (recorded)</div><div className="num font-serif text-[40px]">{qwen}<span className="text-[20px] opacity-70"> / {answers.length}</span></div></div>
         <div className="rounded-2xl border border-rule bg-paper p-4 text-[13.5px] text-ink-2">Round {Math.min(i + 1, rounds.length)} of {rounds.length}. Both of you see the true text so far (teacher forcing). Qwen&apos;s answers were recorded in advance; nothing runs live. <Prov kind="recorded" /></div>
       </div>
       {!done && round && pos && (
         <section className="ll-panel rounded-2xl border border-rule bg-paper p-5 sm:p-7">
           <p className="font-serif text-[22px] leading-relaxed text-ink sm:text-[26px]">
             {round.contextStart > 0 && <span className="text-ink-4">… </span>}{ctx}
-            {revealed ? <span className={cn("ll-pop rounded px-1", answers[i].you ? "bg-[var(--role-norm-soft)]" : "bg-[#fbe9e4]")}> {round.word}</span> : <span className="rounded bg-[var(--role-resid-soft)] px-2 text-[var(--role-resid-ink)]"> ▢</span>}
+            {revealed ? <span className={cn("ll-pop rounded px-1", answers[i].you ? "bg-[var(--role-norm-soft)]" : "bg-[var(--bad-soft)]")}> {round.word}</span> : <span className="rounded bg-[var(--role-resid-soft)] px-2 text-[var(--role-resid-ink)]"> ▢</span>}
           </p>
           {!revealed ? (
             <form className="mt-5 flex flex-wrap gap-2" onSubmit={(e) => { e.preventDefault(); submit(); }}>
@@ -85,11 +85,11 @@ function Game({ data, versions }: { data: Recall; versions?: RecallVersions }) {
             </form>
           ) : (
             <div className="ll-pop mt-5 grid gap-3 md:grid-cols-2">
-              <div className={cn("rounded-xl p-4", answers[i].you ? "bg-[var(--role-norm-soft)]" : "bg-[#fbe9e4]")}>
+              <div className={cn("rounded-xl p-4", answers[i].you ? "bg-[var(--role-norm-soft)]" : "bg-[var(--bad-soft)]")}>
                 <div className="text-[13px] text-ink-3">You</div>
                 <div className="text-[18px]"><span className="font-mono">{answers[i].guess}</span> {answers[i].you ? "✓ correct" : `✗ (the text says “${round.word}”)`}</div>
               </div>
-              <div className={cn("rounded-xl p-4", pos.top1 ? "bg-[var(--role-norm-soft)]" : "bg-[#fbe9e4]")}>
+              <div className={cn("rounded-xl p-4", pos.top1 ? "bg-[var(--role-norm-soft)]" : "bg-[var(--bad-soft)]")}>
                 <div className="text-[13px] text-ink-3">Qwen&apos;s top guess</div>
                 <div className="text-[18px]"><span className="font-mono">{showTok(pos.top ?? "")}</span> {pos.top1 ? "✓ correct" : "✗"}</div>
                 <div className="mt-1 text-[13.5px] text-ink-2">Probability it gave to “{round.word}”: <strong className="num">{fmtProb(pos.p_true)}</strong> (rank {pos.rank}). Its top guess had {fmtProb(pos.p_top)}.</div>

@@ -5,7 +5,7 @@
  */
 [data-story] {
   font-family: var(--font-story), var(--font-body), system-ui, sans-serif;
-  --story-shadow: 0 2px 0 rgba(27, 30, 39, 0.06), 0 14px 30px -22px rgba(27, 30, 39, 0.35);
+  --story-shadow: 0 2px 0 rgba(0, 0, 0, 0.3), 0 14px 30px -22px rgba(0, 0, 0, 0.8);
 }
 [data-story] .story-title { font-family: var(--font-story), var(--font-body), sans-serif; letter-spacing: -0.01em; }
 [data-story] .story-text { font-size: 22px; line-height: 1.5; color: var(--ink); }
@@ -25,13 +25,13 @@
 [data-story] .story-paper {
   background:
     repeating-linear-gradient(to bottom, transparent 0 33px, color-mix(in oklab, var(--role-resid) 16%, transparent) 33px 34px),
-    #fffef6;
+    var(--paper-2);
   border: 2px solid var(--rule);
 }
 
 /* buttons press down a little; the focus ring comes from the LatentLens theme */
-[data-story] .story-btn { transition: transform 120ms ease, box-shadow 120ms ease, background-color 200ms ease; box-shadow: 0 3px 0 rgba(27, 30, 39, 0.12); }
-[data-story] .story-btn:not(:disabled):active { transform: translateY(2px); box-shadow: 0 1px 0 rgba(27, 30, 39, 0.12); }
+[data-story] .story-btn { transition: transform 120ms ease, box-shadow 120ms ease, background-color 200ms ease; box-shadow: 0 3px 0 rgba(0, 0, 0, 0.45); }
+[data-story] .story-btn:not(:disabled):active { transform: translateY(2px); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.45); }
 [data-story] .story-btn:not(:disabled):hover { filter: brightness(1.03); }
 
 [data-story] .story-range { accent-color: var(--role-mlp); height: 34px; }

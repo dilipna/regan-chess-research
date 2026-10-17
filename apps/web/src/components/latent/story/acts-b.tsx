@@ -263,7 +263,7 @@ const TEMPS: { key: string; t: number; label: string }[] = [
   { key: "0.25", t: 0.25, label: "❄️ freezing" }, { key: "0.5", t: 0.5, label: "cold" }, { key: "0.7", t: 0.7, label: "cool" },
   { key: "1.0", t: 1, label: "normal" }, { key: "1.5", t: 1.5, label: "warm" }, { key: "2.0", t: 2, label: "🔥 hot" },
 ];
-const SLICE = ["#1f5fae", "#c47a00", "#00a08a", "#a274e2", "#d0517a", "#6a8f1f", "#3d8fd6"];
+const SLICE = ["var(--role-resid)", "var(--role-mlp)", "var(--role-norm)", "var(--role-attn)", "#ff7aa8", "#a8dc5a", "#7fd0ff"];
 
 export function WheelAct({ gen, onDone }: { gen?: GenerationSteps; onDone: () => void }) {
   const [ti, setTi] = useState(3);
@@ -277,7 +277,7 @@ export function WheelAct({ gen, onDone }: { gen?: GenerationSteps; onDone: () =>
   const lse = gen.step1.logsumexp_by_temperature[T.key];
   const { slices } = sharesAt(gen.step1.top.slice(0, 7), lse, T.t);
   const rest = Math.max(0, 1 - slices.reduce((a, s) => a + s.p, 0));
-  const all = [...slices.map((s, i) => ({ ...s, color: SLICE[i], label: s.text.replace(/\n/g, "↵").trim() || "␣" })), { text: "", p: rest, color: "#cbc2b0", label: "others" }];
+  const all = [...slices.map((s, i) => ({ ...s, color: SLICE[i], label: s.text.replace(/\n/g, "↵").trim() || "␣" })), { text: "", p: rest, color: "var(--ink-4)", label: "others" }];
   let acc = 0;
   const arcs = all.map((s) => { const a0 = acc * 360; acc += s.p; return { ...s, a0, a1: acc * 360 }; });
   const R = 130, C = 150;
@@ -306,12 +306,12 @@ export function WheelAct({ gen, onDone }: { gen?: GenerationSteps; onDone: () =>
               const [x0, y0] = pt(s.a0), [x1, y1] = pt(s.a1), [lx, ly] = pt((s.a0 + s.a1) / 2, R * 0.66);
               return (
                 <g key={i}>
-                  <path d={`M ${C} ${C} L ${x0} ${y0} A ${R} ${R} 0 ${s.a1 - s.a0 > 180 ? 1 : 0} 1 ${x1} ${y1} Z`} fill={s.color} stroke="#fffdf8" strokeWidth={2} className="ll-anim" />
+                  <path d={`M ${C} ${C} L ${x0} ${y0} A ${R} ${R} 0 ${s.a1 - s.a0 > 180 ? 1 : 0} 1 ${x1} ${y1} Z`} fill={s.color} stroke="var(--paper)" strokeWidth={2} className="ll-anim" />
                   {s.a1 - s.a0 > 16 && <text x={lx} y={ly + 5} textAnchor="middle" className="fill-white text-[15px] font-bold">{s.label}</text>}
                 </g>
               );
             })}
-            <circle cx={C} cy={C} r={16} fill="#fffdf8" stroke="var(--ink)" strokeWidth={3} />
+            <circle cx={C} cy={C} r={16} fill="var(--paper)" stroke="var(--ink)" strokeWidth={3} />
           </g>
           <path d={`M ${C - 13} 4 L ${C + 13} 4 L ${C} 30 Z`} fill="var(--ink)" />
         </svg>

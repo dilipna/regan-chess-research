@@ -43,7 +43,7 @@ export function TrainingLab({ params }: { params: number }) {
         <div className="mt-5 flex flex-wrap items-center gap-2 rounded-xl bg-paper-2/50 p-4 text-[15px]">
           <span>Predict: after one update p({CANDS[target]}) will…</span>
           {["go up", "stay the same", "go down"].map((x) => <button key={x} type="button" aria-pressed={guess === x} onClick={() => setGuess(x)} className={cn("rounded-lg border-2 px-3 py-1", guess === x ? "border-ink bg-ink text-paper" : "border-rule-strong")}>{x}</button>)}
-          <button type="button" disabled={!guess} onClick={() => { setLast({ before: r.p[target], after: r.pNext[target] }); setHist([...hist, r.loss]); setW(r.next); }} className="rounded-lg bg-[var(--role-resid)] px-4 py-1.5 font-medium text-white disabled:opacity-40">Apply one update</button>
+          <button type="button" disabled={!guess} onClick={() => { setLast({ before: r.p[target], after: r.pNext[target] }); setHist([...hist, r.loss]); setW(r.next); }} className="rounded-lg bg-[var(--role-resid)] px-4 py-1.5 font-medium text-[var(--on-role)] disabled:opacity-40">Apply one update</button>
           <button type="button" onClick={reset} className="rounded-lg border-2 border-rule-strong px-3 py-1">↺ Reset weights</button>
         </div>
         {last && <p className="ll-pop mt-3 text-[15.5px]" aria-live="polite">p({CANDS[target]}) {last.before < last.after ? "rose" : "changed"} from {(last.before * 100).toFixed(1)}% to <strong>{(last.after * 100).toFixed(1)}%</strong>. {guess === "go up" ? "You predicted that." : "One gradient step on this example always raises the target's share here, because it raises the target's score and lowers the others."}</p>}

@@ -197,7 +197,7 @@ describe("Version 1 preservation and copy rules", () => {
   });
   it("the LatentLens theme is scoped to LatentLens pages and leaves Version 1 unchanged", () => {
     const css = readFileSync(path.join(WEB, "src", "app", "latent", "latent.css"), "utf-8");
-    expect(readFileSync(path.join(WEB, "src", "app", "latent", "layout.tsx"), "utf-8")).toContain('data-latent-theme="museum"');
+    expect(readFileSync(path.join(WEB, "src", "app", "latent", "layout.tsx"), "utf-8")).toContain('data-latent-theme="deep"');
     for (const rule of css.match(/^[^\s@/*}][^{]*\{/gm) ?? []) expect(rule).toMatch(/data-latent-theme|^\s*(0%|50%|100%)/);
     expect(readFileSync(path.join(WEB, "src", "app", "globals.css"), "utf-8")).not.toContain("data-latent-theme");
   });

@@ -58,7 +58,7 @@ export function KvLab({ arch }: { arch: Architecture }) {
                     const recomputed = !cached && step > 0 && !isNew;
                     return (
                       <td key={i} className={cn("ll-anim h-10 rounded-md border-2 text-center",
-                        isNew ? "border-[var(--role-attn)] bg-[var(--role-attn-soft)] font-semibold" : recomputed ? "border-[#b5452f] bg-[#fbe9e4]" : "border-[var(--role-resid)] bg-[var(--role-resid-soft)]")}>
+                        isNew ? "border-[var(--role-attn)] bg-[var(--role-attn-soft)] font-semibold" : recomputed ? "border-[var(--bad)] bg-[var(--bad-soft)]" : "border-[var(--role-resid)] bg-[var(--role-resid-soft)]")}>
                         {isNew ? "new" : recomputed ? "recomputed" : "cached"}
                       </td>
                     );

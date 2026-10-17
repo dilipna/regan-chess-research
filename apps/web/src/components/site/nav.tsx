@@ -26,6 +26,8 @@ export function Nav() {
     return () => { cancelAnimationFrame(raf); window.removeEventListener("hashchange", read); };
   }, []);
   const home = path === "/";
+  // LatentLens pages carry their own header
+  if (path.startsWith("/latent")) return null;
   return (
     <header className="sticky top-0 z-40 border-b border-rule bg-paper/95 backdrop-blur supports-[backdrop-filter]:bg-paper/85">
       <div className="mx-auto flex h-14 max-w-[1180px] items-center gap-3 px-4 sm:gap-6 sm:px-6">
