@@ -21,7 +21,7 @@ const SUBNAV = [
   { href: "/latent/play", label: "You vs Qwen" },
   { href: "/latent/research", label: "Research" },
   { href: "/latent/recall", label: "Recall" },
-  { href: "/latent/demo", label: "Professor Demo" },
+  { href: "/latent/demo", label: "5-step demo" },
   { href: "/latent/methods", label: "Methods" },
   { href: "/latent/learn", label: "Reference notes" },
 ];
