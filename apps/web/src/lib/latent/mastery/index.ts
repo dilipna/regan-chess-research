@@ -2,10 +2,27 @@
 
 import { SECURITY } from "../security/topics";
 import { CORE } from "./topics-core";
+import { EXTRA } from "./topics-extra";
 import { SYSTEMS } from "./topics-systems";
 import type { Topic } from "./types";
 
-export const TOPICS: Topic[] = [...CORE, ...SYSTEMS, ...SECURITY];
+/** Each added topic sits right after the topic it builds on, so the course order and prev/next stay natural. */
+const AFTER: Record<string, string> = {
+  "scaling-laws": "training-step", evaluation: "scaling-laws", "fine-tuning": "post-training", "reasoning-models": "fine-tuning",
+  hallucination: "rag", superposition: "logit-lens", "web-security": "security-foundations",
+};
+function withExtras(base: Topic[]): Topic[] {
+  const out = [...base];
+  let pending = [...EXTRA];
+  while (pending.length) {
+    const ready = pending.filter((t) => out.some((x) => x.slug === AFTER[t.slug]));
+    if (!ready.length) throw new Error(`No anchor for ${pending.map((t) => t.slug).join(", ")}`);
+    for (const t of ready) out.splice(out.findIndex((x) => x.slug === AFTER[t.slug]) + 1, 0, t);
+    pending = pending.filter((t) => !ready.includes(t));
+  }
+  return out;
+}
+export const TOPICS: Topic[] = withExtras([...CORE, ...SYSTEMS, ...SECURITY]);
 export const topicBySlug = (s: string) => TOPICS.find((t) => t.slug === s);
 export const topicHref = (t: Topic) => (t.track === "security" ? `/latent/security/learn/${t.slug}` : `/latent/mastery/${t.slug}`);
 export const hrefFor = (slug: string) => { const t = topicBySlug(slug); return t ? topicHref(t) : "/latent/mastery"; };

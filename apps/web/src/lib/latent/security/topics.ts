@@ -43,7 +43,7 @@ export const SECURITY: Topic[] = [
         { t: "Between the tokenizer and the embedding", why: "That is an internal data step, not a change in trust." },
       ] },
     ],
-    links: [{ href: "/latent/security/lab/threat-model", label: "Lab: threat-model builder" }],
+    links: [{ href: "/latent/security/labs/trust-boundaries", label: "Lab 1: trust boundaries" }],
     sources: [NIST_AML],
   },
   {
@@ -78,7 +78,7 @@ export const SECURITY: Topic[] = [
         { t: "By asking the model if it is sure", why: "The model's self-assessment is not a control." },
       ] },
     ],
-    links: [{ href: "/latent/security/lab/threat-model", label: "Lab: threat-model builder" }, { href: "/latent/security/lab/attack-tree", label: "Lab: attack tree" }],
+    links: [{ href: "/latent/security/labs/trust-boundaries", label: "Lab 1: trust boundaries" }],
     sources: [OWASP_LLM, OWASP_AGENTIC],
   },
   {
@@ -149,7 +149,7 @@ export const SECURITY: Topic[] = [
         { t: "Asking the model to self-check", why: "A fooled model can also be fooled in its self-check." },
       ] },
     ],
-    links: [{ href: "/latent/security/lab/prompt-injection", label: "Lab: safe prompt-injection sandbox" }],
+    links: [{ href: "/latent/security/labs/prompt-injection", label: "Lab 3: prompt injection" }],
     sources: [OWASP_LLM, NIST_AML, { label: "Greshake et al., indirect prompt injection (arXiv 2302.12173)", url: "https://arxiv.org/abs/2302.12173" }, { label: "Instruction hierarchy (arXiv 2404.13208)", url: "https://arxiv.org/abs/2404.13208" }, { label: "Spotlighting (arXiv 2403.14720)", url: "https://arxiv.org/abs/2403.14720" }, { label: "CaMeL: Defeating prompt injections by design (arXiv 2503.18813)", url: "https://arxiv.org/abs/2503.18813" }],
   },
   {
@@ -185,7 +185,7 @@ export const SECURITY: Topic[] = [
         { t: "Injection only happens in images", why: "Injection can arrive through any channel." },
       ] },
     ],
-    links: [{ href: "/latent/security/lab/evals", label: "Lab: security eval harness" }],
+    links: [{ href: "/latent/security/labs/evals", label: "Lab 10: the red-team eval suite" }],
     sources: [NIST_AML, { label: "Zou et al., universal adversarial suffixes (arXiv 2307.15043)", url: "https://arxiv.org/abs/2307.15043" }],
   },
   {
@@ -257,7 +257,7 @@ export const SECURITY: Topic[] = [
         { t: "Poisoned pretraining data", why: "Its effect is in the weights." },
       ] },
     ],
-    links: [{ href: "/latent/security/lab/rag", label: "Lab: RAG poisoning" }, { href: "/latent/security/lab/memory", label: "Lab: memory poisoning" }],
+    links: [{ href: "/latent/security/labs/rag", label: "Lab 7: RAG poisoning" }, { href: "/latent/security/labs/memory-poisoning", label: "Lab 6: memory poisoning" }],
     sources: [NIST_AML, { label: "BadNets (arXiv 1708.06733)", url: "https://arxiv.org/abs/1708.06733" }, { label: "Poisoning web-scale datasets is practical (arXiv 2302.10149)", url: "https://arxiv.org/abs/2302.10149" }, { label: "Sleeper Agents (arXiv 2401.05566)", url: "https://arxiv.org/abs/2401.05566" }],
   },
   {
@@ -327,7 +327,7 @@ export const SECURITY: Topic[] = [
         { t: "They are not sensitive", why: "Embedding inversion is an active research finding." },
       ] },
     ],
-    links: [{ href: "/latent/security/lab/rag", label: "Lab: local RAG security sandbox" }],
+    links: [{ href: "/latent/security/labs/rag", label: "Lab 7: poisoned and leaky retrieval" }],
     sources: [OWASP_LLM, { label: "Morris et al., text embeddings reveal almost as much as text (arXiv 2310.06816)", url: "https://arxiv.org/abs/2310.06816" }],
   },
   {
@@ -361,7 +361,7 @@ export const SECURITY: Topic[] = [
         { t: "Check it contains no bad words", why: "Keyword filters are bypassable and not structural." },
       ] },
     ],
-    links: [{ href: "/latent/security/lab/output", label: "Lab: improper output handling" }],
+    links: [{ href: "/latent/security/labs/output-handling", label: "Lab 8: improper output handling" }],
     sources: [OWASP_LLM],
   },
   {
@@ -395,7 +395,7 @@ export const SECURITY: Topic[] = [
         { t: "Long prompts change the weights", why: "Weights do not change at inference." },
       ] },
     ],
-    links: [{ href: "/latent/security/lab/consumption", label: "Lab: denial of wallet" }],
+    links: [{ href: "/latent/security/labs/consumption", label: "Lab 9: denial of wallet" }],
     sources: [OWASP_LLM],
   },
   {
@@ -464,7 +464,7 @@ export const SECURITY: Topic[] = [
         { t: "Use a larger model", why: "Capability does not reduce reachable actions." },
       ] },
     ],
-    links: [{ href: "/latent/security/lab/tools", label: "Lab: tool permissions" }, { href: "/latent/security/frameworks", label: "Frameworks" }],
+    links: [{ href: "/latent/security/labs/excessive-agency", label: "Lab 5: tool permissions and blast radius" }, { href: "/latent/security/frameworks", label: "Frameworks" }],
     sources: [OWASP_AGENTIC, { label: "OWASP Agent Control Standard", url: "https://genai.owasp.org/agent-control-standard/" }],
   },
   {
@@ -498,7 +498,7 @@ export const SECURITY: Topic[] = [
         { t: "The model requires it", why: "It is an application control." },
       ] },
     ],
-    links: [{ href: "/latent/security/lab/memory", label: "Lab: memory poisoning" }],
+    links: [{ href: "/latent/security/labs/memory-poisoning", label: "Lab 6: memory poisoning" }],
     sources: [OWASP_AGENTIC],
   },
   {
@@ -568,7 +568,7 @@ export const SECURITY: Topic[] = [
         { t: "Single transcripts are not allowed", why: "Transcripts are useful evidence, but not enough alone." },
       ] },
     ],
-    links: [{ href: "/latent/security/redteam", label: "Red-team process and report writer" }, { href: "/latent/security/lab/evals", label: "Security eval harness" }],
+    links: [{ href: "/latent/security/redteam", label: "Red-team process and report writer" }, { href: "/latent/security/labs/evals", label: "Lab 10: the red-team eval suite" }],
     sources: [ATLAS, { label: "NIST AI 600-1 Generative AI Profile (July 2024)", url: "https://doi.org/10.6028/NIST.AI.600-1" }],
   },
   {
@@ -603,7 +603,7 @@ export const SECURITY: Topic[] = [
         { t: "Yes, if you use delimiters", why: "Delimiters reduce some attacks; they are not a boundary." },
       ] },
     ],
-    links: [{ href: "/latent/security/lab/tools", label: "Lab: reduce the blast radius" }, { href: "/latent/security/lab/evals", label: "Lab: measure it" }],
+    links: [{ href: "/latent/security/labs/excessive-agency", label: "Lab 5: reduce the blast radius" }, { href: "/latent/security/labs/evals", label: "Lab 10: measure it" }],
     sources: [OWASP_LLM, OWASP_AGENTIC, { label: "CaMeL (arXiv 2503.18813)", url: "https://arxiv.org/abs/2503.18813" }],
   },
 ];

@@ -1,0 +1,181 @@
+// "Go deeper" for every topic: primary reading (each arXiv id and page checked on 2026-10-17) and practice inside
+// LatentLens (Foundations, Atlas, Build, labs) or on public practice ranges. Merged with each topic's own
+// `sources` and `links`, de-duplicated by URL.
+
+import type { Topic } from "./types";
+
+export interface Read { label: string; url: string }
+export interface Practice { label: string; href: string }
+
+const ax = (id: string, title: string): Read => ({ label: `${title} (arXiv ${id})`, url: `https://arxiv.org/abs/${id}` });
+
+const R = {
+  attention: ax("1706.03762", "Attention Is All You Need"),
+  gpt3: ax("2005.14165", "Language Models are Few-Shot Learners"),
+  zeroToHero: { label: "Andrej Karpathy: Neural Networks, Zero to Hero (videos)", url: "https://karpathy.ai/zero-to-hero.html" },
+  threeBlue: { label: "3Blue1Brown: neural networks and transformers (videos)", url: "https://www.3blue1brown.com/topics/neural-networks" },
+  illustrated: { label: "Jay Alammar: The Illustrated Transformer", url: "https://jalammar.github.io/illustrated-transformer/" },
+  bpe: ax("1508.07909", "Neural Machine Translation of Rare Words with Subword Units (BPE)"),
+  qwen3: { label: "Qwen3 Technical Report (arXiv 2505.09388)", url: "https://arxiv.org/abs/2505.09388" },
+  resnet: ax("1512.03385", "Deep Residual Learning for Image Recognition"),
+  framework: { label: "A Mathematical Framework for Transformer Circuits (2021)", url: "https://transformer-circuits.pub/2021/framework/index.html" },
+  rmsnorm: ax("1910.07467", "Root Mean Square Layer Normalization"),
+  preln: ax("2002.04745", "On Layer Normalization in the Transformer Architecture"),
+  gqa: ax("2305.13245", "GQA: Grouped-Query Attention"),
+  mqa: ax("1911.02150", "Fast Transformer Decoding: One Write-Head is All You Need (MQA)"),
+  rope: ax("2104.09864", "RoFormer: Rotary Position Embedding"),
+  flash: ax("2205.14135", "FlashAttention"),
+  glu: ax("2002.05202", "GLU Variants Improve Transformer (SwiGLU)"),
+  stealing: ax("2403.06634", "Stealing Part of a Production Language Model"),
+  nucleus: ax("1904.09751", "The Curious Case of Neural Text Degeneration (top-p sampling)"),
+  extracting: ax("2012.07805", "Extracting Training Data from Large Language Models"),
+  dedup: ax("2107.06499", "Deduplicating Training Data Makes Language Models Better"),
+  adam: ax("1412.6980", "Adam: A Method for Stochastic Optimization"),
+  adamw: ax("1711.05101", "Decoupled Weight Decay Regularization (AdamW)"),
+  micrograd: { label: "micrograd: a tiny autograd engine (code)", url: "https://github.com/karpathy/micrograd" },
+  megatron: ax("1909.08053", "Megatron-LM: model parallelism"),
+  zero: ax("1910.02054", "ZeRO: memory optimizations for training"),
+  switch: ax("2101.03961", "Switch Transformers (mixture of experts)"),
+  mixtral: ax("2401.04088", "Mixtral of Experts"),
+  paged: ax("2309.06180", "PagedAttention / vLLM"),
+  specdec: ax("2211.17192", "Fast Inference via Speculative Decoding"),
+  rag: ax("2005.11401", "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks"),
+  react: ax("2210.03629", "ReAct: Synergizing Reasoning and Acting"),
+  toolformer: ax("2302.04761", "Toolformer"),
+  genAgents: ax("2304.03442", "Generative Agents"),
+  memgpt: ax("2310.08560", "MemGPT: Towards LLMs as Operating Systems"),
+  probing: ax("2102.12452", "Probing Classifiers: Promises, Shortcomings, and Advances"),
+  tunedLens: ax("2303.08112", "Eliciting Latent Predictions with the Tuned Lens"),
+  owaspWeb: { label: "OWASP Top 10 (web)", url: "https://owasp.org/Top10/" },
+  saif: { label: "Google Secure AI Framework (SAIF)", url: "https://saif.google/" },
+  spotlight: ax("2403.14720", "Defending Against Indirect Prompt Injection with Spotlighting"),
+  camel: ax("2503.18813", "Defeating Prompt Injections by Design (CaMeL)"),
+  agentdojo: ax("2406.13352", "AgentDojo: prompt injection benchmark for agents"),
+  greshake: ax("2302.12173", "Not what you've signed up for: indirect prompt injection"),
+  gcg: ax("2307.15043", "Universal and Transferable Adversarial Attacks on Aligned LMs (GCG)"),
+  perez: ax("2202.03286", "Red Teaming Language Models with Language Models"),
+  ganguli: ax("2209.07858", "Red Teaming Language Models to Reduce Harms"),
+  poisonWeb: ax("2302.10149", "Poisoning Web-Scale Training Datasets is Practical"),
+  sleeper: ax("2401.05566", "Sleeper Agents"),
+  tramer: ax("1609.02943", "Stealing Machine Learning Models via Prediction APIs"),
+  poisonedRag: ax("2402.07867", "PoisonedRAG"),
+  xssSheet: { label: "OWASP XSS Prevention Cheat Sheet", url: "https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html" },
+  owaspLlm: { label: "OWASP Top 10 for LLM Applications", url: "https://genai.owasp.org/llm-top-10/" },
+  garak: ax("2406.11036", "garak: security probing for LLMs"),
+  pyrit: ax("2410.02828", "PyRIT: red-teaming framework for generative AI"),
+  hierarchy: ax("2404.13208", "The Instruction Hierarchy"),
+  simon: { label: "Simon Willison's prompt-injection series", url: "https://simonwillison.net/tags/prompt-injection/" },
+};
+
+export const READ: Record<string, Read[]> = {
+  autoregressive: [R.attention, R.gpt3, R.zeroToHero],
+  tokenization: [R.bpe, R.qwen3],
+  embeddings: [R.attention, R.threeBlue],
+  "residual-stream": [R.framework, R.resnet],
+  rmsnorm: [R.rmsnorm, R.preln],
+  projections: [R.illustrated, R.attention],
+  qkv: [R.attention, R.illustrated],
+  gqa: [R.gqa, R.mqa],
+  rope: [R.rope],
+  "causal-attention": [R.attention, R.flash],
+  swiglu: [R.glu],
+  "residual-connections": [R.resnet, R.preln],
+  "lm-head": [R.framework, R.stealing],
+  decoding: [R.nucleus],
+  "pretraining-data": [R.dedup, R.extracting],
+  "training-step": [R.adam, R.adamw, R.micrograd],
+  "distributed-training": [R.megatron, R.zero],
+  architectures: [R.switch, R.mixtral],
+  "prefill-decode": [R.paged, R.specdec],
+  rag: [R.rag],
+  agents: [R.react, R.toolformer],
+  "memory-multiagent": [R.memgpt, R.genAgents],
+  probes: [R.probing, R.tunedLens],
+  "logit-lens": [R.tunedLens],
+  "security-foundations": [R.owaspWeb],
+  "security-layers": [R.saif],
+  "prompt-injection": [R.greshake, R.spotlight, R.camel, R.simon],
+  jailbreaks: [R.gcg, R.perez],
+  poisoning: [R.poisonWeb, R.sleeper],
+  "model-extraction": [R.tramer, R.stealing],
+  "rag-security": [R.poisonedRag],
+  "output-handling": [R.xssSheet],
+  "unbounded-consumption": [R.owaspLlm],
+  "agent-security": [R.agentdojo, R.camel],
+  "memory-security": [R.greshake],
+  "red-teaming": [R.perez, R.ganguli, R.garak, R.pyrit],
+  defenses: [R.hierarchy, R.camel, R.spotlight],
+};
+
+const A = (part: string, label: string): Practice => ({ label: `Atlas: ${label}`, href: `/latent?part=${part}#atlas` });
+const F = (slug: string, label: string): Practice => ({ label: `Foundations: ${label}`, href: `/latent/foundations/${slug}` });
+const B = (label: string): Practice => ({ label: `Build it: ${label}`, href: "/latent/build" });
+const L = (slug: string, label: string): Practice => ({ label, href: `/latent/security/labs/${slug}` });
+const GANDALF: Practice = { label: "Practice range: Lakera Gandalf (prompt injection levels)", href: "https://gandalf.lakera.ai/" };
+const PORTSWIGGER_LLM: Practice = { label: "Practice range: PortSwigger Web Security Academy, LLM attacks", href: "https://portswigger.net/web-security/llm-attacks" };
+const CRUCIBLE: Practice = { label: "Practice range: Dreadnode Crucible (AI red-team challenges)", href: "https://crucible.dreadnode.io/" };
+
+export const PRACTICE: Record<string, Practice[]> = {
+  autoregressive: [F("next-token", "next-token prediction"), A("model.softmax", "softmax and sampling"), B("step 2, a counting language model")],
+  tokenization: [A("model.tokenizer", "tokenizer"), B("step 3, a BPE tokenizer")],
+  embeddings: [A("model.embedding", "embedding lookup"), F("vectors", "vectors and the dot product")],
+  "residual-stream": [A("model.blocks", "the residual stream"), A("block.add1", "the residual addition")],
+  rmsnorm: [A("block.norm1", "RMSNorm"), B("step 5, RMSNorm")],
+  projections: [F("matrices", "matrices are functions"), A("attention.q", "Q, K and V projections")],
+  qkv: [A("attention.q", "Q, K and V"), F("vectors", "the dot product")],
+  gqa: [A("attention.k", "shared K/V heads"), B("step 4, repeat_kv")],
+  rope: [A("attention.rope", "RoPE"), B("step 5, RoPE")],
+  "causal-attention": [A("attention.mask", "the causal mask"), F("why-attention", "why attention"), B("step 4, attention by hand")],
+  swiglu: [A("mlp.gate", "the SwiGLU MLP"), F("neural-nets", "neural networks")],
+  "residual-connections": [A("block.add2", "residual addition"), F("backprop", "backpropagation")],
+  "lm-head": [A("model.lm_head", "LM head"), F("softmax", "softmax")],
+  decoding: [A("model.softmax", "softmax and sampling"), F("softmax", "temperature"), B("step 7, sampling and the KV cache")],
+  "pretraining-data": [B("step 6, train on a corpus"), F("loss", "loss")],
+  "training-step": [F("gradients", "gradient descent"), F("backprop", "backpropagation"), B("step 1, autograd")],
+  "distributed-training": [F("gradients", "gradient descent")],
+  "post-training": [B("step 8, LoRA")],
+  architectures: [A("model.blocks", "one block, 36 times")],
+  "prefill-decode": [B("step 7, a KV cache"), A("attention.k", "keys and values")],
+  serving: [{ label: "Lab: KV cache", href: "/latent/labs/kv-cache" }],
+  efficiency: [{ label: "Lab: KV cache", href: "/latent/labs/kv-cache" }],
+  rag: [L("rag", "Security lab 7: retrieval")],
+  agents: [L("excessive-agency", "Security lab 5: excessive agency")],
+  "memory-multiagent": [L("memory-poisoning", "Security lab 6: memory poisoning")],
+  mcp: [L("trust-boundaries", "Security lab 1: trust boundaries")],
+  probes: [{ label: "LatentLens research", href: "/latent/research" }],
+  "logit-lens": [{ label: "Recall Microscope", href: "/latent/recall" }],
+  "scaling-laws": [B("step 6, train a tiny GPT")],
+  "reasoning-models": [L("consumption", "Security lab 9: cost of long outputs")],
+  "fine-tuning": [B("step 8, LoRA")],
+  evaluation: [L("evals", "Security lab 10: the eval suite")],
+  hallucination: [{ label: "Recall Microscope", href: "/latent/recall" }],
+  superposition: [{ label: "LatentLens research", href: "/latent/research" }],
+  "web-security": [L("web-basics", "Security lab 2: web bugs"), PORTSWIGGER_LLM],
+  "security-foundations": [L("trust-boundaries", "Security lab 1: trust boundaries"), L("web-basics", "Security lab 2: web bugs")],
+  "threat-modeling": [L("trust-boundaries", "Security lab 1: trust boundaries")],
+  "security-layers": [L("trust-boundaries", "Security lab 1: trust boundaries")],
+  "prompt-injection": [L("prompt-injection", "Security lab 3: prompt injection"), GANDALF, PORTSWIGGER_LLM],
+  jailbreaks: [L("evals", "Security lab 10: the eval suite"), GANDALF],
+  "privacy-attacks": [L("secrets", "Security lab 4: secrets")],
+  poisoning: [L("rag", "Security lab 7: RAG poisoning"), L("memory-poisoning", "Security lab 6: memory poisoning")],
+  "model-extraction": [A("model.lm_head", "what the LM head's logits reveal")],
+  "rag-security": [L("rag", "Security lab 7: retrieval")],
+  "output-handling": [L("output-handling", "Security lab 8: output handling"), L("web-basics", "Security lab 2: web bugs")],
+  "unbounded-consumption": [L("consumption", "Security lab 9: unbounded consumption")],
+  "supply-chain": [L("trust-boundaries", "Security lab 1: trust boundaries")],
+  "agent-security": [L("excessive-agency", "Security lab 5: excessive agency")],
+  "memory-security": [L("memory-poisoning", "Security lab 6: memory poisoning")],
+  "mcp-security": [L("trust-boundaries", "Security lab 1: trust boundaries")],
+  "red-teaming": [{ label: "Red-team process and report", href: "/latent/security/redteam" }, L("evals", "Security lab 10: the eval suite"), CRUCIBLE],
+  defenses: [L("evals", "Security lab 10: compare defense presets"), L("prompt-injection", "Security lab 3: likelihood vs impact controls")],
+};
+
+const uniq = <T,>(xs: T[], key: (x: T) => string) => xs.filter((x, i) => xs.findIndex((y) => key(y) === key(x)) === i);
+
+/** Everything to read and practise after a topic. */
+export function deeper(t: Topic): { read: Read[]; practice: Practice[] } {
+  return {
+    read: uniq([...(t.sources ?? []), ...(READ[t.slug] ?? [])], (r) => r.url),
+    practice: uniq([...(PRACTICE[t.slug] ?? []), ...t.links], (p) => p.href.split("#")[0]),
+  };
+}

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { connectionsOf } from "@/lib/latent/mastery/connections";
+import { deeper, type Practice, type Read } from "@/lib/latent/mastery/deeper";
 import { LEVELS, topicBySlug, topicHref } from "@/lib/latent/mastery";
 import { ConceptCard, FactBadge, MasteryBadge, QuizCard, RevealOutline, TeachBackPrompt } from "../learn/primitives";
 import { saveAnswer, saveTeachBack, useConceptStatus, useLearn } from "../learn/progress-hook";
@@ -19,6 +20,7 @@ export function MasteryTopic({ slug, defaultOpen = false }: { slug: string; defa
   const level = LEVELS.find((l) => l.n === t.level)!;
   const home = t.track === "security" ? "/latent/security" : "/latent/mastery";
   const isSec = t.track === "security";
+  const more = deeper(t);
 
   return (
     <article className="grid gap-5" aria-labelledby="topic-title">
@@ -67,16 +69,7 @@ export function MasteryTopic({ slug, defaultOpen = false }: { slug: string; defa
           </ConceptCard>
           <ConceptCard k="M" title={`Interview question · level ${t.interview.level}`}><RevealOutline q={t.interview.q} outline={t.interview.outline} /></ConceptCard>
           {t.quiz.slice(1).map((q) => <QuizCard key={q.id} q={q} label="Check yourself" onAnswer={(ok) => saveAnswer(slug, ok)} />)}
-          {(t.links.length > 0 || t.story || t.sources) && (
-            <section className="grid gap-1.5 text-[14px] text-ink-2">
-              <h2 className="text-[12px] font-semibold tracking-wide text-ink-3 uppercase">Explore and verify</h2>
-              <ul className="flex flex-wrap gap-x-5 gap-y-1">
-                {t.links.map((l) => <li key={l.href}><Link href={l.href} className="text-[var(--role-resid-ink)] underline underline-offset-2">{l.label}</Link></li>)}
-                {t.story && <li><Link href={`/latent/story/${t.story}`} className="text-[var(--role-resid-ink)] underline underline-offset-2">Storybook intuition</Link></li>}
-              </ul>
-              {t.sources && <p className="text-[13px]">Sources: {t.sources.map((s, i) => <span key={s.url}>{i > 0 && " · "}<a href={s.url} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2">{s.label}</a></span>)}</p>}
-            </section>
-          )}
+          <GoDeeper read={more.read} practice={more.practice} story={t.story} />
         </>
       )}
 
@@ -85,5 +78,35 @@ export function MasteryTopic({ slug, defaultOpen = false }: { slug: string; defa
         {c.next && <Link href={topicHref(c.next)} className="rounded-lg bg-ink px-4 py-2 text-[14.5px] font-medium text-paper">{c.next.title} →</Link>}
       </nav>
     </article>
+  );
+}
+
+function GoDeeper({ read, practice, story }: { read: Read[]; practice: Practice[]; story?: string }) {
+  const ext = (h: string) => h.startsWith("http");
+  return (
+    <section aria-labelledby="go-deeper" className="grid gap-4 rounded-3xl border border-rule bg-paper p-5 sm:p-6">
+      <h2 id="go-deeper" className="font-serif text-[22px] font-semibold text-ink">Go deeper</h2>
+      <div className="grid gap-6 lg:grid-cols-2">
+        <div>
+          <h3 className="text-[11px] font-medium tracking-[0.14em] text-[var(--role-resid-ink)] uppercase">Practise it</h3>
+          <ul className="mt-2 grid gap-1.5">
+            {practice.map((p) => (
+              <li key={p.href + p.label}>
+                {ext(p.href)
+                  ? <a href={p.href} target="_blank" rel="noopener noreferrer" className="text-[14px] text-ink-2 underline decoration-rule-strong underline-offset-4 hover:text-ink">{p.label} ↗</a>
+                  : <Link href={p.href} className="text-[14px] text-ink-2 underline decoration-rule-strong underline-offset-4 hover:text-ink">{p.label}</Link>}
+              </li>
+            ))}
+            {story && <li><Link href={`/latent/story/${story}`} className="text-[14px] text-ink-2 underline decoration-rule-strong underline-offset-4 hover:text-ink">Storybook: the intuition</Link></li>}
+          </ul>
+        </div>
+        <div>
+          <h3 className="text-[11px] font-medium tracking-[0.14em] text-[var(--role-attn-ink)] uppercase">Read the source</h3>
+          <ul className="mt-2 grid gap-1.5">
+            {read.map((r) => <li key={r.url}><a href={r.url} target="_blank" rel="noopener noreferrer" className="text-[14px] text-ink-2 underline decoration-rule-strong underline-offset-4 hover:text-ink">{r.label} ↗</a></li>)}
+          </ul>
+        </div>
+      </div>
+    </section>
   );
 }
