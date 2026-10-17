@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { CHAPTERS, PARTS, type Chapter } from "@/lib/latent/story";
+import { STORY_TO_MASTERY, hrefFor, topicBySlug } from "@/lib/latent/mastery";
 import { Prov, type ProvKind } from "../kit";
 import { Burst, Narrated, Pip, ReadAloud, Say, earnSticker, resetStickers, useStickers, useStopOnLeave, type Mood } from "./core";
 
@@ -68,6 +69,13 @@ export function ChapterShell({ ch, prov, provDetail, children }: {
           <span className="text-[16px] text-ink">{have ? <><strong>Sticker earned!</strong><br />{ch.sticker.name}</> : <>Finish &quot;Your turn&quot; to earn the <strong>{ch.sticker.name}</strong> sticker.</>}</span>
         </div>
       </section>
+
+      {(STORY_TO_MASTERY[ch.slug] ?? []).length > 0 && (
+        <aside aria-label="Go deeper" className="flex flex-wrap items-center gap-x-4 gap-y-2 rounded-[20px] border-2 border-ink bg-paper px-4 py-3">
+          <span className="text-[16px] font-bold text-ink">Ready for the real mechanism?</span>
+          {STORY_TO_MASTERY[ch.slug].map((s) => <Link key={s} href={hrefFor(s)} className="text-[16px] text-[var(--role-resid-ink)] underline underline-offset-2">See the real mechanism: {topicBySlug(s)?.title} →</Link>)}
+        </aside>
+      )}
 
       <details className="story-grown rounded-[20px] border border-rule bg-paper-2/60 p-4 sm:p-5">
         <summary className="cursor-pointer text-[16px] font-semibold text-ink"><span aria-hidden>🧑‍🏫 </span>Grown-up corner: the precise version</summary>
