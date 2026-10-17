@@ -1,13 +1,16 @@
 // For each confusion pair: one concrete example and one trap question (with its answer).
 // Keyed "A|B" exactly as in confusions.ts; tests check every pair has an entry.
 
-import type { Pair } from "./confusions";
+import { PAIRS, type Pair } from "./confusions";
 
 export const MORE_PAIRS: Pair[] = [
   { a: "Token", b: "Token ID", key: "A token is a piece of text chosen by the tokenizer; its token ID is the integer that names that piece in the vocabulary.", topic: "tokenization", rows: [["Example", "\" notebook\" (with its leading space)", "37166"], ["Used by", "humans reading the split", "the embedding lookup"]] },
   { a: "KV cache", b: "Model memory (weights)", key: "The KV cache holds keys and values for the current request only; what the model knows lives in its fixed weights.", topic: "prefill-decode", rows: [["Lifetime", "one request", "until retrained"], ["Size driver", "tokens × layers × KV heads", "parameter count"]] },
   { a: "Agent memory", b: "Context window", key: "The context window is what the model reads in this call; agent memory is stored outside and selectively copied into that window.", topic: "memory-multiagent", rows: [["Bounded by", "max positions (32,768 for Qwen3-8B)", "storage and retrieval policy"], ["Persists across sessions", "no", "yes, if written"]] },
 ];
+
+/** Every pair in display order: token vs token ID first, the core list, then the remaining additions. */
+export const ALL_PAIRS_LIST = (): Pair[] => [...MORE_PAIRS.slice(0, 1), ...PAIRS, ...MORE_PAIRS.slice(1)];
 
 export const EXTRAS: Record<string, { example: string; trap: { q: string; a: string } }> = {
   "Token|Embedding": { example: "Token id 37166 (\" notebook\") selects row 37166 of a [151936, 4096] table.", trap: { q: "Do two tokens with ids 37166 and 37167 have similar embeddings?", a: "Not necessarily; id order carries no meaning, only learned rows do." } },
