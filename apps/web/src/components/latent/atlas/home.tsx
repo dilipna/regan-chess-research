@@ -103,9 +103,9 @@ export function RememberIt({ arch }: { arch: Architecture }) {
 }
 
 const DOORS = [
-  { href: "/latent/story", role: "norm" as const, kicker: "Gentle", title: "Storybook", line: "The same ideas told as a picture book, with no maths. Good for a first pass or for explaining it to someone else." },
-  { href: "/latent/labs", role: "attn" as const, kicker: "Hands-on", title: "Labs", line: "Turn the knobs yourself: attention weights, RoPE, RMSNorm, sampling temperature and the KV cache." },
-  { href: "/latent/research", role: "mlp" as const, kicker: "Evidence", title: "Research", line: "What we measured inside Qwen3-8B: layer probes, component ablations and the Recall Microscope." },
+  { href: "/latent/foundations", role: "norm" as const, kicker: "Level 0 · start here", title: "Foundations", line: "New to the maths? Vectors, matrices, softmax, loss, gradients and backprop, each as something you can play with." },
+  { href: "/latent/build", role: "mlp" as const, kicker: "Level 2 · code", title: "Build it", line: "Write autograd, a tokenizer, attention and a tiny Qwen-style GPT yourself. Automatic checks tell you when it is right." },
+  { href: "/latent/mastery", role: "attn" as const, kicker: "Level 3 → 4", title: "Mastery and security", line: "Training, inference, RAG, agents and MCP, then the AI-security path from threat models to red teaming." },
 ];
 
 export function Doors() {
@@ -126,7 +126,7 @@ export function Doors() {
         ))}
       </div>
       <p className="mt-6 text-[13px] text-ink-4">
-        Everything else, including the mastery path, AI security and professor mode, is under <span className="text-ink-3">More</span> in the top bar.
+        Everything else, including the Storybook, labs, research and professor mode, is under <span className="text-ink-3">More</span> in the top bar.
       </p>
     </section>
   );

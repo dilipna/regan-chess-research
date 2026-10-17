@@ -20,3 +20,6 @@ data/latentlens/
 tools/cloudflared/
 *.safetensors
 *.npz
+
+# Build-it track: backups made by make_exercises.py --force
+learn/build/*.py.bak

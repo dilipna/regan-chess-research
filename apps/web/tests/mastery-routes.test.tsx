@@ -17,7 +17,7 @@ const mastery = TOPICS.filter((t) => t.track === "mastery");
 describe("/latent home", () => {
   it("opens on the Transformer Atlas, the four verbs and the doors", async () => {
     const h = text(await LatentHome());
-    for (const s of ["The transformer,", "in one picture.", "The whole model", "Follow a token", "Quiz me", "The whole model is four verbs.", "Ten-second recall", "Go deeper", "Storybook", "Labs", "Research"]) expect(h).toContain(s);
+    for (const s of ["The transformer,", "in one picture.", "The whole model", "Follow a token", "Quiz me", "The whole model is four verbs.", "Ten-second recall", "Go deeper", "Foundations", "Build it", "Mastery and security"]) expect(h).toContain(s);
   });
   it("keeps the project overview at /latent/project", async () => {
     const h = text(await LatentProject());
