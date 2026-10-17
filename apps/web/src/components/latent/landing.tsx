@@ -120,3 +120,29 @@ export function QwenBlockOrder({ arch }: { arch: Architecture }) {
     </section>
   );
 }
+
+export function OnlyHere({ versionsHeadline }: { versionsHeadline?: string }) {
+  const items = [
+    { href: "/latent/glassbox", kicker: "Glass Box", title: "Open one real Qwen block and re-check its math", body: "Every tensor recorded from Qwen3-8B. Your browser re-derives ten operations and shows that only Qwen's real formulas fit: try LayerNorm, ReLU or the wrong rotation." },
+    { href: "/latent/recall", kicker: "Mistake, or another version?", title: versionsHeadline ?? "Some of Qwen's recall mistakes are Lincoln's own words", body: "Lincoln wrote five copies of the Gettysburg Address. Several of Qwen's 'errors' match another copy word for word, which matters for any recall plateau." },
+    { href: "/latent/play", kicker: "You vs Qwen", title: "Guess the next word against an 8B model", body: "The recall experiment as a game: the true text so far, your guess, and Qwen's recorded answer for the same position." },
+  ];
+  const borders = ["border-[var(--role-norm)]", "border-[var(--role-attn)]", "border-[var(--role-resid)]"];
+  return (
+    <section className="mt-12">
+      <h2 className="font-serif text-[28px] font-semibold text-ink">Three things to try first</h2>
+      <ol className="mt-4 grid gap-4 md:grid-cols-3">
+        {items.map((x, i) => (
+          <li key={x.href}>
+            <Link href={x.href} className={`ll-panel flex h-full flex-col gap-2 rounded-2xl border-2 bg-paper p-5 hover:border-ink ${borders[i]}`}>
+              <span className="text-[12.5px] font-semibold tracking-wide text-ink-3 uppercase">{x.kicker}</span>
+              <span className="font-serif text-[22px] leading-snug font-semibold text-ink">{x.title}</span>
+              <span className="text-[14.5px] text-ink-2">{x.body}</span>
+              <span className="mt-auto pt-2 text-[14px] font-medium">Open →</span>
+            </Link>
+          </li>
+        ))}
+      </ol>
+    </section>
+  );
+}

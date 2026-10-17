@@ -110,6 +110,10 @@ export function SceneOutput({ st, data }: SceneProps) {
           })}
         />
         <AnalogyLimit analogy="A raffle: each token holds tickets in proportion to its share, and temperature changes how evenly tickets are handed out." limit="Temperature is applied when generating, after the model has computed its scores. It does not change the weights, add knowledge, or make an answer more or less factual." />
+        <Link href="/latent/play" className="rounded-xl border-2 border-[var(--role-resid)] bg-[var(--role-resid-soft)] p-4 text-[15px] text-ink hover:border-ink">
+          <span className="block text-[12px] font-semibold tracking-wide text-[var(--role-resid-ink)] uppercase">You vs Qwen</span>
+          Try predicting the next word yourself, against Qwen&apos;s recorded answers →
+        </Link>
         <Check id="output-temperature" prompt="Does increasing the temperature guarantee a better answer?" options={[
           { label: "Yes, it makes the model think harder", feedback: "Temperature does not change the computation that produced the scores. It only reshapes the shares before sampling." },
           { label: "No, it only makes choices more varied", correct: true, feedback: "Higher T flattens the shares, so less likely tokens are chosen more often. That can help variety or hurt accuracy." },

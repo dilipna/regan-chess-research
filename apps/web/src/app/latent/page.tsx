@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Destinations, JourneyMap, LabsStrip, LandingHero, QwenBlockOrder } from "@/components/latent/landing";
+import { Destinations, JourneyMap, LabsStrip, LandingHero, OnlyHere, QwenBlockOrder } from "@/components/latent/landing";
 import { ArchitectureOverview, OpenVsClosed, Progression } from "@/components/latent/overview";
 import { loadLatent } from "@/lib/latent/data";
 
@@ -11,6 +11,7 @@ export default async function LatentHome() {
   return (
     <>
       <LandingHero />
+      <OnlyHere versionsHeadline={d.recallVersions ? `${d.recallVersions.miss_categories["another version"]} of Qwen's ${d.recallVersions.misses} Gettysburg misses are another Lincoln manuscript's wording` : undefined} />
       <JourneyMap />
       <LabsStrip />
       <Destinations layerProbe={d.layerProbe} precision={d.recallPrecision} />

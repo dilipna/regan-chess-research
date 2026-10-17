@@ -401,6 +401,8 @@ transformers 5.18 `output_hidden_states[-1]` is post-final-norm while the other 
 | `probe_rmsnorm.py`, `probe_components.py`, `build_pca_artifacts.py` | normalization, attention-vs-MLP, PCA |
 | `verify_streaming.py` | streamed vs offloaded full-model check on the real 8B |
 | `record_generation_steps.py` | two recorded generation steps (top candidates and the step after each) for the journey |
+| `capture_glassbox.py` | Glass Box: every intermediate tensor of blocks 1, 18 and 36 for one token (float32 copies of bfloat16 values, 0.4 MB per block) plus a Python re-derivation ledger |
+| `analyze_recall_versions.py` | "Mistake, or another version?": classifies Gettysburg recall misses against the five Lincoln manuscripts (no model run; reads the recorded recall artifact) |
 | `export_web_artifacts.py` | validate, write pending placeholders, copy compact JSON to the website |
 
 Environment: `uv venv .venv-latent` and `pip install -r scripts/latentlens/requirements.txt` (torch 2.14.1 first). The

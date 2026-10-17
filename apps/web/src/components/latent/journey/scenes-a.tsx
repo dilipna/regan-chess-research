@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { EXAMPLE, rms, toyForward } from "@/lib/latent/toy-model";
@@ -287,6 +288,10 @@ export function SceneBlock({ st, set, data, toy }: SceneProps) {
           })}
         />
         {lvl === "story" && <AnalogyLimit analogy="Like adding notes in the margin of a shared document instead of rewriting it." limit="The “notes” are lists of numbers mixed into every position of the vector. They are not readable sentences, and later blocks can add notes that largely cancel earlier ones." />}
+        <Link href="/latent/glassbox" className="rounded-xl border-2 border-[var(--role-norm)] bg-[var(--role-norm-soft)] p-4 text-[15px] text-ink hover:border-ink">
+          <span className="block text-[12px] font-semibold tracking-wide text-[var(--role-norm-ink)] uppercase">Glass Box</span>
+          See this same block with Qwen3-8B&apos;s real numbers, and watch your browser re-check every step →
+        </Link>
         <Check id="block-zero" prompt="If the attention branch output were all zeros, what would leave the first + sign?" options={[
           { label: "All zeros", feedback: "The + adds the update to the stream. Adding zeros leaves the stream as it was." },
           { label: "The unchanged input x", correct: true, feedback: "Because the update is added to x, a zero update passes x through unchanged. Try “attention off”." },
