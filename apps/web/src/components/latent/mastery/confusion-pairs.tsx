@@ -2,12 +2,11 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { EXTRAS, MORE_PAIRS } from "@/lib/latent/mastery/confusion-extras";
-import { PAIRS } from "@/lib/latent/mastery/confusions";
+import { ALL_PAIRS_LIST, EXTRAS } from "@/lib/latent/mastery/confusion-extras";
 import { hrefFor, topicBySlug } from "@/lib/latent/mastery";
 import { ConfusionPairCard } from "../learn/primitives";
 
-export const ALL_PAIRS = [...MORE_PAIRS.slice(0, 1), ...PAIRS, ...MORE_PAIRS.slice(1)];
+export const ALL_PAIRS = ALL_PAIRS_LIST();
 const GROUPS = [
   { id: "all", label: "All" },
   { id: "model", label: "Model internals", levels: [1] },
