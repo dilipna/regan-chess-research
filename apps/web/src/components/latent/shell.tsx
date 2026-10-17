@@ -11,25 +11,28 @@ import { Prov } from "./kit";
 // Four destinations up front; everything else lives in one grouped "More" menu.
 const PRIMARY = [
   { href: "/latent", label: "Atlas" },
-  { href: "/latent/story", label: "Storybook" },
+  { href: "/latent/foundations", label: "Foundations" },
+  { href: "/latent/build", label: "Build" },
   { href: "/latent/labs", label: "Labs" },
-  { href: "/latent/research", label: "Research" },
 ];
 const MORE: { group: string; links: { href: string; label: string }[] }[] = [
   { group: "Learn", links: [
     { href: "/latent/mastery", label: "Mastery path" },
+    { href: "/latent/story", label: "Storybook" },
     { href: "/latent/journey", label: "Guided journey" },
     { href: "/latent/glassbox", label: "Glass Box" },
     { href: "/latent/learn", label: "Reference notes" },
     { href: "/latent/review", label: "Daily review" },
   ] },
   { group: "Practice", links: [
+    { href: "/latent/security", label: "AI security" },
+    { href: "/latent/security/labs", label: "Security labs" },
     { href: "/latent/play", label: "You vs Qwen" },
     { href: "/latent/demo", label: "5-step demo" },
     { href: "/latent/professor", label: "Professor mode" },
-    { href: "/latent/security", label: "AI security" },
   ] },
   { group: "Evidence", links: [
+    { href: "/latent/research", label: "Research" },
     { href: "/latent/recall", label: "Recall Microscope" },
     { href: "/latent/methods", label: "Methods" },
     { href: "/latent/project", label: "Project overview" },

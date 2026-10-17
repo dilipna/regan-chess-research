@@ -42,6 +42,20 @@ export function Atlas({ levels, dims, example }: { levels: AtlasLevel[]; dims: A
     setSel(level.order[j]);
   }, [level, sel]);
 
+  // deep link: /latent?part=attention.scores#atlas opens that level with that part selected
+  useEffect(() => {
+    const part = new URLSearchParams(window.location.search).get("part");
+    if (!part) return;
+    const [lv, id] = part.split(".") as [LevelId, string];
+    if (!byId[lv]) return;
+    const raf = requestAnimationFrame(() => {
+      setLevelId(lv);
+      setSel(byId[lv].nodes.some((n) => n.id === id) ? id : null);
+      document.getElementById("atlas")?.scrollIntoView({ block: "start" });
+    });
+    return () => cancelAnimationFrame(raf);
+  }, [byId]);
+
   // guided tour: advance along the token's path, stop at the end
   useEffect(() => {
     if (!playing) return;
