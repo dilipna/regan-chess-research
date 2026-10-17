@@ -1,0 +1,78 @@
+/*
+ * LLM Storybook styles. Scoped to [data-story], which only the /latent/story pages render, inside the LatentLens
+ * museum theme. Large type in Andika (a typeface made for beginning readers), big touch targets, gentle motion that
+ * switches off with prefers-reduced-motion or the LatentLens "Motion: off" setting.
+ */
+[data-story] {
+  font-family: var(--font-story), var(--font-body), system-ui, sans-serif;
+  --story-shadow: 0 2px 0 rgba(27, 30, 39, 0.06), 0 14px 30px -22px rgba(27, 30, 39, 0.35);
+}
+[data-story] .story-title { font-family: var(--font-story), var(--font-body), sans-serif; letter-spacing: -0.01em; }
+[data-story] .story-text { font-size: 22px; line-height: 1.5; color: var(--ink); }
+[data-story] .story-big { font-size: 26px; line-height: 1.4; }
+@media (min-width: 640px) {
+  [data-story] .story-text { font-size: 24px; }
+  [data-story] .story-big { font-size: 30px; }
+}
+[data-story] .story-hero {
+  background:
+    radial-gradient(1200px 300px at 0% 0%, color-mix(in oklab, var(--role-resid) 9%, transparent), transparent 60%),
+    radial-gradient(900px 260px at 100% 100%, color-mix(in oklab, var(--role-mlp) 10%, transparent), transparent 60%),
+    var(--paper);
+  box-shadow: var(--story-shadow);
+}
+[data-story] .story-card { box-shadow: var(--story-shadow); }
+[data-story] .story-paper {
+  background:
+    repeating-linear-gradient(to bottom, transparent 0 33px, color-mix(in oklab, var(--role-resid) 16%, transparent) 33px 34px),
+    #fffef6;
+  border: 2px solid var(--rule);
+}
+
+/* buttons press down a little; the focus ring comes from the LatentLens theme */
+[data-story] .story-btn { transition: transform 120ms ease, box-shadow 120ms ease, background-color 200ms ease; box-shadow: 0 3px 0 rgba(27, 30, 39, 0.12); }
+[data-story] .story-btn:not(:disabled):active { transform: translateY(2px); box-shadow: 0 1px 0 rgba(27, 30, 39, 0.12); }
+[data-story] .story-btn:not(:disabled):hover { filter: brightness(1.03); }
+
+[data-story] .story-range { accent-color: var(--role-mlp); height: 34px; }
+
+/* motion */
+[data-story] .story-pop { animation: story-pop 420ms cubic-bezier(.2, .9, .3, 1.3) both; }
+@keyframes story-pop { from { opacity: 0; transform: scale(.7) translateY(6px); } to { opacity: 1; transform: none; } }
+[data-story] .story-dot { animation: story-dot 300ms ease-out both; }
+@keyframes story-dot { from { opacity: 0; transform: scale(.2); } to { opacity: 1; transform: none; } }
+[data-story] .story-dot { transform-box: fill-box; transform-origin: center; }
+[data-story] .story-shake { animation: story-shake 360ms ease both; }
+@keyframes story-shake { 0%, 100% { transform: none; } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+[data-story] .story-sticker { display: inline-block; animation: story-sticker 700ms cubic-bezier(.2, .9, .3, 1.4) both; }
+@keyframes story-sticker { 0% { transform: scale(.2) rotate(-30deg); } 70% { transform: scale(1.2) rotate(8deg); } 100% { transform: none; } }
+[data-story] .story-burst i {
+  position: absolute; left: 42px; top: 50%; width: 9px; height: 9px; border-radius: 99px; background: var(--c);
+  animation: story-burst 900ms cubic-bezier(.1, .7, .3, 1) both;
+}
+@keyframes story-burst {
+  from { opacity: 1; transform: rotate(var(--a)) translateX(0); }
+  to { opacity: 0; transform: rotate(var(--a)) translateX(70px); }
+}
+[data-story] .pip { overflow: visible; }
+[data-story] .pip-eyes { animation: pip-blink 5s infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes pip-blink { 0%, 94%, 100% { transform: none; } 96% { transform: scaleY(.1); } }
+[data-story] .pip-bulb { animation: pip-glow 2.4s ease-in-out infinite; }
+@keyframes pip-glow { 50% { opacity: .55; } }
+[data-story] .pip-wave { animation: pip-wave 1.6s ease-in-out infinite; transform-box: fill-box; transform-origin: 0% 100%; }
+@keyframes pip-wave { 50% { transform: rotate(-14deg); } }
+[data-story] .story-word { transition: background-color 120ms ease; }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-story] :is(.story-pop, .story-dot, .story-shake, .story-sticker, .story-burst i, .pip-eyes, .pip-bulb, .pip-wave) { animation: none !important; }
+  [data-story] .story-burst { display: none; }
+}
+[data-latent-theme][data-motion="off"] [data-story] :is(.story-pop, .story-dot, .story-shake, .story-sticker, .story-burst i, .pip-eyes, .pip-bulb, .pip-wave) { animation: none !important; }
+
+/* printing the certificate prints only the certificate */
+@media print {
+  body:has([data-story]) * { visibility: hidden; }
+  [data-story] .story-cert, [data-story] .story-cert * { visibility: visible; }
+  [data-story] .story-cert { position: fixed; inset: 10mm; border-width: 6px; }
+  [data-story] .story-noprint { display: none !important; }
+}

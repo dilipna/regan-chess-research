@@ -33,6 +33,20 @@ export function LandingHero() {
   );
 }
 
+export function StorybookInvite() {
+  return (
+    <Link href="/latent/story" className="ll-panel mt-8 grid items-center gap-5 rounded-2xl border-2 border-[var(--role-mlp)] bg-[var(--role-mlp-soft)] p-5 hover:border-ink sm:grid-cols-[auto_1fr_auto]">
+      <span aria-hidden className="text-[56px] leading-none">📖</span>
+      <span className="min-w-0">
+        <span className="block text-[13px] font-semibold tracking-wide text-[var(--role-mlp-ink)] uppercase">New · for young learners</span>
+        <span className="mt-0.5 block font-serif text-[26px] leading-tight font-semibold text-ink">The LLM Storybook</span>
+        <span className="mt-1 block text-[16px] text-ink-2">Fourteen read-aloud chapters, from a guessing game in 1948 to GPT-6 Astra, Muse Spark and Qwen3.8 in 2026. Every chapter has something to try.</span>
+      </span>
+      <span className="rounded-xl bg-ink px-5 py-3 text-[16px] font-medium whitespace-nowrap text-paper">Open the book →</span>
+    </Link>
+  );
+}
+
 export function JourneyMap() {
   const progress = useProgress();
   return (
