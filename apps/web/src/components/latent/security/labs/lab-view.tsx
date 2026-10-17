@@ -5,10 +5,21 @@
 import { labBySlug } from "@/lib/latent/security/labs";
 import { hrefFor, topicBySlug } from "@/lib/latent/mastery";
 import { LabLesson } from "../lab-lesson";
+import { AgencyLab, InjectionLab, LeakLab, MemoryLab } from "./agent-labs";
+import { ConsumptionLab, EvalLab, OutputLab, RagLab, WebBasicsLab } from "./system-labs";
 import { TrustBoundaryLab } from "./trust-boundary-lab";
 
 const INTERACTIVE: Record<string, () => React.ReactNode> = {
   "trust-boundaries": () => <TrustBoundaryLab />,
+  "web-basics": () => <WebBasicsLab />,
+  "prompt-injection": () => <InjectionLab />,
+  secrets: () => <LeakLab />,
+  "excessive-agency": () => <AgencyLab />,
+  "memory-poisoning": () => <MemoryLab />,
+  rag: () => <RagLab />,
+  "output-handling": () => <OutputLab />,
+  consumption: () => <ConsumptionLab />,
+  evals: () => <EvalLab />,
 };
 
 export function LabView({ slug }: { slug: string }) {

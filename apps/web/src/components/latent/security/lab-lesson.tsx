@@ -25,7 +25,7 @@ export function LabLesson({ title, intro, text, children, topicLinks }: { title:
       <ol className="grid gap-2 md:grid-cols-2">
         {STEPS.slice(0, 4).map(([k, label], i) => <Step key={k} n={i + 1} label={label} body={text[k]} />)}
       </ol>
-      <section aria-label="Try it" className="rounded-2xl border-2 border-ink bg-paper p-4 sm:p-5">{children}</section>
+      <section aria-label="Try it" className="rounded-3xl border border-rule-strong bg-[#090c14] p-4 shadow-[0_0_0_1px_color-mix(in_oklab,var(--role-resid)_12%,transparent)] sm:p-6">{children}</section>
       <ol className="grid gap-2 md:grid-cols-2" start={5}>
         {STEPS.slice(4).map(([k, label], i) => <Step key={k} n={i + 5} label={label} body={text[k]} />)}
       </ol>
@@ -36,7 +36,7 @@ export function LabLesson({ title, intro, text, children, topicLinks }: { title:
 
 function Step({ n, label, body }: { n: number; label: string; body: string | string[] }) {
   return (
-    <li className="rounded-xl border border-rule bg-paper p-3.5">
+    <li className="rounded-2xl border border-rule bg-paper p-4">
       <div className="text-[12px] font-semibold tracking-wide text-ink-3 uppercase"><span className="num mr-1.5 text-ink-4">{n}</span>{label}</div>
       {Array.isArray(body) ? <ul className="mt-1 list-disc pl-5 text-[14.5px] text-ink-2">{body.map((b) => <li key={b}>{b}</li>)}</ul> : <p className="mt-1 text-[14.5px] leading-relaxed text-ink-2">{body}</p>}
     </li>
