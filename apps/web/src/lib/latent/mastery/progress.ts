@@ -3,7 +3,7 @@
 
 import type { Area, QuizItem } from "./types";
 
-export interface ConceptRecord { seen: number; right: number; wrong: number; box: number; due: number; last: number; lastWrong: boolean; teach?: number }
+export interface ConceptRecord { seen: number; right: number; wrong: number; box: number; due: number; last: number; lastWrong: boolean; teach?: number; lowConfidence?: boolean }
 export interface LearnState { v: 1; concepts: Record<string, ConceptRecord>; teach: Record<string, { text: string; at: number; points: number }> }
 export const EMPTY_STATE: LearnState = { v: 1, concepts: {}, teach: {} };
 
@@ -17,6 +17,13 @@ export function record(s: LearnState, concept: string, correct: boolean, now: nu
   return { ...s, concepts: { ...s.concepts, [concept]: next } };
 }
 
+/** "I got it right but was guessing" keeps a concept in review even after a correct answer. */
+export function markConfidence(s: LearnState, concept: string, low: boolean): LearnState {
+  const c = s.concepts[concept];
+  if (!c) return s;
+  return { ...s, concepts: { ...s.concepts, [concept]: { ...c, lowConfidence: low } } };
+}
+
 export function recordTeach(s: LearnState, concept: string, text: string, points: number, now: number): LearnState {
   const c = s.concepts[concept] ?? { seen: 0, right: 0, wrong: 0, box: 0, due: now, last: 0, lastWrong: false };
   return { ...s, teach: { ...s.teach, [concept]: { text, at: now, points } }, concepts: { ...s.concepts, [concept]: { ...c, teach: now } } };
@@ -27,7 +34,7 @@ export const STATUS_TEXT: Record<Status, string> = { "not-started": "Not started
 
 export function status(c: ConceptRecord | undefined, now: number): Status {
   if (!c || c.seen === 0) return "not-started";
-  if (c.lastWrong || (c.box > 0 && c.due <= now)) return "review";
+  if (c.lastWrong || c.lowConfidence || (c.box > 0 && c.due <= now)) return "review";
   if (c.box >= 3) return "mastered";
   return "learning";
 }
@@ -36,6 +43,7 @@ export function status(c: ConceptRecord | undefined, now: number): Status {
 export function priority(c: ConceptRecord | undefined, now: number): number {
   if (!c || c.seen === 0) return 2;
   if (c.lastWrong) return 4;
+  if (c.lowConfidence) return 3.5;
   if (c.due <= now) return 3;
   return 1 - c.box / 10;
 }

@@ -108,8 +108,9 @@ export function RevealOutline({ q, outline }: { q: string; outline: string[] }) 
   );
 }
 
-export function ConfusionPairCard({ a, b, keyDiff, rows, href }: { a: string; b: string; keyDiff: string; rows: [string, string, string][]; href?: string }) {
+export function ConfusionPairCard({ a, b, keyDiff, rows, href, example, trap }: { a: string; b: string; keyDiff: string; rows: [string, string, string][]; href?: string; example?: string; trap?: { q: string; a: string } }) {
   const [show, setShow] = useState(false);
+  const [trapOpen, setTrapOpen] = useState(false);
   return (
     <article className="rounded-xl border border-rule bg-paper p-4">
       <h3 className="text-[17px] font-semibold text-ink">{a} <span className="text-ink-4">vs</span> {b}</h3>
@@ -124,6 +125,13 @@ export function ConfusionPairCard({ a, b, keyDiff, rows, href }: { a: string; b:
               <tbody>{rows.map(([d, x, y]) => <tr key={d} className="border-t border-rule"><td className="py-1 pr-3 text-ink-3">{d}</td><td className="py-1 pr-3 text-ink">{x}</td><td className="py-1 text-ink">{y}</td></tr>)}</tbody>
             </table>
           </div>
+          {example && <p className="text-[14px] text-ink-2"><strong className="text-ink">Example: </strong>{example}</p>}
+          {trap && (
+            <div className="rounded-lg bg-paper-2/60 p-2.5 text-[14px]">
+              <p className="text-ink"><strong>Trap question: </strong>{trap.q}</p>
+              {trapOpen ? <p className="mt-1 text-ink-2">{trap.a}</p> : <button type="button" onClick={() => setTrapOpen(true)} className="mt-1 text-[13px] text-ink-3 underline underline-offset-2">Answer, then reveal</button>}
+            </div>
+          )}
           {href && <a href={href} className="w-fit text-[13.5px] text-[var(--role-resid-ink)] underline underline-offset-2">Revisit the topic →</a>}
         </div>
       )}
