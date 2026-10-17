@@ -2,49 +2,121 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useId, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { cn } from "@/lib/utils";
 import type { Part } from "@/lib/latent/parts";
 import type { Pending } from "@/lib/latent/types";
 import { Prov } from "./kit";
 
-const SUBNAV = [
-  { href: "/latent", label: "Overview" },
+// Four destinations up front; everything else lives in one grouped "More" menu.
+const PRIMARY = [
+  { href: "/latent", label: "Atlas" },
   { href: "/latent/story", label: "Storybook" },
-  { href: "/latent/mastery", label: "Mastery" },
-  { href: "/latent/security", label: "Security" },
-  { href: "/latent/review", label: "Review" },
-  { href: "/latent/professor", label: "Professor" },
-  { href: "/latent/journey", label: "Journey" },
   { href: "/latent/labs", label: "Labs" },
-  { href: "/latent/glassbox", label: "Glass Box" },
-  { href: "/latent/play", label: "You vs Qwen" },
   { href: "/latent/research", label: "Research" },
-  { href: "/latent/recall", label: "Recall" },
-  { href: "/latent/demo", label: "5-step demo" },
-  { href: "/latent/methods", label: "Methods" },
-  { href: "/latent/learn", label: "Reference notes" },
 ];
+const MORE: { group: string; links: { href: string; label: string }[] }[] = [
+  { group: "Learn", links: [
+    { href: "/latent/mastery", label: "Mastery path" },
+    { href: "/latent/journey", label: "Guided journey" },
+    { href: "/latent/glassbox", label: "Glass Box" },
+    { href: "/latent/learn", label: "Reference notes" },
+    { href: "/latent/review", label: "Daily review" },
+  ] },
+  { group: "Practice", links: [
+    { href: "/latent/play", label: "You vs Qwen" },
+    { href: "/latent/demo", label: "5-step demo" },
+    { href: "/latent/professor", label: "Professor mode" },
+    { href: "/latent/security", label: "AI security" },
+  ] },
+  { group: "Evidence", links: [
+    { href: "/latent/recall", label: "Recall Microscope" },
+    { href: "/latent/methods", label: "Methods" },
+    { href: "/latent/project", label: "Project overview" },
+    { href: "/", label: "MoveLens (Version 1)" },
+  ] },
+];
+
+function LensGlyph() {
+  return (
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden className="shrink-0">
+      <circle cx="12" cy="12" r="9" fill="none" stroke="var(--role-resid)" strokeWidth="1.6" opacity="0.9" />
+      <circle cx="12" cy="12" r="4.2" fill="none" stroke="var(--role-attn)" strokeWidth="1.6" />
+      <circle cx="12" cy="12" r="1.3" fill="var(--ink)" />
+    </svg>
+  );
+}
 
 export function LatentSubNav() {
   const path = usePathname();
+  const isActive = (href: string) => (href === "/latent" ? path === href : path.startsWith(href));
+  const moreActive = MORE.some((g) => g.links.some((l) => l.href !== "/" && isActive(l.href)));
   return (
-    <div className="border-b border-rule bg-paper-2/60 backdrop-blur">
-      <div className="mx-auto flex h-11 max-w-[1180px] items-center gap-3 px-4 sm:px-6">
-        <Link href="/latent" className="shrink-0 font-serif text-[16px] font-semibold tracking-tight text-ink">LatentLens</Link>
-        <span aria-hidden className="h-4 w-px shrink-0 bg-rule-strong" />
-        <nav aria-label="LatentLens" className="no-scrollbar -mr-4 flex min-w-0 flex-1 items-center gap-0.5 overflow-x-auto pr-4">
-          {SUBNAV.map((l) => {
-            const active = l.href === "/latent" ? path === l.href : path.startsWith(l.href);
-            return (
-              <Link key={l.href} href={l.href} aria-current={active ? "page" : undefined}
-                className={cn("shrink-0 rounded px-2 py-1 text-[13px] whitespace-nowrap text-ink-3 hover:text-ink", active && "bg-paper text-ink shadow-[inset_0_0_0_1px_var(--rule-strong)]")}>
+    <header className="sticky top-0 z-40 border-b border-rule bg-[#06080d]/80 backdrop-blur-md supports-[backdrop-filter]:bg-[#06080d]/65">
+      <div className="mx-auto flex h-14 max-w-[1180px] items-center gap-4 px-4 sm:px-6">
+        <Link href="/latent" className="flex shrink-0 items-center gap-2 text-ink">
+          <LensGlyph />
+          <span className="font-serif text-[16px] font-semibold">LatentLens</span>
+        </Link>
+        <nav aria-label="LatentLens" className="flex min-w-0 flex-1 items-center justify-end gap-0.5 sm:gap-1">
+          <div className="no-scrollbar flex min-w-0 items-center gap-0.5 overflow-x-auto sm:gap-1">
+            {PRIMARY.map((l, i) => (
+              <Link key={l.href} href={l.href} aria-current={isActive(l.href) ? "page" : undefined}
+                className={cn("shrink-0 rounded-full px-3 py-1.5 text-[13px] whitespace-nowrap text-ink-3 transition-colors hover:text-ink",
+                  i > 0 && "max-sm:hidden", isActive(l.href) && "bg-paper-3 text-ink")}>
                 {l.label}
               </Link>
-            );
-          })}
+            ))}
+          </div>
+          <MoreMenu active={moreActive} isActive={isActive} />
         </nav>
       </div>
+    </header>
+  );
+}
+
+function MoreMenu({ active, isActive }: { active: boolean; isActive: (href: string) => boolean }) {
+  const [open, setOpen] = useState(false);
+  const id = useId();
+  const path = usePathname();
+  // close on navigation and on Escape
+  const [at, setAt] = useState(path);
+  if (at !== path) { setAt(path); setOpen(false); }
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+  return (
+    <div className="relative shrink-0">
+      <button type="button" aria-expanded={open} aria-controls={id} onClick={() => setOpen((o) => !o)}
+        className={cn("flex items-center gap-1 rounded-full px-3 py-1.5 text-[13px] text-ink-3 transition-colors hover:text-ink", (open || active) && "bg-paper-3 text-ink")}>
+        More
+        <svg viewBox="0 0 12 12" width="10" height="10" aria-hidden className={cn("transition-transform", open && "rotate-180")}><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.5" /></svg>
+      </button>
+      {open && (
+        <>
+          <button type="button" aria-hidden tabIndex={-1} className="fixed inset-0 z-40 cursor-default" onClick={() => setOpen(false)} />
+          <div id={id} className="atlas-fade absolute right-0 z-50 mt-2 grid max-h-[80vh] w-[min(92vw,560px)] gap-5 overflow-y-auto rounded-2xl border border-rule-strong bg-paper-2 p-5 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.9)] sm:grid-cols-3">
+            {[{ group: "Main", links: PRIMARY.slice(1) }, ...MORE].map((g) => (
+              <div key={g.group} className={cn(g.group === "Main" && "sm:hidden")}>
+                <div className="mb-2 text-[11px] font-medium tracking-[0.12em] text-ink-4 uppercase">{g.group}</div>
+                <ul className="grid gap-0.5">
+                  {g.links.map((l) => (
+                    <li key={l.href}>
+                      <Link href={l.href} aria-current={l.href !== "/" && isActive(l.href) ? "page" : undefined}
+                        className={cn("block rounded-lg px-2 py-1.5 text-[13.5px] text-ink-2 hover:bg-paper-3 hover:text-ink", l.href !== "/" && isActive(l.href) && "text-ink")}>
+                        {l.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 }

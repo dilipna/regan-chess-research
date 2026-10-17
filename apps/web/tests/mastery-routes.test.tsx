@@ -6,6 +6,7 @@ vi.mock("next/navigation", () => ({ useRouter: () => ({ push: () => {} }), usePa
 import MasteryHome from "@/app/latent/mastery/page";
 import MasteryTopicPage, { generateStaticParams } from "@/app/latent/mastery/[topic]/page";
 import LatentHome from "@/app/latent/page";
+import LatentProject from "@/app/latent/project/page";
 import { MasteryTopic } from "@/components/latent/mastery/mastery-topic";
 import { connectionsOf } from "@/lib/latent/mastery/connections";
 import { TOPICS } from "@/lib/latent/mastery";
@@ -14,8 +15,12 @@ const text = (el: React.ReactElement) => renderToString(el).replace(/<!-- -->/g,
 const mastery = TOPICS.filter((t) => t.track === "mastery");
 
 describe("/latent home", () => {
-  it("shows the four paths, the progression and professor mode", async () => {
+  it("opens on the Transformer Atlas, the four verbs and the doors", async () => {
     const h = text(await LatentHome());
+    for (const s of ["The transformer,", "in one picture.", "The whole model", "Follow a token", "Quiz me", "The whole model is four verbs.", "Ten-second recall", "Go deeper", "Storybook", "Labs", "Research"]) expect(h).toContain(s);
+  });
+  it("keeps the project overview at /latent/project", async () => {
+    const h = text(await LatentProject());
     for (const s of ["Understand modern AI from the inside out.", "Storybook", "Mastery", "Security", "Research", "Professor mode", "Intuition", "Mechanism", "System"]) expect(h).toContain(s);
   });
 });

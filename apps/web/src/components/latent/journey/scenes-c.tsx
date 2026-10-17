@@ -170,7 +170,7 @@ export function SceneLearning({ st, data, toy }: SceneProps) {
               <div className="flex flex-wrap items-center gap-2 text-[15px]">
                 <span>Predict: after one update, p(target) will…</span>
                 {(["up", "same", "down"] as const).map((x) => <button key={x} type="button" aria-pressed={guess === x} onClick={() => setGuess(x)} className={cn("rounded-lg border-2 px-3 py-1", guess === x ? "border-ink bg-ink text-paper" : "border-rule-strong")}>{x === "up" ? "go up" : x === "down" ? "go down" : "stay the same"}</button>)}
-                <button type="button" disabled={!guess} onClick={apply} className="rounded-lg bg-[var(--role-resid)] px-4 py-1.5 font-medium text-white disabled:opacity-40">Apply one update</button>
+                <button type="button" disabled={!guess} onClick={apply} className="rounded-lg bg-[var(--role-resid)] px-4 py-1.5 font-medium text-[var(--on-role)] disabled:opacity-40">Apply one update</button>
                 <button type="button" onClick={reset} className="rounded-lg border-2 border-rule-strong px-3 py-1">↺ Reset weights</button>
               </div>
               {applied && (

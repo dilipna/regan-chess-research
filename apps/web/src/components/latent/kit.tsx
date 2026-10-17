@@ -132,7 +132,7 @@ export function TokenStrip({ tokens, selected, onSelect, showIds = true, label =
           <button key={t.pos} type="button" role="radio" aria-checked={sel} disabled={off || !onSelect} onClick={() => onSelect?.(t.pos)}
             aria-label={`position ${t.pos}, token ${t.prefix ? "document start" : t.text}${showIds ? `, id ${t.id}` : ""}`}
             className={cn("ll-anim group flex min-w-[64px] flex-col items-start rounded-lg border-2 px-3 py-2 text-left",
-              sel ? "border-ink bg-ink text-paper shadow-[0_6px_16px_-8px_rgba(27,30,39,.6)]" : "border-rule-strong bg-paper text-ink hover:border-ink-3",
+              sel ? "border-ink bg-ink text-paper shadow-[0_6px_16px_-8px_rgba(0,0,0,.8)]" : "border-rule-strong bg-paper text-ink hover:border-ink-3",
               t.prefix && !sel && "border-dashed", off && "cursor-not-allowed opacity-40")}>
             <span className={cn("text-[10.5px] font-medium tracking-wide uppercase", sel ? "text-paper/70" : "text-ink-4")}>pos {t.pos}</span>
             <span className="font-mono text-[17px] leading-tight whitespace-pre">{t.prefix ? "⟨start⟩" : showTok(t.text)}</span>
@@ -199,14 +199,14 @@ export function Check({ id, prompt, options }: { id: string; prompt: string; opt
         {options.map((o, i) => (
           <button key={i} type="button" onClick={() => setPicked(i)} aria-pressed={picked === i}
             className={cn("rounded-lg border-2 px-3.5 py-2 text-[14px] text-left",
-              picked === i ? (o.correct ? "border-[var(--role-norm)] bg-[var(--role-norm-soft)] text-ink" : "border-[#b5452f] bg-[#fbe9e4] text-ink") : "border-rule-strong bg-paper text-ink-2 hover:border-ink-3")}>
+              picked === i ? (o.correct ? "border-[var(--role-norm)] bg-[var(--role-norm-soft)] text-ink" : "border-[var(--bad)] bg-[var(--bad-soft)] text-ink") : "border-rule-strong bg-paper text-ink-2 hover:border-ink-3")}>
             {o.label}
           </button>
         ))}
       </div>
       <div aria-live="polite" className="min-h-[1.5em]">
         {picked !== null && (
-          <p className={cn("ll-pop mt-3 text-[14.5px] leading-relaxed", options[picked].correct ? "text-[var(--role-norm-ink)]" : "text-[#8f3422]")}>
+          <p className={cn("ll-pop mt-3 text-[14.5px] leading-relaxed", options[picked].correct ? "text-[var(--role-norm-ink)]" : "text-[var(--bad-ink)]")}>
             <span className="font-semibold">{options[picked].correct ? "Yes. " : "Not quite. "}</span>{options[picked].feedback}
             {!options[picked].correct && <span className="text-ink-3"> Try another answer.</span>}
           </p>

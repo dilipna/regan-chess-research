@@ -1,73 +1,115 @@
 /*
- * LatentLens "museum" theme: warm off-white, deep ink, four role colours, large readable labels.
+ * LatentLens "deep field" theme: a near-black canvas, quiet slate surfaces, and four luminous role colours.
  * Scoped to pages that render [data-latent-theme] (the /latent layout), so every Version 1 page keeps its own look.
  *
- * Role colours (validated as a categorical set on #fbf8f2: lightness band, chroma, all-pairs CVD separation,
- * normal-vision floor, contrast; all pass). They always appear together with a text label and an icon.
- *   --role-resid  #1f5fae  residual stream and vectors   (icon: ═)
- *   --role-norm   #00a08a  normalization                 (icon: ⇕)
- *   --role-attn   #a274e2  attention                     (icon: ⇄)
- *   --role-mlp    #c47a00  MLP                           (icon: ◆)
- * The -ink variants are darker shades of the same hues used for text (WCAG AA on the background).
+ * Role colours (one per component family, always shown with a text label; chosen for separation on #06080d and
+ * for >= 7:1 contrast as text):
+ *   --role-resid  #5eb0ff  residual stream and vectors
+ *   --role-norm   #3ddbb9  normalization
+ *   --role-attn   #b794ff  attention
+ *   --role-mlp    #ffb347  MLP
+ * The -ink variants are lighter tints of the same hues for body text; -soft are low-alpha fills for surfaces.
  */
 html:has([data-latent-theme]) {
-  background: #fbf8f2;
+  background: #06080d;
+  color-scheme: dark;
 }
 
 body:has([data-latent-theme]) {
-  --role-resid: #1f5fae;
-  --role-norm: #00a08a;
-  --role-attn: #a274e2;
-  --role-mlp: #c47a00;
-  --role-resid-ink: #1a4f92;
-  --role-norm-ink: #006b5d;
-  --role-attn-ink: #6b3fb5;
-  --role-mlp-ink: #8a5600;
-  --role-resid-soft: color-mix(in oklab, var(--role-resid) 11%, #fffdf8);
-  --role-norm-soft: color-mix(in oklab, var(--role-norm) 11%, #fffdf8);
-  --role-attn-soft: color-mix(in oklab, var(--role-attn) 13%, #fffdf8);
-  --role-mlp-soft: color-mix(in oklab, var(--role-mlp) 12%, #fffdf8);
+  --role-resid: #5eb0ff;
+  --role-norm: #3ddbb9;
+  --role-attn: #b794ff;
+  --role-mlp: #ffb347;
+  --role-resid-ink: #9ccfff;
+  --role-norm-ink: #84ecd4;
+  --role-attn-ink: #d4bfff;
+  --role-mlp-ink: #ffd08f;
+  --role-resid-soft: color-mix(in oklab, var(--role-resid) 13%, #0b0f17);
+  --role-norm-soft: color-mix(in oklab, var(--role-norm) 12%, #0b0f17);
+  --role-attn-soft: color-mix(in oklab, var(--role-attn) 14%, #0b0f17);
+  --role-mlp-soft: color-mix(in oklab, var(--role-mlp) 12%, #0b0f17);
+  /* text placed on a solid role-coloured fill */
+  --on-role: #06080d;
+  /* wrong answers and failures */
+  --bad: #ff7b6b;
+  --bad-ink: #ffa89c;
+  --bad-soft: color-mix(in oklab, var(--bad) 14%, #0b0f17);
 
   --viz-1: var(--role-resid);
   --viz-2: var(--role-mlp);
 
-  --paper: #fffdf8;
-  --paper-2: #f5f0e6;
-  --paper-3: #ebe4d6;
-  --ink: #1b1e27;
-  --ink-2: #393d49;
-  --ink-3: #5c6170;
-  --ink-4: #868b98;
-  --rule: #e4ddcf;
-  --rule-strong: #cbc2b0;
+  --paper: #0b0f17;
+  --paper-2: #111622;
+  --paper-3: #18202e;
+  --ink: #eef2f8;
+  --ink-2: #bcc5d4;
+  --ink-3: #8b96a9;
+  --ink-4: #5f6a7e;
+  --rule: #1b2231;
+  --rule-strong: #2a3446;
   --llm: var(--role-attn-ink);
   --llm-soft: var(--role-attn-soft);
   --prov-ours: var(--role-norm-ink);
   --tint-ours: var(--role-norm-soft);
+  --prov-regan: #9fb4cc;
+  --prov-finding: #c6d77a;
+  --tint-regan: color-mix(in oklab, var(--prov-regan) 8%, var(--paper));
+  --tint-finding: color-mix(in oklab, var(--prov-finding) 8%, var(--paper));
+  --engine: #8fb2d6;
+  --human: #7fcfa3;
+  --flag: #ff8a76;
+  --engine-soft: color-mix(in oklab, var(--engine) 14%, var(--paper));
+  --human-soft: color-mix(in oklab, var(--human) 14%, var(--paper));
+  --flag-soft: color-mix(in oklab, var(--flag) 14%, var(--paper));
+  --tint-llm: color-mix(in oklab, var(--llm) 8%, var(--paper));
+  --board-light: #2a3242;
+  --board-dark: #171d29;
 
   --background: var(--paper);
   --foreground: var(--ink);
+  --card: var(--paper);
+  --card-foreground: var(--ink);
+  --popover: var(--paper-2);
+  --popover-foreground: var(--ink);
+  --primary: var(--ink);
+  --primary-foreground: #06080d;
+  --secondary: var(--paper-2);
+  --secondary-foreground: var(--ink);
+  --muted: var(--paper-3);
+  --muted-foreground: var(--ink-3);
+  --accent: var(--paper-2);
+  --accent-foreground: var(--ink);
   --border: var(--rule);
+  --input: var(--rule-strong);
   --ring: var(--role-resid);
 
-  background: #fbf8f2;
+  background: #06080d;
   color: var(--ink);
 }
 
 body:has([data-latent-theme]) ::selection {
-  background: color-mix(in oklab, var(--role-resid) 22%, transparent);
+  background: color-mix(in oklab, var(--role-resid) 35%, transparent);
+}
+
+/* headings in the LatentLens pages use a geometric grotesk instead of the chess-book Garamond */
+[data-latent-theme] {
+  --font-display: var(--font-latent-display), var(--font-body), system-ui, sans-serif;
+  --font-display-italic: var(--font-latent-display), var(--font-body), system-ui, sans-serif;
+}
+[data-latent-theme] .font-serif {
+  letter-spacing: -0.02em;
 }
 
 /* visible keyboard focus everywhere inside LatentLens */
 [data-latent-theme] :is(a, button, input, select, summary, [tabindex]:not([tabindex="-1"])):focus-visible {
-  outline: 3px solid var(--role-resid);
+  outline: 2px solid var(--role-resid);
   outline-offset: 2px;
   border-radius: 4px;
 }
 
 [data-latent-theme] .ll-panel {
   background: var(--paper);
-  box-shadow: 0 1px 0 rgba(27, 30, 39, 0.03), 0 8px 24px -18px rgba(27, 30, 39, 0.25);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03), 0 18px 40px -28px rgba(0, 0, 0, 0.9);
 }
 
 /* role-coloured surfaces used by the diagrams */
@@ -101,3 +143,49 @@ body:has([data-latent-theme]) ::selection {
   accent-color: var(--role-resid);
   min-height: 28px;
 }
+
+/* ---------- Atlas ---------- */
+
+/* faint star-field grid behind the atlas canvas */
+[data-latent-theme] .atlas-field {
+  background:
+    radial-gradient(600px 320px at 50% 0%, color-mix(in oklab, var(--role-resid) 9%, transparent), transparent 70%),
+    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.055) 1px, transparent 0) 0 0 / 22px 22px,
+    #080b12;
+}
+
+/* residual spine: a steady glow with packets of light moving along it */
+[data-latent-theme] .atlas-flow {
+  stroke-dasharray: 2 14;
+  animation: atlas-flow 1.6s linear infinite;
+}
+@keyframes atlas-flow {
+  to { stroke-dashoffset: -32; }
+}
+[data-latent-theme] .atlas-edge-live {
+  stroke-dasharray: 5 7;
+  animation: atlas-flow 0.9s linear infinite;
+}
+[data-latent-theme] .atlas-node { cursor: pointer; }
+[data-latent-theme] .atlas-node rect.atlas-box { transition: fill 220ms ease, stroke 220ms ease, stroke-width 220ms ease, opacity 220ms ease; }
+[data-latent-theme] .atlas-node:hover rect.atlas-box { fill: color-mix(in oklab, var(--c) 22%, #0b0f17); }
+[data-latent-theme] .atlas-node:focus { outline: none; }
+[data-latent-theme] .atlas-node:focus-visible rect.atlas-ring { stroke: var(--ink); stroke-width: 1.5; }
+[data-latent-theme] .atlas-pulse {
+  animation: atlas-pulse 2.4s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+@keyframes atlas-pulse {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+[data-latent-theme] .atlas-fade { animation: atlas-fade 360ms cubic-bezier(.2, .8, .2, 1) both; }
+@keyframes atlas-fade {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-latent-theme] :is(.atlas-flow, .atlas-edge-live, .atlas-pulse, .atlas-fade) { animation: none; }
+}
+[data-latent-theme][data-motion="off"] :is(.atlas-flow, .atlas-edge-live, .atlas-pulse, .atlas-fade) { animation: none; }

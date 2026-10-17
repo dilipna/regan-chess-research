@@ -76,7 +76,7 @@ export function ReadAloud({ id, sentences, label = "Read it to me", className }:
   return (
     <div className={cn("flex flex-wrap items-center gap-2", className)}>
       <button type="button" onClick={() => (on ? stopSpeaking() : speak(id, sentences))} aria-pressed={on}
-        className={cn("story-btn inline-flex min-h-12 items-center gap-2 rounded-full px-5 text-[18px] font-bold", on ? "bg-[var(--role-mlp)] text-white" : "bg-ink text-paper")}>
+        className={cn("story-btn inline-flex min-h-12 items-center gap-2 rounded-full px-5 text-[18px] font-bold", on ? "bg-[var(--role-mlp)] text-[var(--on-role)]" : "bg-ink text-paper")}>
         <span aria-hidden className="text-[22px]">{on ? "⏹" : "🔊"}</span>{on ? "Stop" : label}
       </button>
       <button type="button" onClick={() => setR(r < 0.85 ? 0.9 : 0.75)} aria-pressed={r < 0.85}
@@ -95,7 +95,7 @@ export function Say({ text, id }: { text: string; id: string }) {
   const on = n.id === id;
   return (
     <button type="button" onClick={() => (on ? stopSpeaking() : speak(id, [text]))} aria-label={on ? "Stop reading" : `Read aloud: ${text}`}
-      className={cn("story-btn inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-[20px]", on ? "bg-[var(--role-mlp)] text-white" : "bg-paper-2 text-ink")}>
+      className={cn("story-btn inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-[20px]", on ? "bg-[var(--role-mlp)] text-[var(--on-role)]" : "bg-paper-2 text-ink")}>
       <span aria-hidden>{on ? "⏹" : "🔊"}</span>
     </button>
   );
@@ -125,7 +125,7 @@ function Words({ text, at }: { text: string; at: number }) {
   while ((m = re.exec(text))) {
     if (m.index > last) parts.push(text.slice(last, m.index));
     const hit = at >= m.index && at < m.index + m[0].length;
-    parts.push(hit ? <mark key={k++} className="story-word rounded bg-[var(--role-mlp)] px-0.5 text-white">{m[0]}</mark> : m[0]);
+    parts.push(hit ? <mark key={k++} className="story-word rounded bg-[var(--role-mlp)] px-0.5 text-[var(--on-role)]">{m[0]}</mark> : m[0]);
     last = m.index + m[0].length;
   }
   parts.push(text.slice(last));
@@ -170,7 +170,7 @@ export function Pip({ mood = "happy", size = 120, className, wave }: { mood?: Mo
       <line x1="60" y1="22" x2="60" y2="8" stroke="var(--ink)" strokeWidth="3" strokeLinecap="round" />
       <circle cx="60" cy="8" r="6.5" fill={bulb} className="pip-bulb" />
       <rect x="14" y="22" width="92" height="74" rx="26" fill="var(--role-resid)" />
-      <rect x="25" y="33" width="70" height="50" rx="17" fill="#fffdf8" />
+      <rect x="25" y="33" width="70" height="50" rx="17" fill="var(--paper)" />
       <g className="pip-eyes">
         {mood === "think" ? (
           <><path d="M38 55 q6 -6 12 0" stroke="var(--ink)" strokeWidth="4" fill="none" strokeLinecap="round" /><circle cx="76" cy="54" r="5.5" fill="var(--ink)" /></>
@@ -212,7 +212,7 @@ export function Big({ children, onClick, tone = "ink", disabled, pressed, classN
 }) {
   const cls = {
     ink: "bg-ink text-paper", soft: "border-2 border-rule-strong bg-paper text-ink",
-    resid: "bg-[var(--role-resid)] text-white", norm: "bg-[var(--role-norm-ink)] text-white", attn: "bg-[var(--role-attn-ink)] text-white", mlp: "bg-[var(--role-mlp-ink)] text-white",
+    resid: "bg-[var(--role-resid)] text-[var(--on-role)]", norm: "bg-[var(--role-norm-ink)] text-[var(--on-role)]", attn: "bg-[var(--role-attn-ink)] text-[var(--on-role)]", mlp: "bg-[var(--role-mlp-ink)] text-[var(--on-role)]",
   }[tone];
   return (
     <button type="button" onClick={onClick} disabled={disabled} aria-pressed={pressed} aria-label={label}

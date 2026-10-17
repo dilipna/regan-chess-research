@@ -78,7 +78,7 @@ export function Journey({ data }: { data: JourneyData }) {
       </nav>
 
       {/* persistent tracker: the example, the selected token, its current representation */}
-      <section aria-label="Your token" className="z-20 mt-4 lg:sticky lg:top-[64px] rounded-xl border border-rule bg-paper/95 p-3 shadow-[0_8px_24px_-20px_rgba(27,30,39,.6)] backdrop-blur sm:p-4">
+      <section aria-label="Your token" className="z-20 mt-4 lg:sticky lg:top-[64px] rounded-xl border border-rule bg-paper/95 p-3 shadow-[0_8px_24px_-20px_rgba(0,0,0,.8)] backdrop-blur sm:p-4">
         <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
           <div className="min-w-0">
             <div className="mb-1.5 text-[12px] font-semibold tracking-wide text-ink-3 uppercase">Example sentence · selected token</div>

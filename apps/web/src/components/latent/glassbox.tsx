@@ -58,7 +58,7 @@ function CheckPanel({ check, A, m, onResult }: { check: GbCheck; A: GbArrays; m:
       </div>
       <Segment label={`Candidate formula for ${check.title}`} value={variant} onChange={setVariant} options={check.variants.map((v) => ({ value: v.id, label: v.label }))} />
       {check.usesPosition && <Slider label="position used for the rotation" value={pos} min={0} max={10} step={1} onChange={setPos} format={(p) => (p === m.query_position ? `${p} (the token's real position)` : String(p))} />}
-      <p className={cn("text-[15px]", r.best && r.cmp.maxRel < MATCH_TOLERANCE ? "text-[var(--role-norm-ink)]" : "text-[#8f3422]")} aria-live="polite">
+      <p className={cn("text-[15px]", r.best && r.cmp.maxRel < MATCH_TOLERANCE ? "text-[var(--role-norm-ink)]" : "text-[var(--bad-ink)]")} aria-live="polite">
         {r.best && r.cmp.maxRel < MATCH_TOLERANCE
           ? <><strong>Reproduces the recorded output</strong> to bfloat16 precision: median error {pct(r.cmp.medianRel)}, largest error {pct(r.cmp.maxRel)} of the vector&apos;s largest value.</>
           : <><strong>Does not reproduce it as well:</strong> median error {pct(r.cmp.medianRel)}, {r.ratio.toFixed(r.ratio < 10 ? 1 : 0)}× worse than the best candidate{r.cmp.maxRel < 0.1 ? " (close, but measurably worse)" : ""}.</>}
