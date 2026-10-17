@@ -12,6 +12,8 @@ const SUBNAV = [
   { href: "/latent", label: "Overview" },
   { href: "/latent/journey", label: "Journey" },
   { href: "/latent/labs", label: "Labs" },
+  { href: "/latent/glassbox", label: "Glass Box" },
+  { href: "/latent/play", label: "You vs Qwen" },
   { href: "/latent/research", label: "Research" },
   { href: "/latent/recall", label: "Recall" },
   { href: "/latent/demo", label: "Professor Demo" },

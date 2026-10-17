@@ -14,8 +14,8 @@ stop at any point for questions; "Motion: off" removes transitions. Every panel 
 |---|---|---|---|
 | 0:00 | 1 Follow one token | "Last time I analyzed Qwen mainly from its outputs. After our discussion, I wanted to understand what is happening inside the model. Here is one sentence, followed token by token." | Click "␣notebook" (pos 5): id 37166, real tokenizer output. Point at the starting vector: a toy 8-number stand-in for 4,096 numbers. |
 | 0:50 | 2 One complete block | "Here is one complete Qwen transformer block, step by step." | Press "Next step" six times: RMSNorm copy, attention update, add, RMSNorm copy, MLP update, add. "The blue line, the residual stream, is only ever added to." |
-| 1:50 | 3 RMSNorm vs LayerNorm | "This is the normalization operation we discussed." | Scale × 10: RMSNorm output unchanged. Offset +2: RMSNorm changes, LayerNorm does not. Point at the gains: learned weights, separate from the input-dependent denominator. |
-| 3:00 | 4 Recall evidence | "This connects to the recall experiments. Instead of only checking the final next token, we can trace the true token's rank through the model." | 76.9% vs 34.6% (bfloat16, teacher forcing). Rank-by-depth chart: "diagnostic projections, not the model's output at those layers." |
+| 1:50 | 3 RMSNorm vs LayerNorm | "This is the normalization operation we discussed." | Scale × 10: RMSNorm output unchanged. Offset +2: RMSNorm changes, LayerNorm does not. Point at the gains: learned weights, separate from the input-dependent denominator. Then scroll to "Now the real model": the recorded block-18 input of Qwen3-8B, renormalized in the browser, reproduces Qwen's own output at bfloat16 precision, and the LayerNorm candidate fits worse. |
+| 3:00 | 4 Recall evidence | "This connects to the recall experiments. Instead of only checking the final next token, we can trace the true token's rank through the model." | 76.9% vs 34.6% (bfloat16, teacher forcing). Rank-by-depth chart: "diagnostic projections, not the model's output at those layers." Then the panel below: "9 of Qwen's 73 misses are the wording of another Lincoln manuscript." Strict 76.9%, 79.7% if any of the five manuscripts counts. "Before comparing recall plateaus, check which transcript was used." |
 | 4:00 | 5 Human vs AI | "Next, I want to measure whether these representations carry information that separates human from AI writing, and where. The plan is ready; the data access is pending." | Point at "Experiment pending" and the commands. Close with the final sentence on screen. |
 
 ## Optional deeper sections (10-minute version)
@@ -25,7 +25,10 @@ stop at any point for questions; "Motion: off" removes transitions. Every panel 
 - Step 3, **D**: the recorded Qwen RMSNorm gains by block appear in the RMSNorm lab (`/latent/labs/rmsnorm`).
 - Step 5, **D**: the full research plan (question, hypothesis, data access, representation, leakage controls, probes and
   baselines, metrics, limitations).
-- Outside the demo: `/latent/journey?s=4&level=research` (real attention probabilities for one head),
+- Outside the demo, the two new pages: `/latent/glassbox` (one real block opened: pick a candidate formula for each step
+  and see which one reproduces Qwen's recorded numbers; try RoPE at the wrong position) and `/latent/play` (guess the
+  next word of the Gettysburg Address or the Declaration against Qwen's recorded predictions).
+- Also outside the demo: `/latent/journey?s=4&level=research` (real attention probabilities for one head),
   `/latent/journey?s=6&level=research` (any of the 36 blocks, recorded values), `/latent/recall` (click any token of the
   Gettysburg Address for its rank trajectory), `/latent/labs/kv-cache` (cache size by dtype, batch and length).
 

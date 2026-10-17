@@ -14,5 +14,7 @@ export const PATHS = {
   streaming: `${BASE}/streaming_check.json`,
   recallPrecision: `${BASE}/recall_precision_check.json`,
   generation: `${BASE}/generation_steps.json`,
+  glassbox: `${BASE}/glassbox/manifest.json`,
+  recallVersions: `${BASE}/recall_versions.json`,
   metadata: `${BASE}/metadata.json`,
 } as const;

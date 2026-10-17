@@ -13,6 +13,9 @@ import { QwenBlockOrder } from "./landing";
 import { RmsCore } from "./labs/norm";
 import { RankByDepth, useRecall } from "./recall";
 import { LayerProbeSection, ResearchWorkspace } from "./research";
+import { RealRmsCheck } from "./glassbox";
+import { VersionsFinding, type RecallVersions } from "./versions";
+import type { GbManifest } from "@/lib/latent/glassbox";
 
 function Say({ children }: { children: React.ReactNode }) {
   return <blockquote className="border-l-4 border-[var(--role-attn)] pl-4 font-serif text-[22px] leading-snug text-ink sm:text-[26px]">{children}</blockquote>;
@@ -73,12 +76,12 @@ function StepRecall() {
 const NOTES = [
   "Point at the token strip, then at the id and the starting vector. Mention that real token splits come from the Qwen tokenizer and the 8-number vector is a toy stand-in for 4,096 numbers.",
   "Step through with the Next step button: copy, attention update, add, copy, MLP update, add. Stress that the residual stream is only added to. Open “Deeper” for the verified Qwen order if asked about Q/K normalization or RoPE.",
-  "Scale × 10: RMSNorm output unchanged. Offset +2: RMSNorm changes, LayerNorm does not. Then the gains: learned and separate from the input-dependent denominator. Recorded Qwen gains are on the RMSNorm lab page.",
-  "Teacher forcing: true text in, next token scored. 76.9% vs 34.6% (bfloat16). Rank-by-depth chart: diagnostic projection, not intermediate outputs. bfloat16 vs float32 flips up to 5 of 162 decisions on the control text.",
+  "Scale × 10: RMSNorm output unchanged. Offset +2: RMSNorm changes, LayerNorm does not. Then the real block 18: switch the candidate to LayerNorm and back. On Qwen's real vector the mean is about 2% of the RMS, so LayerNorm comes close, but RMSNorm fits clearly better, re-derived live from recorded tensors.",
+  "Teacher forcing: true text in, next token scored. 76.9% vs 34.6% (bfloat16). Rank-by-depth chart: diagnostic projection, not intermediate outputs. Then the surprise: 9 of the 73 Gettysburg misses are another Lincoln manuscript's wording (Hay: so nobly carried on; Nicolay: highly resolve these dead). Recall depends on the reference transcript; worth checking for the MLK text and the 86.3% plateau.",
   "The plan and controls are fixed; the dataset is gated and access is pending, so no result is shown. Ask about access to his recall scripts on turing/cerf and suggest the 14B vs ~27B depth comparison.",
 ];
 
-export function ProfessorDemo({ arch, layerProbe, tok, trace }: { arch: Architecture; layerProbe: LayerProbe | Pending; precision?: RecallPrecision; tok: TokenizerExamples; trace: TokenTrace }) {
+export function ProfessorDemo({ arch, layerProbe, tok, trace, glassbox, versions }: { arch: Architecture; layerProbe: LayerProbe | Pending; precision?: RecallPrecision; tok: TokenizerExamples; trace: TokenTrace; glassbox?: GbManifest; versions?: RecallVersions }) {
   const [s, setS] = useState(0);
   const [notes, setNotes] = useState(false);
   const [deeper, setDeeper] = useState(false);
@@ -86,8 +89,8 @@ export function ProfessorDemo({ arch, layerProbe, tok, trace }: { arch: Architec
   const steps = [
     { title: "Follow one token", say: "Last time I analyzed Qwen mainly from its outputs. After our discussion, I wanted to understand what is happening inside the model. Here is one sentence, followed token by token.", body: <StepTokens tok={tok} trace={trace} /> },
     { title: "One complete block", say: "Here is one complete Qwen transformer block, step by step.", body: <StepBlock arch={arch} /> },
-    { title: "RMSNorm vs LayerNorm", say: "This is the normalization operation we discussed.", body: <RmsCore arch={arch} compact={!deeper} /> },
-    { title: "Recall evidence", say: "This connects to the recall experiments. Instead of only checking the final next token, we can trace the true token's rank through the model.", body: <StepRecall /> },
+    { title: "RMSNorm vs LayerNorm", say: "This is the normalization operation we discussed. First a toy, then Qwen's own numbers.", body: <div className="grid gap-8"><RmsCore arch={arch} compact={!deeper} />{glassbox && <div className="grid gap-2"><h3 className="font-serif text-[24px] font-semibold">Now the real model: which formula reproduces Qwen&apos;s block 18?</h3><RealRmsCheck manifest={glassbox} block={1} /></div>}</div> },
+    { title: "Recall evidence", say: "This connects to the recall experiments. Instead of only checking the final next token, we can trace the true token's rank through the model.", body: <div className="grid gap-8"><StepRecall />{versions && <VersionsFinding v={versions} compact />}</div> },
     { title: "Human vs AI: plan and status", say: "Next, I want to measure whether these representations carry information that separates human from AI writing, and where. The plan is ready; the data access is pending.", body: <div className="grid gap-4">{deeper && <ResearchWorkspace arch={arch} />}<LayerProbeSection lp={layerProbe} /></div> },
   ];
   const n = steps.length;

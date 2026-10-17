@@ -7,5 +7,5 @@ export const metadata: Metadata = { title: "5-minute professor demo" };
 export default async function DemoPage() {
   const d = await loadLatent();
   if (!d.arch || !d.tok || !d.trace) return <p role="alert" className="text-[13px] text-flag">Artifacts could not be loaded.</p>;
-  return <ProfessorDemo arch={d.arch} layerProbe={d.layerProbe} precision={d.recallPrecision} tok={d.tok} trace={d.trace} />;
+  return <ProfessorDemo arch={d.arch} layerProbe={d.layerProbe} precision={d.recallPrecision} tok={d.tok} trace={d.trace} glassbox={d.glassbox} versions={d.recallVersions} />;
 }

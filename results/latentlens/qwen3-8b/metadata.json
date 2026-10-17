@@ -1,8 +1,8 @@
 {
  "schema": "latentlens.metadata/1",
  "experiment_id": "latentlens-qwen3-8b",
- "exported": "2026-10-16T03:52:19+00:00",
- "git_commit": "0f4fd281b51be26d7aa4e5b5a074d79b36ab7001-dirty",
+ "exported": "2026-10-16T22:08:37+00:00",
+ "git_commit": "cc886f7b88092f5940b11bfb8a063226f42288a2-dirty",
  "model_id": "Qwen/Qwen3-8B-Base",
  "model_revision": "49e3418fbbbca6ecbdf9608b4d22e5a407081db4",
  "tokenizer_id": "Qwen/Qwen3-8B-Base",
@@ -13,14 +13,19 @@
   "architecture.json": "ok",
   "component_probe.json": "pending",
   "generation_steps.json": "ok",
+  "glassbox/manifest.json": "ok",
   "layer_probe.json": "pending",
   "pca/index.json": "pending",
   "recall_precision_check.json": "ok",
   "recall_probe.json": "ok",
+  "recall_versions.json": "ok",
   "rmsnorm_probe.json": "pending",
   "streaming_check.json": "ok",
   "token_trace.json": "ok",
-  "tokenizer_examples.json": "ok"
+  "tokenizer_examples.json": "ok",
+  "glassbox/layer_00.bin": "ok",
+  "glassbox/layer_17.bin": "ok",
+  "glassbox/layer_35.bin": "ok"
  },
  "learn_mode": {
   "architecture": "ok",

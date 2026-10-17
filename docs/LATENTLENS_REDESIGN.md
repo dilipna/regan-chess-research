@@ -55,6 +55,24 @@ T = 0 handled as greedy; recorded Qwen at its recorded temperatures only), KV ca
 recomputed, illustrative operation counts, size estimate with dtype / batch / length and overhead excluded), one training
 step (prediction, loss, gradient, update).
 
+## Additions after the first redesign
+
+- **Glass Box** (`/latent/glassbox`). Every intermediate tensor of blocks 1, 18 and 36 of the real Qwen3-8B-Base, recorded
+  for the last token of "The researcher opened the notebook" (`capture_glassbox.py`, real 8B run on the streaming runner).
+  The browser re-derives the 10 operations that do not need weights (RMSNorm before attention, q_norm, k_norm, RoPE,
+  softmax of scaled scores with grouped KV heads, weighted sum of values, first residual add, RMSNorm before the MLP,
+  SwiGLU product, second residual add) and ranks candidate formulas by median relative error. Acceptance: the documented
+  formula is best by at least 3x and its maximum relative error is under 0.03 (bfloat16 precision); this holds in all
+  three blocks and is enforced by `tests/glassbox.test.ts`. The 4 matrix multiplications are listed as not derivable
+  without the 16 GB of weights. Finding worth showing: LayerNorm comes close to RMSNorm on these inputs because the
+  mean is only about 1 to 3% of the RMS; median error still separates them.
+- **Mistake, or another version?** (on `/latent/recall` and demo step 4). `analyze_recall_versions.py` compares each of
+  Qwen's 73 Gettysburg misses with the Nicolay, Hay, Everett and Bancroft manuscripts (the scored text is the Bliss copy).
+  9 misses are exactly another manuscript's wording, 17 are punctuation or formatting, 47 are other. Strict recall 76.9%,
+  79.7% if any manuscript's wording is accepted. One passage, exploratory; the caveats are shown with it.
+- **You vs Qwen** (`/latent/play`). Ten deterministic rounds of guessing a whole-word next token, scored against Qwen's
+  recorded top-1 prediction and rank; a miss that matches another manuscript is called out. Recorded data only.
+
 ## Data honesty rules (enforced by tests)
 
 - Every visual carries one of: **Toy calculation**, **Recorded Qwen measurement**, **Live model computation** (not used:
