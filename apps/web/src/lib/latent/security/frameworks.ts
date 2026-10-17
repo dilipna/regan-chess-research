@@ -1,6 +1,6 @@
 // AI-security frameworks, checked on the date below. Editions change; each entry says what was verified where.
 
-export const FRAMEWORKS_CHECKED = "17 October 2026";
+export const FRAMEWORKS_CHECKED = "2026-10-17";
 
 export interface Framework { name: string; version: string; source: string; url: string; covers: string; labs: string[]; note?: string }
 
@@ -47,3 +47,15 @@ export const REDTEAM_STEPS = [
 ] as const;
 
 export const REPORT_FIELDS = ["Title", "Summary", "Affected component", "Prerequisites", "Threat model", "Reproduction in sandbox", "Observed behavior", "Expected behavior", "Impact", "Severity rationale", "Evidence", "Root cause", "Recommended mitigation", "Regression test", "Residual risk"] as const;
+
+/** Which curriculum topics each framework maps to (topic slugs; checked by tests). */
+export const FRAMEWORK_TOPICS: Record<string, string[]> = {
+  "OWASP Top 10 for LLM Applications": ["prompt-injection", "privacy-attacks", "agent-security", "supply-chain", "poisoning", "unbounded-consumption", "rag-security", "output-handling"],
+  "OWASP Top 10 for Agentic Applications": ["agent-security", "memory-security", "mcp-security", "supply-chain", "output-handling"],
+  "OWASP Agent Control Standard (ACS)": ["agent-security", "defenses"],
+  "NIST AI 100-2e2025: Adversarial Machine Learning taxonomy": ["prompt-injection", "jailbreaks", "poisoning", "privacy-attacks", "model-extraction", "supply-chain"],
+  "NIST AI RMF 1.0 and Generative AI Profile (NIST AI 600-1)": ["threat-modeling", "red-teaming", "defenses"],
+  "MITRE ATLAS": ["red-teaming", "model-extraction", "poisoning"],
+  "Google Secure AI Framework (SAIF)": ["security-layers", "threat-modeling", "defenses"],
+  "Model Context Protocol specification": ["mcp", "mcp-security"],
+};
