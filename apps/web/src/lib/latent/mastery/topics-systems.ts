@@ -352,7 +352,7 @@ export const SYSTEMS: Topic[] = [
         { t: "Embeddings are always public", why: "Embedding leakage is a separate risk." },
       ] },
     ],
-    links: [{ href: "/latent/security/lab/rag", label: "Security lab: RAG poisoning and cross-tenant retrieval" }],
+    links: [{ href: "/latent/security/labs/rag", label: "Security lab 7: RAG poisoning and cross-tenant retrieval" }],
   },
   // ---------------- Level 5: agents ----------------
   {
@@ -390,7 +390,7 @@ export const SYSTEMS: Topic[] = [
         { t: "It cannot; tools are always safe", why: "Tools act on real systems." },
       ] },
     ],
-    links: [{ href: "/latent/security/lab/tools", label: "Security lab: tool permissions and blast radius" }, { href: "/latent/story/agents", label: "Storybook: Pip the agent" }],
+    links: [{ href: "/latent/security/labs/excessive-agency", label: "Security lab 5: tool permissions and blast radius" }, { href: "/latent/story/agents", label: "Storybook: Pip the agent" }],
     story: "agents",
   },
   {
@@ -427,7 +427,7 @@ export const SYSTEMS: Topic[] = [
         { t: "It cannot be deleted", why: "It can, if memory has review and deletion controls." },
       ] },
     ],
-    links: [{ href: "/latent/security/lab/memory", label: "Security lab: memory poisoning" }],
+    links: [{ href: "/latent/security/labs/memory-poisoning", label: "Security lab 6: memory poisoning" }],
   },
   {
     slug: "mcp", track: "mastery", level: 5, title: "MCP: the Model Context Protocol", prereqs: ["agents"],

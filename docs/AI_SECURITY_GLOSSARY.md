@@ -8,6 +8,8 @@ _Generated from the LatentLens curriculum data (apps/web/src/lib/latent). Edit t
 
 **Security foundations, mapped to LLM systems.** Security is about protecting assets from adversaries by controlling who can do what, assuming some components will fail. (Level 7; `/latent/security/learn/security-foundations`)
 
+**Web security basics every AI engineer needs.** An LLM app is still a web app: model output, model-chosen URLs and model-chosen ids are untrusted input, and the classic web rules apply to them unchanged. (Level 7; `/latent/security/learn/web-security`)
+
 **Threat modeling an AI application.** If you cannot draw the trust boundaries, you cannot secure the AI system. (Level 7; `/latent/security/learn/threat-modeling`)
 
 **Model, application, infrastructure, people.** AI security has four concentric layers, and most real incidents happen in the outer ones, not inside the weights. (Level 7; `/latent/security/learn/security-layers`)

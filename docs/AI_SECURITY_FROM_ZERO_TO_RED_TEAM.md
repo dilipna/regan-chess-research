@@ -46,6 +46,49 @@ Route: `/latent/security/learn/security-foundations`
 
 **Interview (level 5).** Map the CIA triad onto a customer-support chatbot with retrieval.
 
+### Web security basics every AI engineer needs
+
+Route: `/latent/security/learn/web-security`
+
+**In ten seconds.** An LLM app is still a web app: model output, model-chosen URLs and model-chosen ids are untrusted input, and the classic web rules apply to them unchanged.
+
+**Where.** Wherever model output meets an interpreter or a privileged request: the browser, the server's network, the database, internal APIs.
+
+**Mechanism.**
+- Authentication proves who the user is; authorization decides what they may do. Broken access control (for example, reading another customer's order by changing its id) is the top web risk in OWASP's 2021 list.
+- Cross-site scripting: text shown as HTML runs as code in the viewer's browser with their session. Fix: encode output for its context and add a Content-Security-Policy.
+- Server-side request forgery: a server fetches a URL chosen by someone else and reaches internal services or the cloud metadata service. Fix: parse the URL, allow exact https hosts, block private addresses and re-check the resolved IP at connection time.
+- Injection: data concatenated into SQL or shell commands becomes code. Fix: parameterized queries, allowlisted commands, no shell, strict schemas for tool arguments.
+
+| Input | Operation | Output |
+|---|---|---|
+| `model output` | context-aware encoding | `safe text in the page` |
+| `model-chosen URL` | parse, allowlist host, check IP | `fetch or refuse` |
+
+**LLM property behind it.**
+- (generic) The LLM property behind it: the model's output is sampled from a distribution conditioned on its whole context, including untrusted text, so it carries no guarantee about what it contains.
+- (generic) Tool calls are requests the application makes on the user's behalf; the model choosing the arguments does not make them authorized.
+
+**Why it exists.** Most real-world LLM application incidents are classic web vulnerabilities reached through a new input path.
+
+**Without it.** Skipping these basics turns a chatbot into a script injector, an internal network scanner or a data-export tool.
+
+**Training vs inference.** Inference and application layer only: no training change fixes them; the application must enforce them.
+
+**Security lens.** This topic is the foundation for improper output handling, excessive agency and agent security; lab 2 lets you break and fix each bug.
+
+**Common confusion.** “Authentication means the request is allowed.” A signed-in user is known, not authorized for everything; every object access needs its own check.
+
+**Teach back.** Explain XSS, SSRF and broken access control and how each appears in an LLM app.
+- [ ] authentication vs authorization
+- [ ] XSS via rendered model output
+- [ ] markdown images as a data leak
+- [ ] SSRF via a URL tool and the metadata service
+- [ ] IDOR via a model-chosen id
+- [ ] parameterized queries and allowlists
+
+**Interview (level 3).** Your agent has a fetch_url tool. How do you stop SSRF?
+
 ### Threat modeling an AI application
 
 Route: `/latent/security/learn/threat-modeling`
