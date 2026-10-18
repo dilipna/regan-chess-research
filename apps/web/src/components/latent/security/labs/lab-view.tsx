@@ -4,6 +4,7 @@
 
 import { labBySlug } from "@/lib/latent/security/labs";
 import { hrefFor, topicBySlug } from "@/lib/latent/mastery";
+import { MarkDone } from "../../progress/route-map";
 import { LabLesson } from "../lab-lesson";
 import { AgencyLab, InjectionLab, LeakLab, MemoryLab } from "./agent-labs";
 import { ConsumptionLab, EvalLab, OutputLab, RagLab, WebBasicsLab } from "./system-labs";
@@ -28,6 +29,7 @@ export function LabView({ slug }: { slug: string }) {
     <LabLesson title={`Lab ${lab.n}: ${lab.title}`} intro={lab.intro} text={lab.text}
       topicLinks={lab.text.topics.map((t) => ({ href: hrefFor(t), label: topicBySlug(t)?.title ?? t }))}>
       {INTERACTIVE[slug]?.()}
+      <div className="mt-6 border-t border-rule pt-4"><MarkDone id={`l:${slug}`} label="I finished this lab: mark it done" /></div>
     </LabLesson>
   );
 }

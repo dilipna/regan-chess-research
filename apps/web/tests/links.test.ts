@@ -113,3 +113,24 @@ describe("go deeper has no duplicate destinations", () => {
     }
   });
 });
+
+describe("your route", async () => {
+  const { STAGES, EMPTY_ROUTE, toggle } = await import("@/lib/latent/route-progress");
+  it("covers all six stages with unique ids, and every item links somewhere real", () => {
+    expect(STAGES.map((s) => s.n)).toEqual([0, 1, 2, 3, 4, 5]);
+    const items = STAGES.flatMap((s) => s.items);
+    expect(new Set(items.map((i) => i.id)).size).toBe(items.length);
+    for (const it of items) expect(resolves(it.href), `${it.id} -> ${it.href}`).toBe(true);
+    expect(STAGES[0].items).toHaveLength(FOUNDATIONS.length);
+    expect(STAGES[2].items).toHaveLength(BUILD_STEPS.length);
+    expect(STAGES[3].items.length + STAGES[4].items.length).toBe(TOPICS.length);
+    expect(STAGES[5].items).toHaveLength(LAB_LIST.length + LABS.length);
+  });
+  it("toggling marks and unmarks an item without touching others", () => {
+    const a = toggle(toggle(EMPTY_ROUTE, "f:vectors", 1), "b:1", 2);
+    expect(Object.keys(a.done).sort()).toEqual(["b:1", "f:vectors"]);
+    const b = toggle(a, "f:vectors", 3);
+    expect(Object.keys(b.done)).toEqual(["b:1"]);
+    expect(EMPTY_ROUTE.done).toEqual({});
+  });
+});

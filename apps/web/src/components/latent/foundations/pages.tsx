@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { BUILD_STEPS, SAMPLE_RUN } from "@/lib/latent/build";
 import { FOUNDATIONS, ROUTE, type Foundation } from "@/lib/latent/foundations";
+import { MarkDone } from "../progress/route-map";
 import { FoundationWidget } from "./widgets";
 
 const atlasHref = (part: string) => `/latent?part=${part}#atlas`;
@@ -46,7 +47,10 @@ export function FoundationsIndex() {
       </header>
 
       <section aria-labelledby="route" className="mt-12 rounded-3xl border border-rule bg-paper p-5 sm:p-7">
-        <h2 id="route" className="mb-6 text-[13px] font-medium text-ink-3">The whole route, from zero to red team</h2>
+        <div className="mb-6 flex flex-wrap items-baseline justify-between gap-2">
+          <h2 id="route" className="text-[13px] font-medium text-ink-3">The whole route, from zero to red team</h2>
+          <Link href="/latent/progress" className="text-[13px] text-[var(--role-resid-ink)] underline underline-offset-2">Track your progress →</Link>
+        </div>
         <Route current={0} />
       </section>
 
@@ -137,7 +141,12 @@ export function FoundationPage({ f }: { f: Foundation }) {
         </div>
       </section>
 
-      <nav aria-label="Modules" className="mt-14 grid gap-3 border-t border-rule pt-6 sm:grid-cols-2">
+      <div className="mt-8 flex flex-wrap items-center gap-3">
+        <MarkDone id={`f:${f.slug}`} label="I can explain this: mark the module done" />
+        <Link href="/latent/progress" className="text-[13px] text-ink-3 underline underline-offset-2 hover:text-ink">See your route</Link>
+      </div>
+
+      <nav aria-label="Modules" className="mt-10 grid gap-3 border-t border-rule pt-6 sm:grid-cols-2">
         {prev ? <Link href={`/latent/foundations/${prev.slug}`} className="rounded-2xl border border-rule px-5 py-4 hover:border-rule-strong"><span className="text-[12px] text-ink-4">← Previous</span><span className="mt-1 block text-[15px] text-ink">{prev.title}</span></Link> : <span />}
         {next
           ? <Link href={`/latent/foundations/${next.slug}`} className="rounded-2xl border border-rule px-5 py-4 text-right hover:border-rule-strong"><span className="text-[12px] text-ink-4">Next →</span><span className="mt-1 block text-[15px] text-ink">{next.title}</span></Link>
@@ -190,6 +199,7 @@ export function BuildPage() {
               <div className="grid gap-1 text-[13px] sm:text-right">
                 <Link href={atlasHref(s.atlas.part)} className="text-[var(--role-attn-ink)] hover:underline">Atlas: {s.atlas.label} →</Link>
                 {s.foundation && <Link href={`/latent/foundations/${s.foundation}`} className="text-ink-3 hover:text-ink hover:underline">Foundations first →</Link>}
+                <MarkDone id={`b:${s.n}`} label="Checks pass" className="mt-1 sm:ml-auto sm:w-fit" />
               </div>
             </li>
           ))}
