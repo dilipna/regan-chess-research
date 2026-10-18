@@ -17,6 +17,7 @@ const PRIMARY = [
 ];
 const MORE: { group: string; links: { href: string; label: string }[] }[] = [
   { group: "Learn", links: [
+    { href: "/latent/progress", label: "Your route" },
     { href: "/latent/mastery", label: "Mastery path" },
     { href: "/latent/story", label: "Storybook" },
     { href: "/latent/journey", label: "Guided journey" },
