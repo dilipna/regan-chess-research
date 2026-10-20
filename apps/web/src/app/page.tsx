@@ -1,8 +1,14 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { PATHS } from "@/lib/latent/paths";
 import type { Recall } from "@/lib/latent/types";
 import { preload } from "@/lib/server-data";
 import { PHASES, type Phase } from "@/lib/site/phases";
+
+export const metadata: Metadata = {
+  title: { absolute: "Chess & Model Internals" },
+  description: "A research project in two phases: what models choose on chess positions, and where inside Qwen3-8B the right next word appears.",
+};
 
 // Home: the whole project in one glance. Two phases, one picture each, three places to start, and the full index
 // folded away at the bottom.
