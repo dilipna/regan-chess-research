@@ -41,5 +41,6 @@ Microscope are in `docs/regan-demo-backup/` (`section-1.png` to `section-9.png`,
 
 ## Online
 
-- Production (stable, older design): https://chessassistlens.vercel.app/latent
-- The new design, professor flow and proposal on this branch are not on production.
+- Live site (this version, deployed 2026-10-20): https://chessassistlens.vercel.app
+- Professor demo: https://chessassistlens.vercel.app/latent/professor
+- Proposed experiment: https://chessassistlens.vercel.app/latent/proposal

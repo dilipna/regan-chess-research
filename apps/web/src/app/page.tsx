@@ -19,7 +19,7 @@ function ThreeReaders() {
     <svg viewBox="0 0 300 120" className="h-auto w-full" role="img" aria-label="Illustration: one chess position read by three models, each suggesting a move">
       {Array.from({ length: n * n }, (_, i) => {
         const x = i % n, y = Math.floor(i / n);
-        return <rect key={i} x={20 + x * sq} y={8 + y * sq} width={sq} height={sq} fill={(x + y) % 2 ? "var(--board-dark)" : "var(--board-light)"} />;
+        return <rect key={i} x={20 + x * sq} y={8 + y * sq} width={sq} height={sq} fill={(x + y) % 2 ? "var(--square-dark)" : "var(--square-light)"} />;
       })}
       <circle cx={20 + 1.5 * sq} cy={8 + 3.5 * sq} r={8} fill="var(--ink)" />
       {readers.map((r, k) => {
@@ -104,11 +104,11 @@ export default async function Home() {
       <div className="grid items-stretch gap-5 md:grid-cols-[1fr_auto_1fr]">
         <PhaseCard phase={PHASES[0]} picture={<ThreeReaders />}
           caption="Illustration. One position, three models, three suggested moves."
-          finding="knowing what a human would play helps. Adding the human-move model to the statistical model raised the separation of controlled engine-assisted games from original ones, on held-out games, from 0.820 to 0.873 ROC-AUC. The language model's held-out evaluation is still pending." />
+          finding="adding a model of human play made engine-assisted games easier to tell apart, from 0.820 to 0.873 ROC-AUC on held-out games. The language model's held-out evaluation is still pending." />
         <div aria-hidden className="hidden items-center text-[28px] text-ink-4 md:flex">→</div>
         <PhaseCard phase={PHASES[1]} picture={recall ? <Climb recall={recall} /> : <p className="text-ink-3">Recall data not available.</p>}
           caption={g && last ? `Recorded on Qwen3-8B-Base, ${g.n_scored} words of the Gettysburg Address: the median rank of the correct next word goes from ${g.depth_summary[0].median_rank.toLocaleString("en-US")} at the first layer to ${last.median_rank} at the last. Earlier layers are read through a diagnostic projection.` : ""}
-          finding="on a memorized text, the correct next word typically becomes the model's first choice only in the last few layers. The next question is whether a bigger model gets there the same way." />
+          finding="on a memorized text, the correct next word usually becomes the model's top choice only in the last few layers." />
       </div>
 
       <section aria-labelledby="start-title" className="grid gap-4">
@@ -137,16 +137,23 @@ export default async function Home() {
               {p.groups.map((grp) => (
                 <div key={grp.title} className="grid gap-1">
                   <div className="text-[12px] font-medium tracking-wide text-ink-4 uppercase">{grp.title}</div>
-                  <ul className="grid gap-0.5">
-                    {grp.links.map((l) => (
-                      <li key={l.href}>
-                        <Link href={l.href} className="grid grid-cols-[2.5rem_minmax(0,1fr)] gap-2 rounded px-1 py-1 text-[14.5px] hover:bg-paper-2">
+                  {grp.compact ? (
+                    <p className="text-[14px] leading-relaxed text-ink-3">
+                      {grp.links.map((l, k) => <span key={l.href}>{k > 0 && <span aria-hidden> · </span>}<Link href={l.href} className="text-ink-2 underline-offset-2 hover:text-ink hover:underline">{l.label}</Link></span>)}
+                    </p>
+                  ) : (
+                    <ul className="grid gap-0.5">
+                      {grp.links.map((l) => (
+                        <li key={l.href} className="grid grid-cols-[2.5rem_minmax(0,1fr)] gap-2 rounded px-1 py-1 text-[14.5px] hover:bg-paper-2">
                           <span className="num text-ink-4">{l.n}</span>
-                          <span><span className="text-ink">{l.label}</span> <span className="text-ink-3">· {l.blurb}</span></span>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
+                          <span>
+                            <Link href={l.href} className="text-ink hover:underline">{l.label}</Link> <span className="text-ink-3">· {l.blurb}</span>
+                            {l.parts && <span className="mt-0.5 block text-[13px] text-ink-4">{l.parts.map((x, k) => <span key={x.href}>{k > 0 && " · "}<Link href={x.href} className="hover:text-ink">{x.label}</Link></span>)}</span>}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
               ))}
             </div>
