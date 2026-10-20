@@ -60,6 +60,22 @@ existing workflow exactly. Could you walk me through the files and scripts on tu
 
 Then open the checklist (section 9) and go through the questions.
 
+**If he engages with the experiment · open `/latent/proposal` (Phase 2, subsection 2.21)**
+
+"I wrote the plan down so you can change it. It has five stages: reproduce your run exactly, separate the
+tokenization effect, trace the known next token through the layers of both models, compare the cases where they
+agree and disagree, with will versus shall as the first case study, and only then ask whether the plateau is real.
+The table shows what I'd need to confirm with you and what I'd measure. Which part would you change?"
+
+## 30-SECOND EXPLANATION OF THE PROPOSED APPROACH
+
+"Your two runs give almost the same recall, 86.31 and 86.34 percent, but that single number could come from
+several causes. So I'd first reproduce your recall exactly with your scripts, checkpoints and definition. Then I'd
+separate tokenization, since the larger run had about 40 more tokens. Then, at every position where your text gives
+the known next token, I'd trace its rank through every layer of both models on a relative-depth axis, and look at
+where they agree, where they disagree, and at the will-versus-shall point. That tells us whether the same final
+recall hides a different internal trajectory."
+
 ## 60-SECOND VERSION
 
 "After our last meeting I studied Qwen's internals, not just its outputs. I can now name the exact points where a

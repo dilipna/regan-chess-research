@@ -57,9 +57,12 @@ not the model's predictions at those layers.
 What already exists for this: `scripts/latentlens/run_recall_analysis.py` records the output-level values above and,
 per layer, the true-token rank, top projected token and margin for Qwen3-8B-Base (Gettysburg run, bf16 and fp32).
 Activation RMS per layer is not recorded by it yet (it is in the one-sentence trace), and a named competing token
-(for will vs shall) is not recorded either. `scripts/latentlens/compare_recall_models.py` `scripts/latentlens/compare_recall_models.py` compares
+(for will vs shall) is not recorded either. `scripts/latentlens/compare_recall_models.py` compares
 two such runs. Neither has been run on the 14B or larger checkpoints. Its recall definition (top-1 next-token under
 teacher forcing) may differ from Professor Regan's; his definition takes precedence.
+
+Full written plan (five stages, comparison table, confirmation list): `/latent/proposal`, the last subsection
+(2.21) of Phase 2 on the site.
 
 # Special cases
 
