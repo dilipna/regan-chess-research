@@ -259,7 +259,7 @@ function Node({ n, on, dim, hide, num, onPick, onDive }: {
   if (n.kind === "op") {
     return (
       <g {...common}>
-        <circle cx={n.x} cy={n.y} r={n.w / 2} fill="#0b0f17" stroke={c} strokeWidth={on ? 2.4 : 1.8} />
+        <circle cx={n.x} cy={n.y} r={n.w / 2} fill="#070b09" stroke={c} strokeWidth={on ? 2.4 : 1.8} />
         <text x={n.x} y={n.y + 1} textAnchor="middle" dominantBaseline="central" fill={on ? "var(--ink)" : ROLE_INK[n.role]}
           fontSize={hide ? 14 : 19} fontWeight={600}>{label}</text>
       </g>
@@ -271,7 +271,7 @@ function Node({ n, on, dim, hide, num, onPick, onDive }: {
     return (
       <g {...common}>
         {[2, 1].map((k) => (
-          <rect key={k} x={x0 + k * 6} y={y0 + k * 6} width={n.w} height={n.h} rx={14} fill="#0b0f17" stroke="var(--rule-strong)" strokeWidth={1} opacity={1 - k * 0.25} />
+          <rect key={k} x={x0 + k * 6} y={y0 + k * 6} width={n.w} height={n.h} rx={14} fill="#070b09" stroke="var(--rule-strong)" strokeWidth={1} opacity={1 - k * 0.25} />
         ))}
         <rect className="atlas-box" x={x0} y={y0} width={n.w} height={n.h} rx={14} fill="#0d1320" stroke={on ? "var(--ink)" : "var(--role-resid)"} strokeWidth={on ? 2 : 1.4} />
         <rect className="atlas-ring" x={x0 - 4} y={y0 - 4} width={n.w + 8} height={n.h + 8} rx={17} fill="none" stroke="none" />
@@ -296,7 +296,7 @@ function Node({ n, on, dim, hide, num, onPick, onDive }: {
   return (
     <g {...common}>
       <rect className="atlas-box" x={x0} y={y0} width={n.w} height={n.h} rx={11}
-        fill={on ? `color-mix(in oklab, ${c} 20%, #0b0f17)` : "#0d1320"} stroke={c} strokeOpacity={on ? 1 : 0.6} strokeWidth={on ? 2 : 1.2} />
+        fill={on ? `color-mix(in oklab, ${c} 20%, #070b09)` : "#0d1320"} stroke={c} strokeOpacity={on ? 1 : 0.6} strokeWidth={on ? 2 : 1.2} />
       <rect className="atlas-ring" x={x0 - 4} y={y0 - 4} width={n.w + 8} height={n.h + 8} rx={14} fill="none" stroke="none" />
       <rect x={x0} y={y0 + 8} width={3} height={n.h - 16} rx={1.5} fill={c} opacity={0.9} />
       {hide && <text x={x0 + 14} y={n.y + 1} dominantBaseline="central" fill="var(--ink-4)" fontSize={10.5} fontFamily="var(--font-figures), ui-monospace, monospace">{num}</text>}
@@ -423,7 +423,7 @@ function Detail({ node, hidden, seeIt, onReveal, onDive, onClose }: {
       {seeIt}
 
       {p.hook && (
-        <div className="mt-5 rounded-2xl border px-4 py-3" style={{ borderColor: `color-mix(in oklab, ${c} 45%, transparent)`, background: `color-mix(in oklab, ${c} 9%, #0b0f17)` }}>
+        <div className="mt-5 rounded-2xl border px-4 py-3" style={{ borderColor: `color-mix(in oklab, ${c} 45%, transparent)`, background: `color-mix(in oklab, ${c} 9%, #070b09)` }}>
           <div className="text-[10.5px] font-medium tracking-[0.14em] uppercase" style={{ color: ROLE_INK[node.role] }}>Remember it as</div>
           <p className="mt-1 text-[15px] leading-snug text-ink">{p.hook}</p>
         </div>
@@ -431,12 +431,12 @@ function Detail({ node, hidden, seeIt, onReveal, onDive, onClose }: {
 
       <div className="mt-5">
         <div className="text-[10.5px] font-medium tracking-[0.14em] text-ink-4 uppercase">Shape</div>
-        <code className="mt-1.5 block rounded-xl border border-rule bg-[#080b12] px-3 py-2 font-mono text-[12px] leading-relaxed break-words text-ink-2">{p.shapes}</code>
+        <code className="mt-1.5 block rounded-xl border border-rule bg-[#040706] px-3 py-2 font-mono text-[12px] leading-relaxed break-words text-ink-2">{p.shapes}</code>
       </div>
 
       <Section title="How it works">
         <p>{p.mechanism}</p>
-        {p.equation && <code className="mt-2.5 block rounded-xl border border-rule bg-[#080b12] px-3 py-2 font-mono text-[12.5px] leading-relaxed break-words text-ink">{p.equation}</code>}
+        {p.equation && <code className="mt-2.5 block rounded-xl border border-rule bg-[#040706] px-3 py-2 font-mono text-[12.5px] leading-relaxed break-words text-ink">{p.equation}</code>}
       </Section>
       <Section title="Why it exists"><p>{p.why}</p></Section>
       <Section title="Don’t confuse" tone="warn"><p>{p.confusion}</p></Section>
@@ -444,7 +444,7 @@ function Detail({ node, hidden, seeIt, onReveal, onDive, onClose }: {
       {node.dive && (
         <button type="button" onClick={() => onDive(node.dive!)}
           className="mt-6 flex w-full items-center justify-between rounded-2xl border px-4 py-3 text-left text-[14px] text-ink hover:brightness-125"
-          style={{ borderColor: c, background: `color-mix(in oklab, ${c} 12%, #0b0f17)` }}>
+          style={{ borderColor: c, background: `color-mix(in oklab, ${c} 12%, #070b09)` }}>
           <span>Step inside: {node.label}</span><span aria-hidden>→</span>
         </button>
       )}

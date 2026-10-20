@@ -1,8 +1,8 @@
 import type { MetadataRoute } from "next";
 
 const SITE = "https://chessassistlens.vercel.app";
-const PATHS = ["", "/present", "/about", "/research", "/walkthrough", "/compare", "/examples", "/demo", "/results", "/methodology", "/analyze",
-  "/latent", "/latent/learn", "/latent/research", "/latent/recall", "/latent/methods", "/latent/demo", "/latent/project", "/latent/foundations", "/latent/build"];
+const PATHS = ["", "/chess", "/present", "/about", "/research", "/walkthrough", "/compare", "/examples", "/demo", "/results", "/methodology", "/analyze",
+  "/latent", "/latent/professor", "/latent/learn", "/latent/research", "/latent/recall", "/latent/methods", "/latent/demo", "/latent/project", "/latent/foundations", "/latent/build"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();

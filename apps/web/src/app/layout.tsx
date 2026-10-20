@@ -1,15 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
+import { IBM_Plex_Mono, IBM_Plex_Sans, Space_Grotesk } from "next/font/google";
 import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
 
-// Chess-book typography: a classical Garamond for headings, IBM Plex for text and figures.
+// Minimal technical typography: a geometric grotesk for headings, IBM Plex for text and figures.
 const body = IBM_Plex_Sans({ variable: "--font-body", subsets: ["latin"], weight: ["400", "500", "600", "700"] });
 const mono = IBM_Plex_Mono({ variable: "--font-figures", subsets: ["latin"], weight: ["400", "500", "600"] });
-const display = Cormorant_Garamond({ variable: "--font-display", subsets: ["latin"], weight: ["500", "600", "700"] });
-const displayItalic = Cormorant_Garamond({ variable: "--font-display-italic", subsets: ["latin"], weight: ["500", "600"], style: "italic" });
+const display = Space_Grotesk({ variable: "--font-display", subsets: ["latin"], weight: ["400", "500", "600", "700"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://chessassistlens.vercel.app"),
@@ -28,13 +27,13 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f6f3ec",
-  colorScheme: "light",
+  themeColor: "#030504",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${body.variable} ${mono.variable} ${display.variable} ${displayItalic.variable} h-full antialiased`}>
+    <html lang="en" className={`${body.variable} ${mono.variable} ${display.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
         <TooltipProvider delayDuration={150}>
           <Nav />

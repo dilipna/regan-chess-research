@@ -17,7 +17,7 @@ function Toggle({ on, onClick, label, what }: { on: boolean; onClick: () => void
     <button type="button" aria-pressed={on} onClick={onClick}
       className={cn("flex w-full items-start gap-3 rounded-xl border px-3 py-2.5 text-left transition-colors", on ? "border-[var(--role-norm)] bg-[var(--role-norm-soft)]" : "border-rule bg-paper hover:border-rule-strong")}>
       <span aria-hidden className={cn("mt-0.5 flex h-4 w-7 shrink-0 items-center rounded-full p-0.5", on ? "bg-[var(--role-norm)]" : "bg-paper-3")}>
-        <span className={cn("h-3 w-3 rounded-full bg-[#06080d] transition-transform", on && "translate-x-3")} />
+        <span className={cn("h-3 w-3 rounded-full bg-[#030504] transition-transform", on && "translate-x-3")} />
       </span>
       <span><span className="block text-[13.5px] font-medium text-ink">{label}</span><span className="mt-0.5 block text-[12px] leading-snug text-ink-3">{what}</span></span>
     </button>
@@ -25,7 +25,7 @@ function Toggle({ on, onClick, label, what }: { on: boolean; onClick: () => void
 }
 
 const Code = ({ children, bad }: { children: React.ReactNode; bad?: boolean }) => (
-  <pre className={cn("overflow-x-auto rounded-xl border p-3 font-mono text-[12px] leading-relaxed whitespace-pre-wrap break-words", bad ? "border-[color-mix(in_oklab,var(--bad)_40%,transparent)] bg-[var(--bad-soft)] text-ink" : "border-rule bg-[#080b12] text-ink-2")}>{children}</pre>
+  <pre className={cn("overflow-x-auto rounded-xl border p-3 font-mono text-[12px] leading-relaxed whitespace-pre-wrap break-words", bad ? "border-[color-mix(in_oklab,var(--bad)_40%,transparent)] bg-[var(--bad-soft)] text-ink" : "border-rule bg-[#040706] text-ink-2")}>{children}</pre>
 );
 
 // ---------- lab 2 ----------
@@ -160,7 +160,7 @@ export function OutputLab() {
       <Choice label="Output destination" value={id} onChange={setId} options={OUTPUT_CASES.map((x) => ({ id: x.id, label: { html: "Web page", sql: "SQL database", shell: "Shell", "tool-args": "Tool arguments" }[x.kind] }))} />
       <H n={2}>The model&apos;s output (edit it)</H>
       <textarea value={text} onChange={(e) => setEdits({ ...edits, [id]: e.target.value })} rows={3} aria-label="Model output"
-        className="w-full rounded-xl border border-rule-strong bg-[#080b12] p-3 font-mono text-[12.5px] text-ink outline-none focus:border-[var(--role-resid)]" />
+        className="w-full rounded-xl border border-rule-strong bg-[#040706] p-3 font-mono text-[12.5px] text-ink outline-none focus:border-[var(--role-resid)]" />
       <div className="flex flex-wrap gap-2">
         <button type="button" onClick={() => setEdits({ ...edits, [id]: c.output })} className="rounded-full border border-rule-strong px-3 py-1 text-[12.5px] text-ink-2 hover:text-ink">Reset to the attack</button>
       </div>
@@ -199,7 +199,7 @@ export function ConsumptionLab() {
       </div>
       <H n={3}>Simulated cost</H>
       <div className="grid gap-2">
-        <div className="flex items-end gap-[2px] rounded-xl border border-rule bg-[#080b12] p-3" style={{ height: 140 }} role="img" aria-label={`Cumulative tokens over ${r.steps} steps, ending at ${r.total}`}>
+        <div className="flex items-end gap-[2px] rounded-xl border border-rule bg-[#040706] p-3" style={{ height: 140 }} role="img" aria-label={`Cumulative tokens over ${r.steps} steps, ending at ${r.total}`}>
           {r.costs.map((c, i) => <div key={i} className="flex-1 rounded-t-[2px]" style={{ height: `${Math.max(2, (c / ceiling) * 100)}%`, background: c > 20000 ? "var(--bad)" : "var(--role-resid)" }} />)}
         </div>
         <div className="flex flex-wrap justify-between gap-2 text-[13px] text-ink-2">

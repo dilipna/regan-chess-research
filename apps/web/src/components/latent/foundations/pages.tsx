@@ -21,7 +21,7 @@ export function Route({ current }: { current: number }) {
           <li key={r.n}>
             <Link href={r.href} aria-current={r.n === current ? "step" : undefined}
               className="group flex gap-3 rounded-2xl p-2 transition-colors hover:bg-paper md:block md:p-0 md:hover:bg-transparent">
-              <span className={`num flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 bg-[#06080d] font-mono text-[13px] ${r.n === current ? "border-[var(--role-resid)] text-ink shadow-[0_0_16px_-2px_var(--role-resid)]" : "border-rule-strong text-ink-3 group-hover:border-ink-4"}`}>{r.n}</span>
+              <span className={`num flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 bg-[#030504] font-mono text-[13px] ${r.n === current ? "border-[var(--role-resid)] text-ink shadow-[0_0_16px_-2px_var(--role-resid)]" : "border-rule-strong text-ink-3 group-hover:border-ink-4"}`}>{r.n}</span>
               <span className="block md:mt-3">
                 <span className={`block text-[14px] font-medium ${r.n === current ? "text-ink" : "text-ink-2 group-hover:text-ink"}`}>{r.title}</span>
                 <span className="mt-0.5 block text-[12.5px] leading-snug text-ink-4">{r.line}</span>
@@ -213,7 +213,7 @@ export function BuildPage() {
             A real run of the reference solution: a {SAMPLE_RUN.params.toLocaleString("en-US")}-parameter model trained on a small synthetic story corpus.
             The loss falls from {SAMPLE_RUN.loss[0]} to {SAMPLE_RUN.loss.at(-1)} nats per character.
           </p>
-          <pre className="mt-5 overflow-x-auto rounded-2xl border border-rule bg-[#080b12] p-4 font-mono text-[12.5px] leading-relaxed text-ink-2">{`cd learn/build
+          <pre className="mt-5 overflow-x-auto rounded-2xl border border-rule bg-[#040706] p-4 font-mono text-[12.5px] leading-relaxed text-ink-2">{`cd learn/build
 ../../.venv/Scripts/python -m pytest -k s06
 ../../.venv/Scripts/python train_tiny_gpt.py`}</pre>
         </div>

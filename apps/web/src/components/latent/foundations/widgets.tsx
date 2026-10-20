@@ -28,7 +28,7 @@ function Readout({ items }: { items: [string, React.ReactNode, string?][] }) {
   return (
     <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-rule bg-rule sm:grid-cols-4">
       {items.map(([k, v, c]) => (
-        <div key={k} className="bg-[#0b0f17] px-3 py-2">
+        <div key={k} className="bg-[#070b09] px-3 py-2">
           <dt className="text-[10.5px] text-ink-4">{k}</dt>
           <dd className="num mt-0.5 font-mono text-[15px]" style={{ color: c ?? "var(--ink)" }}>{v}</dd>
         </div>
@@ -124,7 +124,7 @@ function DotProduct() {
           return (
             <g key={k}>
               <circle cx={toX(v.x)} cy={toY(v.y)} r={14} fill="transparent" className="cursor-grab" onPointerDown={(e) => { (e.target as Element).setPointerCapture?.(e.pointerId); setDrag(k); }} />
-              <circle cx={toX(v.x)} cy={toY(v.y)} r={6} fill="#0b0f17" stroke={k === "a" ? "var(--role-resid)" : "var(--role-mlp)"} strokeWidth={2.5} pointerEvents="none" />
+              <circle cx={toX(v.x)} cy={toY(v.y)} r={6} fill="#070b09" stroke={k === "a" ? "var(--role-resid)" : "var(--role-mlp)"} strokeWidth={2.5} pointerEvents="none" />
               <text x={toX(v.x) + 10} y={toY(v.y) - 10} fontSize={14} fontWeight={600} fill={k === "a" ? "var(--role-resid-ink)" : "var(--role-mlp-ink)"} pointerEvents="none">{k}</text>
             </g>
           );
@@ -137,7 +137,7 @@ function DotProduct() {
           ["a · b", f2(dot)],
           ["angle", `${ang.toFixed(0)}°`],
         ]} />
-        <div className="rounded-xl border border-rule bg-[#0b0f17] px-4 py-3 font-mono text-[13px] leading-relaxed text-ink-2">
+        <div className="rounded-xl border border-rule bg-[#070b09] px-4 py-3 font-mono text-[13px] leading-relaxed text-ink-2">
           a · b = {a.x}×{b.x} + {a.y}×{b.y} = <span className="text-ink">{f2(dot)}</span><br />
           cos(angle) = a·b / (|a| |b|) = {f2(dot)} / ({f2(la)} × {f2(lb)}) = <span className="text-ink">{f2(cos)}</span>
         </div>
@@ -181,13 +181,13 @@ function MatrixMap() {
       </svg>
       <div className="grid gap-3">
         <div className="flex flex-wrap gap-1.5">{PRESETS.map(([n, v]) => <Btn key={n} onClick={() => setW(v)} on={v.every((t, i) => t === w[i])}>{n}</Btn>)}</div>
-        <div className="grid gap-2 rounded-xl border border-rule bg-[#0b0f17] p-3">
+        <div className="grid gap-2 rounded-xl border border-rule bg-[#070b09] p-3">
           <Slider label="w₁₁" value={w[0]} min={-2} max={2} step={0.05} onChange={set(0)} color="var(--role-attn)" />
           <Slider label="w₁₂" value={w[1]} min={-2} max={2} step={0.05} onChange={set(1)} color="var(--role-attn)" />
           <Slider label="w₂₁" value={w[2]} min={-2} max={2} step={0.05} onChange={set(2)} color="var(--role-attn)" />
           <Slider label="w₂₂" value={w[3]} min={-2} max={2} step={0.05} onChange={set(3)} color="var(--role-attn)" />
         </div>
-        <div className="rounded-xl border border-rule bg-[#0b0f17] px-4 py-3 font-mono text-[13px] leading-relaxed text-ink-2">
+        <div className="rounded-xl border border-rule bg-[#070b09] px-4 py-3 font-mono text-[13px] leading-relaxed text-ink-2">
           xW = [{x.x}, {x.y}] W = [{x.x}×{f2(w[0])} + {x.y}×{f2(w[2])}, {x.x}×{f2(w[1])} + {x.y}×{f2(w[3])}] = <span className="text-[var(--role-mlp-ink)]">[{f2(xw.x)}, {f2(xw.y)}]</span>
         </div>
         <p className="text-[13.5px] text-ink-3">
@@ -210,7 +210,7 @@ function SoftmaxPlay() {
   const p = softmax(z.map((v) => v / T));
   return (
     <div className="grid gap-5 md:grid-cols-2">
-      <div className="grid content-start gap-2 rounded-xl border border-rule bg-[#0b0f17] p-3">
+      <div className="grid content-start gap-2 rounded-xl border border-rule bg-[#070b09] p-3">
         <div className="mb-1 text-[12px] text-ink-3">The cat sat on the …  <span className="text-ink-4">(logits)</span></div>
         {words.map((w, i) => <Slider key={w} label={w} value={z[i]} min={-4} max={6} step={0.1} color="var(--role-resid)" onChange={(v) => setZ((o) => o.map((x, j) => (j === i ? v : x)))} />)}
         <div className="mt-2 border-t border-rule pt-3"><Slider label="temperature" value={T} min={0.1} max={3} step={0.05} color="var(--role-mlp)" onChange={setT} /></div>
@@ -250,7 +250,7 @@ function LossPlay() {
         {[0, 0.25, 0.5, 0.75, 1].map((v) => <text key={v} x={X(v)} y={H - 8} textAnchor="middle" fontSize={10} fill="var(--ink-4)" fontFamily={MONO}>{v}</text>)}
         <path d={curve} fill="none" stroke="var(--role-mlp)" strokeWidth={2.4} />
         <line x1={X(p).toFixed(2)} x2={X(p).toFixed(2)} y1={Y(loss).toFixed(2)} y2={H - b} stroke="var(--ink-4)" strokeDasharray="3 3" />
-        <circle cx={X(p).toFixed(2)} cy={Y(loss).toFixed(2)} r={6} fill="var(--role-mlp)" stroke="#0b0f17" strokeWidth={2} />
+        <circle cx={X(p).toFixed(2)} cy={Y(loss).toFixed(2)} r={6} fill="var(--role-mlp)" stroke="#070b09" strokeWidth={2} />
       </svg>
       <div className="grid gap-3">
         <Slider label="p(correct)" value={p} min={0.001} max={1} step={0.001} color="var(--role-mlp)" onChange={setP} fmt={(v) => v.toFixed(3)} />
@@ -293,7 +293,7 @@ function DescentPlay() {
         {trail.slice(0, -1).map((t, i) => Math.abs(t) < 4 && <circle key={i} cx={X(t)} cy={Y(fLoss(t))} r={3} fill="var(--role-mlp)" opacity={0.25 + (0.5 * i) / trail.length} />)}
         {!out && <>
           <line x1={X(w - 0.6)} y1={Y(fLoss(w) - 0.6 * g)} x2={X(w + 0.6)} y2={Y(fLoss(w) + 0.6 * g)} stroke="var(--ink-3)" strokeDasharray="4 3" />
-          <circle cx={X(w)} cy={Y(fLoss(w))} r={8} fill="var(--role-mlp)" stroke="#0b0f17" strokeWidth={2} />
+          <circle cx={X(w)} cy={Y(fLoss(w))} r={8} fill="var(--role-mlp)" stroke="#070b09" strokeWidth={2} />
         </>}
         <text x={14} y={H - 8} fontSize={10} fill="var(--ink-4)" fontFamily={MONO}>weight w →   (click the curve to drop the ball elsewhere)</text>
       </svg>
@@ -344,7 +344,7 @@ function ChainGraph() {
           </g>
         ))}
       </svg>
-      <div className="grid content-start gap-2 rounded-xl border border-rule bg-[#0b0f17] p-3">
+      <div className="grid content-start gap-2 rounded-xl border border-rule bg-[#070b09] p-3">
         <div className="text-[12px] text-ink-3">L = (w·x + b − y)²</div>
         <Slider label="w" value={w} min={-3} max={3} step={0.1} color="var(--role-resid)" onChange={setW} />
         <Slider label="x" value={x} min={-3} max={3} step={0.1} color="var(--role-resid)" onChange={setX} />
@@ -492,7 +492,7 @@ function BigramPlay() {
   return (
     <div className="grid gap-5 md:grid-cols-2">
       <div>
-        <p className="rounded-xl border border-rule bg-[#0b0f17] p-3 font-mono text-[12px] leading-relaxed text-ink-3">{CORPUS}</p>
+        <p className="rounded-xl border border-rule bg-[#070b09] p-3 font-mono text-[12px] leading-relaxed text-ink-3">{CORPUS}</p>
         <div className="mt-3 text-[12px] text-ink-3">After the character…</div>
         <div className="mt-1.5 flex flex-wrap gap-1">
           {chars.map((c) => (
@@ -511,7 +511,7 @@ function BigramPlay() {
           </div>
         ))}
         <div className="mt-3 flex items-center gap-2"><Btn onClick={() => setSeed((s) => s + 1)}>Generate new text</Btn></div>
-        <p className="rounded-xl border border-rule bg-[#0b0f17] p-3 font-mono text-[13px] leading-relaxed break-words text-[var(--role-mlp-ink)]">{sample}</p>
+        <p className="rounded-xl border border-rule bg-[#070b09] p-3 font-mono text-[13px] leading-relaxed break-words text-[var(--role-mlp-ink)]">{sample}</p>
         <p className="text-[12.5px] text-ink-4">Locally plausible, globally nonsense: it never sees more than one character back.</p>
       </div>
     </div>
@@ -532,7 +532,7 @@ function ContextPlay() {
   return (
     <div className="grid gap-4">
       <div className="flex flex-wrap gap-1.5">{modes.map((x, i) => <Btn key={x.k} onClick={() => setMi(i)} on={i === mi}>{x.label}</Btn>)}</div>
-      <div className="relative rounded-xl border border-rule bg-[#0b0f17] px-4 pt-10 pb-5">
+      <div className="relative rounded-xl border border-rule bg-[#070b09] px-4 pt-10 pb-5">
         <div className="flex flex-wrap items-end gap-x-2 gap-y-6">
           {words.map((w, i) => {
             const visible = i >= words.length - m.see;
