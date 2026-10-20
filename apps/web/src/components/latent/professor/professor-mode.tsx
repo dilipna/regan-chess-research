@@ -1,17 +1,20 @@
 "use client";
 
-// Professor mode: seven short sections, arrow keys to move, recorded evidence where it exists.
+// Professor mode: nine short sections for the Regan meeting, arrow keys to move, recorded evidence where it exists.
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { PROF_SECTIONS, PROF_TOTAL_MINUTES } from "@/lib/latent/professor";
 import type { GbManifest } from "@/lib/latent/glassbox";
-import type { LayerProbe, Pending } from "@/lib/latent/types";
+import type { Architecture, Metadata, TokenTrace } from "@/lib/latent/types";
 import type { RecallVersions } from "../versions";
 import { RealRmsCheck } from "../glassbox";
 import { Prov } from "../kit";
 import { RankByDepth, useRecall } from "../recall";
+import { BlockTree, ChecklistPanel, ExperimentPanel, HypothesesPanel, LatentPanel, NormCompare, ReganPanel, TracePanel } from "./panels";
+
+const mins = (m: number) => (m < 1 ? "under 1 min" : `about ${m} min`);
 
 function RecallEvidence({ versions }: { versions?: RecallVersions }) {
   const { data, err } = useRecall();
@@ -24,12 +27,14 @@ function RecallEvidence({ versions }: { versions?: RecallVersions }) {
         {versions && <li>Of {versions.misses} Gettysburg misses, {versions.miss_categories["another version"]} match another Lincoln manuscript ({(versions.recall_if_other_versions_accepted * 100).toFixed(1)}% if any manuscript counts).</li>}
       </ul>
       <RankByDepth recall={data} compact />
-      <p className="text-[13px] text-ink-3">Median rank of the true token by relative depth, from diagnostic projections through the final norm and LM head.</p>
+      <p className="text-[13px] text-ink-3">Median rank of the true token by depth, from diagnostic projections through the final norm and LM head.</p>
     </div>
   );
 }
 
-export function ProfessorMode({ glassbox, layerProbe, versions }: { glassbox?: GbManifest; layerProbe: LayerProbe | Pending; versions?: RecallVersions }) {
+interface Props { arch?: Architecture; trace?: TokenTrace; meta?: Metadata; glassbox?: GbManifest; versions?: RecallVersions }
+
+export function ProfessorMode({ arch, trace, meta, glassbox, versions }: Props) {
   const [i, setI] = useState(0);
   const s = PROF_SECTIONS[i];
   useEffect(() => {
@@ -51,11 +56,11 @@ export function ProfessorMode({ glassbox, layerProbe, versions }: { glassbox?: G
               <span className="num mr-1.5 opacity-60">{x.n}</span>{x.title}</button></li>
           ))}
         </ol>
-        <p className="mt-3 hidden text-[12.5px] text-ink-3 lg:block">About {PROF_TOTAL_MINUTES} minutes. ← / → to move.</p>
+        <p className="mt-3 hidden text-[12.5px] text-ink-3 lg:block">About {Math.round(PROF_TOTAL_MINUTES)} minutes. ← / → to move.</p>
       </nav>
       <article aria-labelledby="prof-title" className="grid min-w-0 content-start gap-5">
         <header className="grid gap-2 border-b border-rule pb-4">
-          <div className="text-[12.5px] font-semibold tracking-wide text-ink-3 uppercase">{s.n} of {PROF_SECTIONS.length} · about {s.minutes} min</div>
+          <div className="text-[12.5px] font-semibold tracking-wide text-ink-3 uppercase">{s.n} of {PROF_SECTIONS.length} · {mins(s.minutes)}</div>
           <h2 id="prof-title" className="font-serif text-[32px] leading-tight font-semibold text-ink">{s.title}</h2>
           <p className="max-w-3xl text-[17px] leading-relaxed text-ink">{s.lead}</p>
         </header>
@@ -64,16 +69,20 @@ export function ProfessorMode({ glassbox, layerProbe, versions }: { glassbox?: G
             {s.flow.map((f, k) => <li key={f} className="flex items-center gap-1.5"><span className="rounded-md border border-rule-strong bg-paper px-2.5 py-1 font-mono text-[13px] text-ink">{f}</span>{k < s.flow!.length - 1 && <span aria-hidden className="text-ink-4">→</span>}</li>)}
           </ol>
         )}
-        <ul className="grid max-w-3xl gap-2.5 text-[15.5px] leading-relaxed text-ink-2">{s.points.map((p) => <li key={p} className="border-l-2 border-rule-strong pl-3">{p}</li>)}</ul>
-        {s.evidence && (
+        {s.id === "block" && <BlockTree />}
+        {s.points.length > 0 && <ul className="grid max-w-3xl gap-2.5 text-[15.5px] leading-relaxed text-ink-2">{s.points.map((p) => <li key={p} className="border-l-2 border-rule-strong pl-3">{p}</li>)}</ul>}
+        {s.evidence === "latent" && <LatentPanel trace={trace} />}
+        {s.evidence === "rms" && <NormCompare arch={arch} trace={trace} />}
+        {s.evidence === "trace" && <TracePanel trace={trace} meta={meta} />}
+        {s.evidence === "regan" && <ReganPanel />}
+        {s.evidence === "hypotheses" && <HypothesesPanel />}
+        {s.evidence === "experiment" && <ExperimentPanel recall={<><RecallEvidence versions={versions} /><Link href="/latent/recall" className="w-fit text-[14px] text-[var(--role-resid-ink)] underline underline-offset-2">Open the Recall Microscope →</Link></>} />}
+        {s.evidence === "checklist" && <ChecklistPanel />}
+        {(s.evidence === "glassbox" || s.evidence === "rms") && (
           <section aria-label="Evidence" className="grid gap-3 rounded-xl border border-rule bg-paper p-4 sm:p-5">
             {s.evidence === "glassbox" && <><Prov kind="recorded" detail="re-derived from recorded tensors" /><p className="text-[15px] text-ink-2">For blocks 1, 18 and 36, every operation that needs no weights (both RMSNorms, q_norm, k_norm, RoPE, softmax, the weighted sum, both residual additions, the SwiGLU product) was re-derived from recorded tensors and matched at bfloat16 precision; wrong alternatives fit measurably worse.</p><Link href="/latent/glassbox" className="w-fit text-[14px] text-[var(--role-resid-ink)] underline underline-offset-2">Open the Glass Box →</Link></>}
-            {s.evidence === "rms" && (glassbox ? <><Prov kind="recorded" detail="block 18, recorded input and output" /><RealRmsCheck manifest={glassbox} block={1} /></> : <p className="text-ink-3">Glass Box data not available.</p>)}
-            {s.evidence === "recall" && <><Prov kind="recorded" detail="Qwen3-8B-Base, teacher forcing" /><RecallEvidence versions={versions} /><Link href="/latent/recall" className="w-fit text-[14px] text-[var(--role-resid-ink)] underline underline-offset-2">Open the Recall Microscope →</Link></>}
-            {s.evidence === "probe" && (layerProbe.status === "ok"
-              ? <><Prov kind="recorded" /><Link href="/latent/research" className="text-[14px] underline underline-offset-2">Layerwise results in the research workspace →</Link></>
-              : <><Prov kind="pending" detail="no human-vs-AI result exists yet" /><p className="text-[15px] text-ink-2">The pipeline (hidden-state extraction, layerwise probes, controls) is built and tested on a small model. The planned dataset (EditLens) requires approved access, which is pending; no result is shown until the experiment runs.</p><Link href="/latent/research" className="w-fit text-[14px] text-[var(--role-resid-ink)] underline underline-offset-2">Research workspace →</Link></>)}
-          </section>
+            {s.evidence === "rms" && (glassbox ? <RealRmsCheck manifest={glassbox} block={1} /> : <p className="text-ink-3">Glass Box data not available.</p>)}
+            </section>
         )}
         <nav aria-label="Next and previous" className="flex justify-between gap-3 border-t border-rule pt-4">
           <button type="button" onClick={() => setI(Math.max(0, i - 1))} disabled={i === 0} className="rounded-lg border border-rule-strong px-4 py-2 text-[14px] text-ink disabled:opacity-40">← Previous</button>
