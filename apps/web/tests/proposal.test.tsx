@@ -40,6 +40,10 @@ describe("site phases", () => {
     expect(h).toContain("0.820 to 0.873 ROC-AUC");
     expect(h).toContain("held-out evaluation is still pending");
   });
+  it("keeps the structure simple: five chess sections, four Phase 2 groups ending with the proposal", () => {
+    expect(PHASES[0].groups.flatMap((g) => g.links)).toHaveLength(5);
+    expect(PHASES[1].groups.map((g) => g.title)).toEqual(["Research", "Understand the model", "Study material", "Next step"]);
+  });
   it("keeps the header short: only key pages", () => {
     for (const p of PHASES) expect(headerLinks(p).length).toBeLessThanOrEqual(4);
   });

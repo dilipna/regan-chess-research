@@ -1,37 +1,37 @@
 /*
- * LatentLens pages share the site's light academic theme (globals.css). Here: the four role colours used by the
- * transformer diagrams, each always shown with a text label and chosen for separation and >= 4.5:1 contrast on white:
+ * LatentLens pages share the site theme (globals.css). Here: the four role colours used by the transformer
+ * diagrams, each always shown with a text label and chosen for separation and contrast on a near-black card:
  *   --role-resid  blue     residual stream and vectors
  *   --role-norm   teal     normalization
  *   --role-attn   violet   attention
  *   --role-mlp    amber    MLP
- * The -ink variants are darker shades for text; -soft are light tints for surfaces.
+ * The -ink variants are lighter tints for text; -soft are low-alpha fills for surfaces.
  */
 body:has([data-latent-theme]) {
-  --role-resid: #2563b8;
-  --role-norm: #0e7f73;
-  --role-attn: #6b46c1;
-  --role-mlp: #a85f00;
-  --role-resid-ink: #1b4f96;
-  --role-norm-ink: #0a655b;
-  --role-attn-ink: #55339f;
-  --role-mlp-ink: #834900;
-  --role-resid-soft: color-mix(in oklab, var(--role-resid) 8%, var(--paper));
-  --role-norm-soft: color-mix(in oklab, var(--role-norm) 8%, var(--paper));
-  --role-attn-soft: color-mix(in oklab, var(--role-attn) 8%, var(--paper));
-  --role-mlp-soft: color-mix(in oklab, var(--role-mlp) 9%, var(--paper));
+  --role-resid: #6ea8ff;
+  --role-norm: #4fd1c5;
+  --role-attn: #b49cff;
+  --role-mlp: #ffb86b;
+  --role-resid-ink: #a9c9ff;
+  --role-norm-ink: #8fe3da;
+  --role-attn-ink: #d3c6ff;
+  --role-mlp-ink: #ffd3a3;
+  --role-resid-soft: color-mix(in oklab, var(--role-resid) 12%, var(--paper));
+  --role-norm-soft: color-mix(in oklab, var(--role-norm) 11%, var(--paper));
+  --role-attn-soft: color-mix(in oklab, var(--role-attn) 13%, var(--paper));
+  --role-mlp-soft: color-mix(in oklab, var(--role-mlp) 11%, var(--paper));
   /* text placed on a solid role-coloured fill */
-  --on-role: #ffffff;
+  --on-role: #0a0a0a;
   /* wrong answers and failures */
-  --bad: #b3261e;
-  --bad-ink: #8c1d17;
-  --bad-soft: color-mix(in oklab, var(--bad) 8%, var(--paper));
+  --bad: #ff7b72;
+  --bad-ink: #ffa8a1;
+  --bad-soft: color-mix(in oklab, var(--bad) 13%, var(--paper));
 
   --viz-1: var(--role-resid);
   --viz-2: var(--role-mlp);
   --llm: var(--role-attn-ink);
   --llm-soft: var(--role-attn-soft);
-  --tint-llm: color-mix(in oklab, var(--llm) 5%, var(--paper));
+  --tint-llm: color-mix(in oklab, var(--llm) 7%, var(--paper));
   --ring: var(--role-resid);
 }
 
@@ -44,7 +44,7 @@ body:has([data-latent-theme]) {
 
 [data-latent-theme] .ll-panel {
   background: var(--paper);
-  box-shadow: 0 1px 2px rgba(23, 25, 30, 0.04);
+  box-shadow: none;
 }
 
 /* role-coloured surfaces used by the diagrams */
@@ -84,7 +84,7 @@ body:has([data-latent-theme]) {
 /* faint star-field grid behind the atlas canvas */
 [data-latent-theme] .atlas-field {
   background:
-    radial-gradient(circle at 1px 1px, rgba(23, 25, 30, 0.07) 1px, transparent 0) 0 0 / 22px 22px,
+    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.06) 1px, transparent 0) 0 0 / 22px 22px,
     var(--paper);
 }
 
