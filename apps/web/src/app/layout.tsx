@@ -1,14 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { IBM_Plex_Mono, IBM_Plex_Sans, Space_Grotesk } from "next/font/google";
+import { IBM_Plex_Mono, IBM_Plex_Sans, Source_Serif_4 } from "next/font/google";
 import { Nav } from "@/components/site/nav";
 import { Footer } from "@/components/site/footer";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
 
-// Minimal technical typography: a geometric grotesk for headings, IBM Plex for text and figures.
+// Academic typography: a book serif for headings, IBM Plex for text and figures.
 const body = IBM_Plex_Sans({ variable: "--font-body", subsets: ["latin"], weight: ["400", "500", "600", "700"] });
 const mono = IBM_Plex_Mono({ variable: "--font-figures", subsets: ["latin"], weight: ["400", "500", "600"] });
-const display = Space_Grotesk({ variable: "--font-display", subsets: ["latin"], weight: ["400", "500", "600", "700"] });
+const display = Source_Serif_4({ variable: "--font-display", subsets: ["latin"], weight: ["400", "600", "700"], style: ["normal", "italic"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://chessassistlens.vercel.app"),
@@ -27,8 +27,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#030504",
-  colorScheme: "dark",
+  themeColor: "#fbfaf7",
+  colorScheme: "light",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

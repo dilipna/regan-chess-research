@@ -25,7 +25,7 @@ export function LabLesson({ title, intro, text, children, topicLinks }: { title:
       <ol className="grid gap-2 md:grid-cols-2">
         {STEPS.slice(0, 4).map(([k, label], i) => <Step key={k} n={i + 1} label={label} body={text[k]} />)}
       </ol>
-      <section aria-label="Try it" className="rounded-3xl border border-rule-strong bg-[#090c14] p-4 shadow-[0_0_0_1px_color-mix(in_oklab,var(--role-resid)_12%,transparent)] sm:p-6">{children}</section>
+      <section aria-label="Try it" className="rounded-3xl border border-rule-strong bg-[var(--paper-2)] p-4 shadow-[0_0_0_1px_color-mix(in_oklab,var(--role-resid)_12%,transparent)] sm:p-6">{children}</section>
       <ol className="grid gap-2 md:grid-cols-2" start={5}>
         {STEPS.slice(4).map(([k, label], i) => <Step key={k} n={i + 5} label={label} body={text[k]} />)}
       </ol>

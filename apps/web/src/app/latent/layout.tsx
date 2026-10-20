@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   description: "LatentLens (Version 2 of MoveLens): the complete transformer, drawn and explained, measured on Qwen3-8B-Base. An interactive atlas, hands-on labs and the Recall Microscope.",
 };
 
-export const viewport: Viewport = { themeColor: "#030504", colorScheme: "dark" };
+export const viewport: Viewport = { themeColor: "#fbfaf7", colorScheme: "light" };
 
 export default function LatentLayout({ children }: { children: React.ReactNode }) {
   return (

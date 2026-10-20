@@ -70,7 +70,7 @@ export function RememberIt({ arch }: { arch: Architecture }) {
         {verbs.map((v, i) => (
           <li key={v.verb} className="relative rounded-2xl border border-rule bg-paper p-5">
             <div className="flex items-center gap-3">
-              <span className="num relative flex h-9 w-9 items-center justify-center rounded-full border-2 bg-[#030504] font-mono text-[13px] text-ink"
+              <span className="num relative flex h-9 w-9 items-center justify-center rounded-full border-2 bg-paper font-mono text-[13px] text-ink"
                 style={{ borderColor: ROLE_COLOR[v.role], boxShadow: `0 0 16px -2px ${ROLE_COLOR[v.role]}` }}>{i + 1}</span>
               {(i === 1 || i === 2) && <span className="rounded-full border border-rule-strong px-2 py-0.5 font-mono text-[10.5px] text-ink-3">×{L}</span>}
             </div>

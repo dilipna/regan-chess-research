@@ -11,7 +11,7 @@ const Box = ({ children, className, id }: { children: React.ReactNode; className
 );
 const H2 = ({ children }: { children: React.ReactNode }) => <h2 className="font-serif text-[22px] leading-snug font-semibold text-ink sm:text-[24px]">{children}</h2>;
 const Q = ({ children }: { children: React.ReactNode }) => (
-  <p className="rounded-lg border-l-2 border-ink bg-[color-mix(in_oklab,var(--mint)_6%,transparent)] px-4 py-3 text-[16px] leading-relaxed font-medium text-ink">{children}</p>
+  <p className="rounded-lg border-l-2 border-ink bg-[color-mix(in_oklab,var(--brand)_6%,transparent)] px-4 py-3 text-[16px] leading-relaxed font-medium text-ink">{children}</p>
 );
 const Chain = ({ steps, label }: { steps: string[]; label: string }) => (
   <ol aria-label={label} className="flex flex-wrap items-center gap-1.5">
@@ -176,7 +176,7 @@ export function Proposal() {
         </Box>
       </div>
 
-      <section aria-label="One-sentence summary" className="rounded-xl border border-ink bg-[color-mix(in_oklab,var(--mint)_7%,transparent)] p-5 shadow-[0_0_32px_-8px_var(--mint-glow)] sm:p-7">
+      <section aria-label="One-sentence summary" className="rounded-xl border border-ink bg-[color-mix(in_oklab,var(--brand)_7%,transparent)] p-5 shadow-[0_0_32px_-8px_color-mix(in_oklab,var(--brand)_25%,transparent)] sm:p-7">
         <div className="mb-2 font-mono text-[12px] tracking-[0.1em] text-ink-4 uppercase">In one sentence</div>
         <p className="font-serif text-[20px] leading-snug font-semibold text-ink sm:text-[24px]">&ldquo;{PITCH}&rdquo;</p>
       </section>

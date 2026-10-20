@@ -34,7 +34,7 @@ export function DefenseSwitches({ keys, d, onChange }: { keys: (keyof Defenses)[
             <button type="button" aria-pressed={on} onClick={() => onChange({ ...d, [k]: !on })}
               className={cn("flex h-full w-full items-start gap-3 rounded-xl border px-3 py-2.5 text-left transition-colors", on ? "border-[var(--role-norm)] bg-[var(--role-norm-soft)]" : "border-rule bg-paper hover:border-rule-strong")}>
               <span aria-hidden className={cn("mt-0.5 flex h-4 w-7 shrink-0 items-center rounded-full p-0.5 transition-colors", on ? "bg-[var(--role-norm)]" : "bg-paper-3")}>
-                <span className={cn("h-3 w-3 rounded-full bg-[#030504] transition-transform", on && "translate-x-3")} />
+                <span className={cn("h-3 w-3 rounded-full bg-paper transition-transform", on && "translate-x-3")} />
               </span>
               <span>
                 <span className="block text-[13.5px] font-medium text-ink">{info.label}</span>
@@ -81,7 +81,7 @@ const STEP_STYLE: Record<Step["kind"], { tag: string; cls: string }> = {
 export function Trace({ steps, isHarm }: { steps: Step[]; isHarm?: (s: Step) => boolean }) {
   const shown = steps.filter((s) => s.kind !== "context");
   return (
-    <ol className="grid gap-1 rounded-xl border border-rule bg-[#040706] p-3 font-mono text-[12px] leading-relaxed" aria-label="What happened">
+    <ol className="grid gap-1 rounded-xl border border-rule bg-paper-2 p-3 font-mono text-[12px] leading-relaxed" aria-label="What happened">
       {shown.length === 0 && <li className="text-ink-4">Nothing beyond reading the context.</li>}
       {shown.map((s, i) => {
         const harm = s.kind === "leak" || (isHarm?.(s) ?? false);

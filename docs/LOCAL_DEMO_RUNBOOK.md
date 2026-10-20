@@ -22,7 +22,7 @@ npm run start        # serves the existing build
 
 Open:
 
-- http://localhost:3000/ (home: Phase 1 Chess and Phase 2 LLMs, every subsection numbered)
+- http://localhost:3000/ (home: the two phases, three places to start, all pages folded at the bottom)
 - http://localhost:3000/latent/professor (2.1, the meeting flow; ← / → to move)
 - http://localhost:3000/latent/proposal (2.21, the proposed experiment; last subsection of Phase 2)
 - http://localhost:3000/latent/recall (2.2, Recall Microscope)

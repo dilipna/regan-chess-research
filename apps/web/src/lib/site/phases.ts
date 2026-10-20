@@ -1,9 +1,9 @@
 // The site in two phases. Phase 1 (chess) studied what models predict; Phase 2 (LLM internals) studies how Qwen
 // forms those predictions. Every page belongs to one numbered subsection; the header and the home index read this.
 
-export interface SubLink { n: string; href: string; label: string; blurb: string }
+export interface SubLink { n: string; href: string; label: string; blurb: string; key?: true }
 export interface SubGroup { title: string; links: SubLink[] }
-export interface Phase { id: "chess" | "llm"; n: 1 | 2; label: string; name: string; question: string; status: string; home: string; groups: SubGroup[] }
+export interface Phase { id: "chess" | "llm"; n: 1 | 2; label: string; name: string; plain: string; question: string; status: string; home: string; groups: SubGroup[] }
 
 const number = (n: number, groups: { title: string; links: Omit<SubLink, "n">[] }[]): SubGroup[] => {
   let k = 0;
@@ -12,12 +12,12 @@ const number = (n: number, groups: { title: string; links: Omit<SubLink, "n">[] 
 
 export const PHASES: Phase[] = [
   {
-    id: "chess", n: 1, label: "Chess", name: "MoveLens", home: "/chess",
-    question: "On the same chess positions, what do a statistical model, a general-purpose LLM and a human-move model each predict?",
-    status: "Complete · frozen as Version 1",
+    id: "chess", n: 1, label: "Chess", name: "MoveLens", home: "/chess", plain: "Outside the model",
+    question: "Given one chess position, what move does a statistical model expect, what does a language model prefer, and what would a human play?",
+    status: "Done",
     groups: number(1, [
       { title: "The study", links: [
-        { href: "/chess", label: "Overview", blurb: "Three ways to read one chess move, side by side." },
+        { href: "/chess", label: "Overview", blurb: "Three ways to read one chess move, side by side.", key: true },
         { href: "/chess#statistical", label: "Statistical model", blurb: "A Regan-inspired difficulty and rating model." },
         { href: "/chess#qwen", label: "Qwen on chess", blurb: "Qwen3-8B-Base scored through token likelihoods." },
         { href: "/chess#maia", label: "Maia", blurb: "Maia-3: what a human of a given rating would play." },
@@ -26,27 +26,27 @@ export const PHASES: Phase[] = [
         { href: "/chess#checks", label: "Checks", blurb: "Sanity checks against published reference behaviour." },
       ] },
       { title: "Evidence", links: [
-        { href: "/results", label: "Results", blurb: "Full held-out results and ablations." },
-        { href: "/methodology", label: "Methods", blurb: "Data, models, metrics and reproducibility." },
+        { href: "/results", label: "Results", blurb: "Full held-out results and ablations.", key: true },
+        { href: "/methodology", label: "Methods", blurb: "Data, models, metrics and reproducibility.", key: true },
         { href: "/examples", label: "Disagreements", blurb: "Positions where the models disagree most." },
         { href: "/analyze", label: "Analyze a game", blurb: "Run the report on a PGN." },
       ] },
     ]),
   },
   {
-    id: "llm", n: 2, label: "LLMs", name: "LatentLens", home: "/latent/professor",
-    question: "Inside Qwen3-8B-Base, at what depth does the correct continuation become accessible, and how does that compare across model sizes?",
-    status: "In progress · recall measured on 8B; 14B vs ~27B comparison planned",
+    id: "llm", n: 2, label: "LLMs", name: "LatentLens", home: "/latent/professor", plain: "Inside the model",
+    question: "When a language model recalls a text it has memorized, where inside the model does the right next word appear?",
+    status: "In progress",
     groups: number(2, [
       { title: "Research", links: [
-        { href: "/latent/professor", label: "Professor demo", blurb: "The 5 to 7 minute walkthrough: internals, one real trace, the 14B vs ~27B question." },
-        { href: "/latent/recall", label: "Recall Microscope", blurb: "True-token rank by layer on a memorized text, recorded on Qwen3-8B-Base." },
+        { href: "/latent/professor", label: "Professor demo", blurb: "The 5 to 7 minute walkthrough: internals, one real trace, the 14B vs ~27B question.", key: true },
+        { href: "/latent/recall", label: "Recall Microscope", blurb: "True-token rank by layer on a memorized text, recorded on Qwen3-8B-Base.", key: true },
         { href: "/latent/glassbox", label: "Glass Box", blurb: "Every weight-free operation re-derived from recorded tensors." },
         { href: "/latent/research", label: "Research workspace", blurb: "Layerwise probes, controls and what is still pending." },
         { href: "/latent/methods", label: "Methods", blurb: "Provenance, precision checks and wording rules." },
       ] },
       { title: "Model map", links: [
-        { href: "/latent", label: "Transformer Atlas", blurb: "The whole model drawn as one zoomable map." },
+        { href: "/latent", label: "Transformer Atlas", blurb: "The whole model drawn as one zoomable map.", key: true },
         { href: "/latent/learn", label: "Reference notes", blurb: "Architecture facts, verified against config and source." },
         { href: "/latent/demo", label: "Five-step demo", blurb: "From text to next token, interactively." },
         { href: "/latent/project", label: "Project overview", blurb: "How the pieces of LatentLens fit together." },
@@ -67,15 +67,15 @@ export const PHASES: Phase[] = [
         { href: "/latent/security/labs", label: "Security labs", blurb: "Ten labs on a deterministic simulator." },
       ] },
       { title: "Proposed approach", links: [
-        { href: "/latent/proposal", label: "Proposed experiment", blurb: "Explaining the 14B → ~27B recall plateau: from final recall to layerwise recall trajectories." },
+        { href: "/latent/proposal", label: "Proposed experiment", blurb: "Explaining the 14B → ~27B recall plateau: from final recall to layerwise recall trajectories.", key: true },
       ] },
     ]),
   },
 ];
 
-/** Subsections shown in the header row: the first two groups, and Phase 2's closing proposal. The rest are one click
- *  away in the phase index. */
-export const headerLinks = (p: Phase) => [...p.groups.slice(0, 2), ...(p.id === "llm" ? p.groups.slice(-1) : [])].flatMap((g) => g.links);
+/** The few subsections shown in the header (marked key), in index order; everything else is in the home page's
+ *  full index. Phase 2's proposal is the last subsection, so it is also last here. */
+export const headerLinks = (p: Phase) => p.groups.flatMap((g) => g.links).filter((l) => l.key);
 
 export function phaseOf(path: string): Phase | null {
   if (path === "/") return null;
