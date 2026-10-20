@@ -5,76 +5,71 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Site theme: black canvas, neon-mint type. Minimal: one accent hue for text and structure, plus a few data hues
- * that stay distinguishable on black (validated for contrast as text on #030504).
- *   --ink      neon mint: headings, emphasis, primary text
- *   --ink-2    pale mint: body text
- *   --ink-3/4  muted mint: secondary text, hints
- * Data colours (used consistently in every figure):
- *   --engine  Stockfish (periwinkle)    --human  Maia-3 (mint)
- *   --llm     Qwen3-8B-Base (magenta)   --flag   flags and synthetic substitutions (coral)
- * Model ramp (--m-*) is an ordinal mint ramp, dim to bright, for the nested ablation A0 < A < B < C < D.
+ * Site theme: an academic paper. Warm off-white page, white cards, near-black ink, one restrained blue accent.
+ * Data colours (used consistently in every figure, all >= 4.5:1 on white):
+ *   --engine  Stockfish (blue)          --human  Maia-3 (green)
+ *   --llm     Qwen3-8B-Base (crimson)   --flag   flags and synthetic substitutions (rust)
+ * Model ramp (--m-*) is a single-hue ordinal ramp for the nested ablation A0 < A < B < C < D.
  */
 :root {
-  --bg: #030504;
-  --mint: #5dffb9;
-  --mint-glow: color-mix(in oklab, var(--mint) 38%, transparent);
+  --bg: #fbfaf7;
+  --brand: #1d4f91;
+  --brand-soft: color-mix(in oklab, var(--brand) 7%, white);
 
-  --viz-1: #5dffb9;
-  --viz-2: #ffc66d;
-  --paper: #070b09;
-  --paper-2: #0c1310;
-  --paper-3: #121c18;
-  --ink: #5dffb9;
-  --ink-2: #b4efd6;
-  --ink-3: #78b89c;
-  --ink-4: #4a7766;
-  --rule: #13211b;
-  --rule-strong: #21382e;
+  --viz-1: #2f6fb0;
+  --viz-2: #c8642c;
+  --paper: #ffffff;
+  --paper-2: #f4f2ec;
+  --paper-3: #e9e5dc;
+  --ink: #17191e;
+  --ink-2: #3c4048;
+  --ink-3: #686c75;
+  --ink-4: #9a9da5;
+  --rule: #e5e1d8;
+  --rule-strong: #cdc7ba;
 
-  --engine: #8fb0ff;
-  --human: #5dffb9;
-  --flag: #ff7a7a;
-  /* provenance families: Regan = steel blue (statistical foundation), ours = mint, findings = lime */
-  --prov-regan: #9db8d9;
-  --prov-ours: #5dffb9;
-  --prov-finding: #d4f27a;
-  --tint-regan: color-mix(in oklab, var(--prov-regan) 7%, var(--paper));
+  --engine: #2f5f9e;
+  --human: #2b6e47;
+  --flag: #a8402d;
+  /* provenance families: Regan = slate (statistical foundation), ours = teal, findings = olive */
+  --prov-regan: #3c4b5c;
+  --prov-ours: #0f6f69;
+  --prov-finding: #5a6b1f;
+  --tint-regan: color-mix(in oklab, var(--prov-regan) 6%, var(--paper));
   --tint-ours: color-mix(in oklab, var(--prov-ours) 6%, var(--paper));
   --tint-finding: color-mix(in oklab, var(--prov-finding) 6%, var(--paper));
-  --engine-soft: color-mix(in oklab, var(--engine) 14%, var(--paper));
-  --human-soft: color-mix(in oklab, var(--human) 12%, var(--paper));
-  --flag-soft: color-mix(in oklab, var(--flag) 13%, var(--paper));
-  --llm: #ff85d8;
-  --llm-soft: color-mix(in oklab, var(--llm) 13%, var(--paper));
-  --tint-llm: color-mix(in oklab, var(--llm) 6%, var(--paper));
+  --engine-soft: color-mix(in oklab, var(--engine) 10%, var(--paper));
+  --human-soft: color-mix(in oklab, var(--human) 10%, var(--paper));
+  --flag-soft: color-mix(in oklab, var(--flag) 9%, var(--paper));
+  --llm: #96294e;
+  --llm-soft: color-mix(in oklab, var(--llm) 9%, var(--paper));
+  --tint-llm: color-mix(in oklab, var(--llm) 5%, var(--paper));
 
-  --m-a0: #2a5546;
-  --m-a: #3a7a62;
-  --m-b: #4aa182;
-  --m-c: #55cc9f;
-  --m-d: #5dffb9;
+  --m-a0: #9aa3b2;
+  --m-a: #7a8597;
+  --m-b: #5b677c;
+  --m-c: #3d4961;
+  --m-d: #1f2a44;
 
-  /* decorative board tones (rules, badges, move grid) */
-  --board-light: #183128;
-  --board-dark: #2c5e4b;
-  /* the playable board needs lighter squares so both piece colours read */
-  --square-light: #b9e6d2;
-  --square-dark: #4f8f75;
-  --arrow-played: #06120d;
-  --arrow-engine: #2f5fd6;
-  --arrow-llm: #d2333f;
-  --arrow-human: #0d7a49;
+  /* classic wooden board */
+  --board-light: #f0d9b5;
+  --board-dark: #b58863;
+  --square-light: #f0d9b5;
+  --square-dark: #b58863;
+  --arrow-played: #17191e;
+  --arrow-engine: #2457c5;
+  --arrow-llm: #c62f3b;
+  --arrow-human: #1d7f45;
 
   /* shadcn mapping */
   --background: var(--bg);
-  --foreground: var(--ink-2);
+  --foreground: var(--ink);
   --card: var(--paper);
-  --card-foreground: var(--ink-2);
-  --popover: var(--paper-2);
-  --popover-foreground: var(--ink-2);
+  --card-foreground: var(--ink);
+  --popover: var(--paper);
+  --popover-foreground: var(--ink);
   --primary: var(--ink);
-  --primary-foreground: var(--bg);
+  --primary-foreground: var(--paper);
   --secondary: var(--paper-2);
   --secondary-foreground: var(--ink);
   --muted: var(--paper-3);
@@ -84,9 +79,9 @@
   --destructive: var(--flag);
   --border: var(--rule);
   --input: var(--rule-strong);
-  --ring: var(--mint);
+  --ring: var(--brand);
   --radius: 0.375rem;
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 @theme inline {
@@ -128,6 +123,8 @@
   --color-destructive: var(--destructive);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
+  --color-brand: var(--brand);
+  --color-brand-soft: var(--brand-soft);
   --color-muted-foreground: var(--muted-foreground);
   --color-muted: var(--muted);
   --color-secondary-foreground: var(--secondary-foreground);
@@ -156,22 +153,16 @@
     background: var(--bg);
   }
   body {
-    background:
-      radial-gradient(900px 420px at 50% -120px, color-mix(in oklab, var(--mint) 7%, transparent), transparent 70%),
-      var(--bg);
-    color: var(--ink-2);
+    background: var(--bg);
+    color: var(--ink);
     font-feature-settings: "kern";
   }
   ::selection {
-    background: color-mix(in oklab, var(--mint) 30%, transparent);
-    color: #eafff5;
+    background: color-mix(in oklab, var(--brand) 18%, transparent);
   }
   :is(a, button, input, select, summary, [tabindex]:not([tabindex="-1"])):focus-visible {
-    outline: 2px solid var(--mint);
+    outline: 2px solid var(--brand);
     outline-offset: 2px;
-  }
-  h1, h2 {
-    text-shadow: 0 0 22px var(--mint-glow);
   }
 }
 
@@ -315,10 +306,7 @@
 
 /* Real italic face for the display serif (loaded separately; avoids synthetic slanting). */
 .font-serif.italic {
-  font-family: var(--font-display), sans-serif;
-}
-.font-serif {
-  letter-spacing: -0.02em;
+  font-family: var(--font-display), serif;
 }
 
 /* research figures always use lining, tabular numerals */

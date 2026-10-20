@@ -30,11 +30,18 @@ describe("site phases", () => {
     expect(headerLinks(llm).at(-1)!.href).toBe("/latent/proposal");
     expect(PHASES[0].groups.flatMap((g) => g.links).some((l) => l.href.includes("proposal"))).toBe(false);
   });
-  it("renders the home index with both phases and a recorded figure", async () => {
+  it("renders a simple home: two phases, three starting points, the full index folded away", async () => {
     const h = text(await Home());
-    expect(h).toContain("From chess moves");
+    expect(h).toContain("A research project in two phases");
+    for (const p of PHASES) expect(h).toContain(p.plain);
+    for (const s of ["The 5-minute demo", "The proposed next experiment", "The Recall Microscope", "All pages, by phase"]) expect(h).toContain(s);
     for (const p of PHASES) for (const g of p.groups) for (const l of g.links) expect(h).toContain(l.label);
-    expect(h).toContain("diagnostic projections");
+    expect(h).toContain("diagnostic projection");
+    expect(h).toContain("0.820 to 0.873 ROC-AUC");
+    expect(h).toContain("held-out evaluation is still pending");
+  });
+  it("keeps the header short: only key pages", () => {
+    for (const p of PHASES) expect(headerLinks(p).length).toBeLessThanOrEqual(4);
   });
 });
 
