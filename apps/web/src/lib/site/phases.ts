@@ -66,12 +66,16 @@ export const PHASES: Phase[] = [
         { href: "/latent/security", label: "AI security", blurb: "Threat models and attacks on LLM systems." },
         { href: "/latent/security/labs", label: "Security labs", blurb: "Ten labs on a deterministic simulator." },
       ] },
+      { title: "Proposed approach", links: [
+        { href: "/latent/proposal", label: "Proposed experiment", blurb: "Explaining the 14B → ~27B recall plateau: from final recall to layerwise recall trajectories." },
+      ] },
     ]),
   },
 ];
 
-/** Subsections shown in the header row; the rest are one click away in the phase index. */
-export const headerLinks = (p: Phase) => p.groups.slice(0, 2).flatMap((g) => g.links);
+/** Subsections shown in the header row: the first two groups, and Phase 2's closing proposal. The rest are one click
+ *  away in the phase index. */
+export const headerLinks = (p: Phase) => [...p.groups.slice(0, 2), ...(p.id === "llm" ? p.groups.slice(-1) : [])].flatMap((g) => g.links);
 
 export function phaseOf(path: string): Phase | null {
   if (path === "/") return null;
