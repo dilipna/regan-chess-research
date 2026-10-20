@@ -1,40 +1,37 @@
 # Professor Regan technical walkthrough
 
-For the meeting. Route: `/latent/professor` (seven sections, arrow keys to move). Interactive alternative:
-`/latent/demo`. Every number on screen is labelled recorded, toy, or pending.
+For the meeting on 2026-10-20. Route: `/latent/professor` (nine sections, arrow keys to move). The spoken script
+is in `REGAN_5_MINUTE_DEMO.md`; the meeting checklist is in `REGAN_MEETING_2026-10-20.md`. Every number on screen
+is labelled recorded, professor-reported, hypothesis, or pending.
 
 ## 60-second version
 
-"After our discussion, I realized I had been treating Qwen mostly from the outside. I therefore rebuilt the next
-phase around understanding the computation inside the model. I can now record the hidden states of Qwen3-8B-Base at
-every one of its 36 layers on my laptop, and I have checked that I reproduce its internal operations, including
-RMSNorm, exactly at bfloat16 precision. With that instrumentation, the recall experiments become a question of where
-inside the network the correct token begins to win, and the human-versus-AI question becomes a layerwise
-representation question. The human-versus-AI data needs approved access, which is pending, so that part is a plan,
-not a result."
+See `REGAN_5_MINUTE_DEMO.md` (60-second version). In short: after our last meeting I studied Qwen's internals; I can
+now name the exact capture points for a latent state (the residual stream after each block, before or after
+RMSNorm); I instrumented one real Qwen3-8B trace; your 14B vs ~27B result suggests a layerwise comparison; I want to
+reproduce your scripts first.
 
 ## 5-minute version (follows the sections)
 
-1. **Why Version 2 exists.** "Version 1 measured Qwen through its outputs. After our discussion, I wanted to move
-   inside the model and understand how those outputs are constructed."
-2. **Qwen3-8B-Base end to end.** "Text becomes token ids, each id selects an embedding of 4,096 numbers, and that
-   vector travels through 36 blocks. This is the residual stream. A final RMSNorm and the LM head turn it into a
-   score for each of 151,936 vocabulary entries."
-3. **One transformer block.** "This is where RMSNorm operates: on the copy each sub-layer reads. These are the Q, K
-   and V projections: 32 query heads sharing 8 key-value heads. Qwen applies a second RMSNorm to each Q and K head,
-   then positional information through RoPE, which rotates Q and K. Attention mixes information across positions.
-   The MLP transforms each token's features. These updates are added back into the residual stream." Point at the
-   Glass Box line: every operation that needs no weights is reproduced from recorded tensors.
-4. **RMSNorm.** Show the formula. "It divides by the root mean square and multiplies by a learned gain; no mean
-   subtraction. On real block-18 inputs, RMSNorm reproduces Qwen's output and LayerNorm fits measurably worse,
-   because the mean is only a few percent of the RMS." Then the open questions: pre- versus post-normalization
-   representations, and whether activation magnitude, which the norm removes from the reader's view, carries signal.
-5. **Latent states.** "Once this is instrumented, I can stop asking only what the final model predicted and start
-   asking where inside the network a signal becomes accessible."
-6. **Recall Microscope.** Show the rank of the true Gettysburg token by depth, and the finding that several 'misses'
-   are another Lincoln manuscript's wording.
-7. **Human vs AI, layer by layer.** "The human-vs-AI question becomes a layerwise representation question rather than
-   only a black-box classifier." Say clearly that this result is pending data access.
+1. **From outputs to internals.** Text, tokenizer, token ids, embeddings, 36 blocks, final RMSNorm, LM head,
+   logits, next token.
+2. **One Qwen transformer block.** Pre-norm: RMSNorm, Q/K/V, q_norm and k_norm per head, RoPE on Q and K, causal
+   grouped-query attention, o_proj, residual addition, RMSNorm, SwiGLU MLP, second residual addition.
+3. **The latent state.** The residual stream after each block, [B, T, 4096], 37 capture points (embedding plus 36
+   blocks). The recorded RMS table shows the same token's vector changing across depth.
+4. **RMSNorm.** Formula; no mean subtraction; block RMSNorm (4,096-dimensional residual) vs Q/K RMSNorm (each
+   128-dimensional head). Which representation is captured must be stated.
+5. **One real Qwen internal trace.** "The researcher opened the notebook": output ranks per position, the last
+   position through depth, the logit-lens caveat, full provenance.
+6. **Professor Regan's 14B → ~27B observation.** His numbers, labelled as professor-reported. Same final recall; are
+   the internal trajectories the same?
+7. **Three hypotheses.** Tokenization effect, task saturation, same score by a different internal path (H3 is the one
+   LatentLens can test directly). Tokenization is a first-class question.
+8. **Proposed first experiment.** True-next-token rank vs depth in both models, by relative depth. The same
+   measurement already runs on Qwen3-8B-Base in the Recall Microscope. The will-vs-shall case is a planned analysis.
+9. **What I need from this meeting.** Checkpoints, tokenizer, input file, script, recall definition, output format,
+   location, latent state of interest, copy permission, privacy, next deliverable. Human-vs-AI only as a future
+   extension.
 
 ## 10-minute version
 
@@ -46,7 +43,7 @@ Add to the 5-minute version:
 - **Recall method.** Teacher forcing: feed the true text, record the true token's rank at each layer through the
   final norm and LM head. These are diagnostic projections, not the model's outputs at those depths. Recorded top-1
   recall and the manuscript-variant analysis are on `/latent/recall`.
-- **Human vs AI design.** Frozen Qwen; the same logistic-regression probe at every layer; held-out evaluation,
+- **Human vs AI design (future extension, not for this meeting).** Frozen Qwen; the same logistic-regression probe at every layer; held-out evaluation,
   shuffled-label and surface-feature baselines, leakage checks. Never "this layer detects AI"; the claim is where the
   information becomes linearly accessible.
 - **Next experiments.** Pre- vs post-RMSNorm probes; attention vs MLP contributions; generalization across AI
