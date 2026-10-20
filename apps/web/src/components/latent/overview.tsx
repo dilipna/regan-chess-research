@@ -34,7 +34,7 @@ export function Progression() {
           <div className="eyebrow mb-1">Version 1 · MoveLens</div>
           <p className="font-serif text-[20px] text-ink">What does the model output?</p>
           <p className="mt-2 text-[13.5px] leading-relaxed text-ink-2">A Regan-inspired statistical baseline, Maia-3 and Qwen3-8B compared on the same chess decisions, using their output probabilities.</p>
-          <Link href="/" className="mt-2 inline-block text-[12.5px] text-ink-3 underline underline-offset-2 hover:text-ink">Open Version 1</Link>
+          <Link href="/chess" className="mt-2 inline-block text-[12.5px] text-ink-3 underline underline-offset-2 hover:text-ink">Open Version 1</Link>
         </Panel>
         <Panel className="border-llm/30">
           <div className="eyebrow mb-1 text-llm">Version 2 · LatentLens</div>

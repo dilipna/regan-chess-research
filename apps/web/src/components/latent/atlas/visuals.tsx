@@ -20,7 +20,7 @@ const MONO = "var(--font-figures), ui-monospace, monospace";
 
 function Frame({ kind, caption, children }: { kind: Kind; caption: React.ReactNode; children: React.ReactNode }) {
   return (
-    <figure className="mt-5 overflow-hidden rounded-2xl border border-rule bg-[#080b12]">
+    <figure className="mt-5 overflow-hidden rounded-2xl border border-rule bg-[#040706]">
       <div className="flex items-center justify-between gap-2 border-b border-rule px-3.5 py-2">
         <span className="text-[10.5px] font-medium tracking-[0.14em] text-ink-4 uppercase">See it</span>
         <span className="flex items-center gap-1.5 text-[10.5px] text-ink-3">
@@ -106,7 +106,7 @@ function Embeddings({ ex, d }: { ex: AtlasExample; d: AtlasDims }) {
             <div className="flex flex-1 gap-[3px]">
               {e.coords.map((v, j) => (
                 <span key={j} title={v.toFixed(4)} className="h-5 flex-1 rounded-[3px]"
-                  style={{ background: `color-mix(in oklab, ${v < 0 ? "var(--role-resid)" : "var(--role-mlp)"} ${Math.round(12 + 80 * Math.abs(v) / max)}%, #0b0f17)` }} />
+                  style={{ background: `color-mix(in oklab, ${v < 0 ? "var(--role-resid)" : "var(--role-mlp)"} ${Math.round(12 + 80 * Math.abs(v) / max)}%, #070b09)` }} />
               ))}
             </div>
             <span className="shrink-0 font-mono text-[10.5px] text-ink-4">…</span>
@@ -241,8 +241,8 @@ function Heatmap({ ex, mode }: { ex: AtlasExample; mode: "weights" | "mask" | "r
             return (
               <span key={k} title={future ? "masked" : mode === "mask" ? "allowed" : w.toFixed(3)} className="relative flex items-center justify-center rounded-[3px]"
                 style={future
-                  ? { background: "repeating-linear-gradient(135deg, #141a26 0 4px, #0b0f17 4px 8px)" }
-                  : { background: mode === "mask" ? "color-mix(in oklab, var(--role-attn) 26%, #0b0f17)" : `color-mix(in oklab, var(--role-attn) ${Math.round(6 + 90 * w)}%, #0b0f17)` }}>
+                  ? { background: "repeating-linear-gradient(135deg, #141a26 0 4px, #070b09 4px 8px)" }
+                  : { background: mode === "mask" ? "color-mix(in oklab, var(--role-attn) 26%, #070b09)" : `color-mix(in oklab, var(--role-attn) ${Math.round(6 + 90 * w)}%, #070b09)` }}>
                 {mode === "weights" && !future && w >= 0.1 && <span className="num font-mono text-[9.5px] text-ink">{w.toFixed(1).replace(/^0/, "")}</span>}
                 {mode === "mask" && future && <span className="font-mono text-[9px] text-ink-4">−∞</span>}
               </span>
@@ -265,13 +265,13 @@ function Gqa({ d, focus }: { d: AtlasDims; focus: "q" | "k" | "v" }) {
             <g key={g}>
               {Array.from({ length: d.G }, (_, q) => (
                 <rect key={q} x={gx + 3 + q * qw} y={6} width={qw - 2} height={18} rx={2}
-                  fill={focus === "q" ? "var(--role-attn)" : "color-mix(in oklab, var(--role-attn) 35%, #0b0f17)"} />
+                  fill={focus === "q" ? "var(--role-attn)" : "color-mix(in oklab, var(--role-attn) 35%, #070b09)"} />
               ))}
               {Array.from({ length: d.G }, (_, q) => (
                 <line key={q} x1={gx + 3 + q * qw + (qw - 2) / 2} y1={26} x2={gx + gw / 2} y2={52} stroke="var(--rule-strong)" />
               ))}
-              <rect x={gx + gw / 2 - 13} y={54} width={12} height={18} rx={2} fill={focus === "k" ? "var(--role-attn)" : "color-mix(in oklab, var(--role-attn) 35%, #0b0f17)"} />
-              <rect x={gx + gw / 2 + 1} y={54} width={12} height={18} rx={2} fill={focus === "v" ? "var(--role-attn)" : "color-mix(in oklab, var(--role-attn) 35%, #0b0f17)"} />
+              <rect x={gx + gw / 2 - 13} y={54} width={12} height={18} rx={2} fill={focus === "k" ? "var(--role-attn)" : "color-mix(in oklab, var(--role-attn) 35%, #070b09)"} />
+              <rect x={gx + gw / 2 + 1} y={54} width={12} height={18} rx={2} fill={focus === "v" ? "var(--role-attn)" : "color-mix(in oklab, var(--role-attn) 35%, #070b09)"} />
               <text x={gx + gw / 2} y={86} textAnchor="middle" fontSize={8.5} fill="var(--ink-4)" fontFamily={MONO}>K V</text>
             </g>
           );
@@ -312,7 +312,7 @@ function Rope({ d, ex }: { d: AtlasDims; ex?: AtlasExample }) {
       <circle cx={cx} cy={70} r={52} fill="none" stroke="var(--rule-strong)" />
       {labels.map((s, t) => {
         const a = t * w, x = cx + 46 * Math.cos(a), y = 70 - 46 * Math.sin(a);
-        const c = `color-mix(in oklab, var(--role-attn) ${40 + (60 * t) / (labels.length - 1)}%, #0b0f17)`;
+        const c = `color-mix(in oklab, var(--role-attn) ${40 + (60 * t) / (labels.length - 1)}%, #070b09)`;
         return (
           <g key={t}>
             <line x1={cx} y1={70} x2={x} y2={y} stroke={c} strokeWidth={2.2} strokeLinecap="round" />
@@ -338,7 +338,7 @@ function Concat({ d }: { d: AtlasDims }) {
   return (
     <Frame kind="config" caption={<>{d.H} head outputs of {d.dh} numbers are placed side by side ({d.H} × {d.dh} = {fmt(d.H * d.dh)}), then one learned matrix W<sub>o</sub> mixes them into a {fmt(d.d)}-number update.</>}>
       <div className="flex h-6 gap-[1.5px]">
-        {Array.from({ length: d.H }, (_, i) => <span key={i} className="flex-1 rounded-[2px]" style={{ background: `color-mix(in oklab, var(--role-attn) ${30 + (i % 4) * 15}%, #0b0f17)` }} />)}
+        {Array.from({ length: d.H }, (_, i) => <span key={i} className="flex-1 rounded-[2px]" style={{ background: `color-mix(in oklab, var(--role-attn) ${30 + (i % 4) * 15}%, #070b09)` }} />)}
       </div>
       <div className="my-1.5 text-center font-mono text-[11px] text-ink-4">↓ W<sub>o</sub> ({fmt(d.H * d.dh)} → {fmt(d.d)})</div>
       <div className="h-6 rounded-[3px] bg-[var(--role-resid)] opacity-80" />
@@ -362,7 +362,7 @@ function Top({ ex, d, mode }: { ex: AtlasExample; d: AtlasDims; mode: "logit" | 
           <div key={i} className="flex items-center gap-2">
             <span className="w-[56px] shrink-0 truncate font-mono text-[12px] text-ink">{t.label}</span>
             <div className="h-4 flex-1 rounded-sm bg-paper-3">
-              <div className="h-4 rounded-sm" style={{ width: `${((vals[i] - lo) / (hi - lo)) * 100}%`, background: i === 0 ? "var(--role-resid)" : "color-mix(in oklab, var(--role-resid) 50%, #0b0f17)" }} />
+              <div className="h-4 rounded-sm" style={{ width: `${((vals[i] - lo) / (hi - lo)) * 100}%`, background: i === 0 ? "var(--role-resid)" : "color-mix(in oklab, var(--role-resid) 50%, #070b09)" }} />
             </div>
             <span className="num w-12 shrink-0 text-right font-mono text-[11px] text-ink-3">{mode === "logit" ? t.logit.toFixed(2) : `${(t.p * 100).toFixed(1)}%`}</span>
           </div>
