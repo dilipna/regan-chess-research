@@ -1,6 +1,7 @@
 import { PATHS } from "@/lib/latent/paths";
 import type { Architecture, Metadata, StreamingCheck } from "@/lib/latent/types";
 import { Panel, SectionHead } from "./shell";
+import { Prov } from "./kit";
 
 const limits = (a: Architecture) => [
   `One model so far. Every internal measurement is ${a.model_id} at revision ${a.revision.slice(0, 8)}; nothing here generalizes to other models without running them.`,
@@ -42,11 +43,20 @@ export function Methods({ arch, metadata, streaming }: { arch: Architecture; met
               <li>Architecture: model instantiated on the meta device (exact shapes, no weights), compared with the stored safetensors headers and the model card; operation order checked in the installed source.</li>
               <li>Hidden states: forward hooks at module boundaries (layer input, RMSNorm outputs, attention output, MLP output, layer output), not <span className="font-mono">output_hidden_states</span>, whose last entry is post-norm in this transformers version.</li>
               <li>Layer streaming: the library&apos;s own Qwen3DecoderLayer, loaded one at a time. Tested equal to the full model (1e-4, float32, Qwen3-0.6B-Base).</li>
-              {streaming && <li>Real 8B cross-check in bfloat16 vs an offloaded transformers model: top-1 agreement {streaming.results.map((r) => `${(r.top1_agreement * 100).toFixed(0)}%`).join(" and ")} on two sentences.</li>}
+              {streaming && <li>Real 8B cross-check in bfloat16 against an offloaded transformers model: top-1 agreement {streaming.results.map((r) => `${Math.round(r.top1_agreement * r.positions)}/${r.positions}`).join(" and ")} positions on two sentences, log-probability differences up to {Math.max(...streaming.results.map((r) => r.max_abs_logprob_diff_top20)).toFixed(2)} nats. This is agreement within bfloat16 noise on a small check, not complete numerical equivalence; the runner is still being validated.</li>}
               <li>Documents and passages start with &lt;|endoftext|&gt;, which Qwen&apos;s tokenizer does not add by itself.</li>
             </ul>
           </Panel>
         </div>
+      </section>
+      <section>
+        <SectionHead kicker="Methods" title="How every visual is labelled" />
+        <ul className="grid gap-2 md:grid-cols-2">
+          <li className="rounded-md border border-rule bg-paper p-3 text-[14px] text-ink-2"><Prov kind="toy" /> Small, hand-made or seeded numbers that teach an operation exactly. Not Qwen values. Controls may change them freely.</li>
+          <li className="rounded-md border border-rule bg-paper p-3 text-[14px] text-ink-2"><Prov kind="recorded" /> Saved from the real checkpoint or from a recorded forward pass. Controls only select among what was recorded; new text is never simulated.</li>
+          <li className="rounded-md border border-rule bg-paper p-3 text-[14px] text-ink-2"><Prov kind="live" /> Would mean the model runs in your browser or on a server now. Nothing on these pages does, so this label is not used.</li>
+          <li className="rounded-md border border-rule bg-paper p-3 text-[14px] text-ink-2"><Prov kind="pending" /> The experiment has not been run. No values or charts are shown; the commands that produce them are listed.</li>
+        </ul>
       </section>
       <section>
         <SectionHead kicker="Methods" title="Limitations" />

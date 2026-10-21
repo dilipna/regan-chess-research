@@ -67,9 +67,9 @@ export function DatasetAndMethod({ arch, streaming }: { arch: Architecture; stre
         </Panel>
       </div>
       <Callout>
-        <span className="font-medium text-ink">Pipeline status.</span> Every script runs end to end and is covered by automated tests on the small Qwen3-0.6B-Base checkpoint with a synthetic
-        fixture (a structural test, never shown as a result). The layer-streaming runner used on this laptop reproduces the ordinary forward pass to within 1e-4 in float32.
-        {streaming && <> On Qwen3-8B in bfloat16 it agrees with an independent offloaded transformers run on {streaming.results.map((r) => `${Math.round(r.top1_agreement * r.positions)}/${r.positions}`).join(" and ")} top-1 tokens (largest log-probability difference {Math.max(...streaming.results.map((r) => r.max_abs_logprob_diff_top20)).toFixed(2)} nats, from bfloat16 rounding).</>}
+        <span className="font-medium text-ink">Pipeline status.</span> Every script runs end to end and is covered by automated structural tests on the small Qwen3-0.6B-Base checkpoint with a synthetic
+        fixture (never shown as a result). The layer-by-layer runner used on the laptop matched the ordinary forward pass to within 1e-4 on Qwen3-0.6B-Base in float32.
+        {streaming && <> On Qwen3-8B in bfloat16 it was compared with an independent offloaded transformers run: {streaming.results.map((r) => `${Math.round(r.top1_agreement * r.positions)}/${r.positions}`).join(" and ")} top-1 tokens agreed and log-probabilities differed by up to {Math.max(...streaming.results.map((r) => r.max_abs_logprob_diff_top20)).toFixed(2)} nats. That is agreement within bfloat16 noise on a small check, not proof of numerical equivalence; the runner remains an implementation under validation.</>}
       </Callout>
     </section>
   );
@@ -207,6 +207,32 @@ export function ComponentResearch({ c }: { c: ComponentProbe | Pending }) {
           </div>
         </Panel>
       )}
+    </section>
+  );
+}
+
+export function ResearchWorkspace({ arch }: { arch: Architecture }) {
+  const v = arch.verified;
+  const rows: [string, React.ReactNode][] = [
+    ["Scientific question", "Where inside a frozen Qwen3-8B-Base does information useful for distinguishing human-written from fully AI-generated text become linearly accessible, and which computations (attention, MLP, normalization) change that accessibility?"],
+    ["Hypothesis", "Linear accessibility of the label is higher at some intermediate depths than at the embeddings, and changes across block sub-steps. This is a hypothesis to test, not an expected result; no direction is assumed for normalization."],
+    ["Dataset and access", <>Pangram EditLens (<span className="font-mono">pangram/editlens_iclr</span>), human-written vs fully AI-generated only; AI-edited text excluded. Access is gated (manual approval, non-commercial terms) and <strong>has not been granted</strong>. LatentLens will not use unofficial copies to get around the gate.</>],
+    ["Model and representation", <>{arch.model_id} @ {arch.revision.slice(0, 8)}, frozen. Each document: ⟨start⟩ + up to 512 tokens; pooled residual stream at all {v.num_hidden_layers + 1} depths (mean and last-token; one chosen on validation); seven sites inside five blocks.</>],
+    ["Splits and leakage controls", "Published train / val / test splits plus held-out generator (test_llama) and domain (test_enron) splits. The run stops if any id, identical text or EditLens source_id group appears in two splits."],
+    ["Probe and baselines", "Standardised L2 logistic regression per depth (C by grouped cross-validation inside train). Baselines: shuffled labels, length, token count, perplexity under the model, stylometric features; length-matched test subset; per-generator results."],
+    ["Metrics and uncertainty", "ROC-AUC (primary), PR-AUC, balanced accuracy, F1. Depth and pooling chosen on validation only; the test split used once, at the selected depth and at the final depth, with bootstrap 95% intervals. Exploratory comparisons (RMSNorm, attention vs MLP) use validation with paired bootstrap differences."],
+    ["Limitations", "One model, one dataset. A successful probe shows predictive, label-correlated information under this protocol; it does not show that the model uses that information, identify a mechanism, or provide reliable proof of authorship for any individual text."],
+  ];
+  return (
+    <section className="mt-10">
+      <ol className="grid gap-3">
+        {rows.map(([k, val], i) => (
+          <li key={k} className="ll-panel grid gap-2 rounded-xl border border-rule bg-paper p-4 md:grid-cols-[220px_1fr]">
+            <div className="flex items-baseline gap-2"><span className="num text-[13px] text-ink-4">{i + 1}</span><span className="text-[15px] font-semibold text-ink">{k}</span></div>
+            <div className="text-[15px] leading-relaxed text-ink-2">{val}</div>
+          </li>
+        ))}
+      </ol>
     </section>
   );
 }
