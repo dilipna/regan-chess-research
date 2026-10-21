@@ -35,4 +35,16 @@ Qwen's held-out evaluation remains pending. Seven locally scored demo positions 
 
 The report includes source commit where Git is available, verifier/contract/input hashes, runtime versions, reproduced values/intervals, pending status and explicit unreproduced capabilities. Frozen file hashes detect drift relative to this repository contract; they do not independently authenticate the original scientific results or establish external prospective timestamps.
 
-The handoff's original local checkout could not be read from this session. It was not modified. Work is confined to the isolated `improve/cpu-research-evidence` branch; no public site, provider account or research attribution was changed.
+The initial sandboxed owner-checkout read failed; a subsequent authorized read-only check succeeded. The owner checkout is clean on `latentlens-storybook` at `7e70f1d` and was not modified. Three required ignored inputs were copied into a separate mission snapshot. Their identities match the original frozen test hashes. No public site, provider account or research attribution was changed.
+
+## Optional full saved-prediction check
+
+With an explicitly supplied evidence directory containing the exact frozen `variants.parquet`, `splits.json` and `test_predictions.parquet`:
+
+```powershell
+.venv-cpu/Scripts/python.exe scripts/verify_full_cpu_evidence.py --evidence-dir ../chess-evidence-inputs --output reports/cpu-evidence/full-verification.json
+```
+
+Missing/altered inputs fail; this command is not run by public CI because the ignored inputs are absent from a fresh clone. The pre-implementation contract is `docs/full-cpu-evidence-contract.md`. It independently checks recorded player identifiers (case-normalized) and source games across splits, variant/label metadata and exact held-out prediction identities. It reproduces five saved hybrid ROC-AUC values and seven paired differences/intervals at frozen absolute tolerance 1e-9. The independent weighted pair-ordering AUC gives half credit to score ties. Binary class-balanced weights cancel within classes. Each bootstrap draws the original first-appearance game order with the recorded seed; multiplicities weight every row of a sampled source game together.
+
+Local results: 47,360 variant rows, 2,960 recorded players, 1,561 source games across splits; 9,680 held-out rows from 321 games and 605 player-games. All five point values and seven paired intervals match. These checks establish consistency of the frozen recorded identifiers and saved prediction arithmetic. They do not establish real-human identity, prospective data collection, original inference, independent Regan implementation validity, or real-world cheating-detection validity. Qwen held-out results remain pending. The minimal helper tests run without these external files; the actual external-input command was separately executed locally.
