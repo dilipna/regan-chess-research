@@ -1,3 +1,7 @@
+## Minimal CPU verification of saved Maia evidence
+
+A fresh clone can verify four saved Maia metrics and their paired source-game intervals without model downloads or GPU access. This checks artifact arithmetic and consistency; full split/inference/hybrid reproduction remains separately qualified. See [CPU reproduction and limits](docs/cpu-verification.md).
+
 # MoveLens
 
 **Three ways to understand a chess move.** Statistics, language models, and human chess behavior on the same positions.
