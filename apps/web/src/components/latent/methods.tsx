@@ -25,7 +25,7 @@ export function Methods({ arch, metadata, streaming }: { arch: Architecture; met
   return (
     <div className="grid gap-14">
       <section>
-        <SectionHead n={13} kicker="Methods" title="How every number on these pages was produced" />
+        <SectionHead level={1} n={13} kicker="Methods" title="How every number on these pages was produced" />
         <div className="grid gap-6 lg:grid-cols-2">
           <Panel title="Model and software">
             <div className="scroll-x"><table className="table-lab [&_td]:[overflow-wrap:anywhere]"><tbody>

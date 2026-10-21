@@ -15,7 +15,7 @@ export function ResearchQuestion() {
     "Does activation magnitude matter?", "Does attention increase separation?", "Does the MLP increase separation?", "Does the signal generalize across AI generators?", "Does the signal survive domain shift?"];
   return (
     <section>
-      <SectionHead kicker="Research Mode" title="Where inside Qwen does information useful for distinguishing human-written from AI-generated text emerge?">
+      <SectionHead level={1} kicker="Research Mode" title="Where inside Qwen does information useful for distinguishing human-written from AI-generated text emerge?">
         Qwen3-8B-Base is frozen. For each document we read its hidden states at every depth and ask whether a simple linear classifier can tell human-written from fully
         AI-generated text using only that representation. The model is never fine-tuned.
       </SectionHead>

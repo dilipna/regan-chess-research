@@ -1,0 +1,121 @@
+{
+  "n_clusters": 321,
+  "n_rows": 9680,
+  "n_positive_rows": 9075,
+  "n_player_games": 605,
+  "auc": {
+    "A0_zt1": 0.7846619766409398,
+    "A_stat": 0.8196617717369032,
+    "B_sf": 0.8262254399745008,
+    "C_sf_maia": 0.8730267058261048,
+    "D_sf_maia_seq": 0.8797408191608042
+  },
+  "comparisons": [
+    {
+      "from": "A0_zt1",
+      "to": "A_stat",
+      "delta": 0.034999795095963404,
+      "ci95": [
+        0.029119611977337572,
+        0.04054946753281885
+      ],
+      "share_le_0": 0.0
+    },
+    {
+      "from": "A_stat",
+      "to": "B_sf",
+      "delta": 0.006563668237597575,
+      "ci95": [
+        0.0025631790652353133,
+        0.010463889026158942
+      ],
+      "share_le_0": 0.001
+    },
+    {
+      "from": "B_sf",
+      "to": "C_sf_maia",
+      "delta": 0.046801265851603935,
+      "ci95": [
+        0.039536053102387114,
+        0.053611929921168526
+      ],
+      "share_le_0": 0.0
+    },
+    {
+      "from": "C_sf_maia",
+      "to": "D_sf_maia_seq",
+      "delta": 0.006714113334699401,
+      "ci95": [
+        0.0024570432946758925,
+        0.01104081882203152
+      ],
+      "share_le_0": 0.001
+    },
+    {
+      "from": "A_stat",
+      "to": "C_sf_maia",
+      "delta": 0.05336493408920151,
+      "ci95": [
+        0.045798703793893565,
+        0.06071552613806927
+      ],
+      "share_le_0": 0.0
+    },
+    {
+      "from": "A_stat",
+      "to": "D_sf_maia_seq",
+      "delta": 0.06007904742390091,
+      "ci95": [
+        0.0515748550428968,
+        0.06814395005533314
+      ],
+      "share_le_0": 0.0
+    },
+    {
+      "from": "B_sf",
+      "to": "D_sf_maia_seq",
+      "delta": 0.053515379186303336,
+      "ci95": [
+        0.045090050361760815,
+        0.0612009219269132
+      ],
+      "share_le_0": 0.0
+    }
+  ],
+  "bootstrap": {
+    "seed": 20261012,
+    "n_boot": 2000,
+    "cluster": "source game",
+    "order": "first appearance"
+  },
+  "status": "PASS",
+  "scope": "Saved hybrid predictions and case-normalized recorded-player/game split assignments; no inference or true player-identity verification",
+  "split_counts": {
+    "variants": 47360,
+    "recorded_players": 2960,
+    "source_games": 1561
+  },
+  "recorded_player_and_game_disjointness_verified": true,
+  "inputs_sha256": {
+    "test_predictions.parquet": "07db35613fb926925ae617519404581698d24f05c237c2685f800a373f5467e9",
+    "splits.json": "b4cb777d5afb82e817ac638c2acee75e5ada2e2b5211bc4c4fb2e82cd01c9f5f",
+    "variants.parquet": "8baa1b4d0cafcff781d11dbcac1adda43e07758fa0562227c4f59884152797e6",
+    "data/artifacts/metrics.json": "9da1aa1be1f6299c365ef387850258d75df012201cff6467346d755c6609b4b2",
+    "data/artifacts/paired_bootstrap.json": "abb053c80425a06a2e129803f994ce1a1b90db3b655e90b2737e8020944ebf46"
+  },
+  "absolute_tolerance": 1e-09,
+  "contract_sha256": "72ca7ed366a160309801f14e460bad7dbc197acd6addeff2eaab3e7a10e62202",
+  "verifier_sha256": "d2eebdfad8199c5a61f3cdec838e207cc25b3a5f11926ef20a2285e392e2dfae",
+  "source_commit": "70d64da76247249994a34d4ebe0038120469e36d",
+  "runtime": {
+    "python": "3.10.9",
+    "numpy": "1.26.4",
+    "pyarrow": "21.0.0"
+  },
+  "not_verified": [
+    "Real human identity or collection integrity",
+    "Original model inference or legal-policy normalization",
+    "Qwen held-out results (pending)",
+    "Scientific or production cheating-detection validity"
+  ]
+}

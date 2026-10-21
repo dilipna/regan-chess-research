@@ -110,7 +110,7 @@ export default async function Home() {
       <div className="grid items-stretch gap-5 md:grid-cols-[1fr_auto_1fr]">
         <PhaseCard phase={PHASES[0]} picture={<ThreeReaders />}
           caption="Illustration. One position, three models, three suggested moves."
-          finding="adding a model of human play made engine-assisted games easier to tell apart, from 0.820 to 0.873 ROC-AUC on held-out games. The language model's held-out evaluation is still pending." />
+          finding="adding a model of human play improved discrimination of controlled move substitutions, from 0.820 to 0.873 ROC-AUC on held-out source games. This is a synthetic assistance task; the language model's held-out evaluation is still pending." />
         <div aria-hidden className="hidden items-center text-[28px] text-ink-4 md:flex">→</div>
         <PhaseCard phase={PHASES[1]} picture={recall ? <Climb recall={recall} /> : <p className="text-ink-3">Recall data not available.</p>}
           caption={g && last ? `Recorded on Qwen3-8B-Base, ${g.n_scored} words of the Gettysburg Address: the median rank of the correct next word goes from ${g.depth_summary[0].median_rank.toLocaleString("en-US")} at the first layer to ${last.median_rank} at the last. Earlier layers are read through a diagnostic projection.` : ""}
