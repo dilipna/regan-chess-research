@@ -1,43 +1,10 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useId, useState } from "react";
 import { cn } from "@/lib/utils";
 import type { Part } from "@/lib/latent/parts";
 import type { Pending } from "@/lib/latent/types";
-
-const SUBNAV = [
-  { href: "/latent", label: "Overview" },
-  { href: "/latent/learn", label: "Learn" },
-  { href: "/latent/research", label: "Research" },
-  { href: "/latent/recall", label: "Recall" },
-  { href: "/latent/methods", label: "Methods" },
-  { href: "/latent/demo", label: "Professor Demo" },
-];
-
-export function LatentSubNav() {
-  const path = usePathname();
-  return (
-    <div className="border-b border-rule bg-paper-2/60 backdrop-blur">
-      <div className="mx-auto flex h-11 max-w-[1180px] items-center gap-3 px-4 sm:px-6">
-        <Link href="/latent" className="shrink-0 font-serif text-[16px] font-semibold tracking-tight text-ink">LatentLens</Link>
-        <span aria-hidden className="h-4 w-px shrink-0 bg-rule-strong" />
-        <nav aria-label="LatentLens" className="no-scrollbar -mr-4 flex min-w-0 flex-1 items-center gap-0.5 overflow-x-auto pr-4">
-          {SUBNAV.map((l) => {
-            const active = path === l.href;
-            return (
-              <Link key={l.href} href={l.href} aria-current={active ? "page" : undefined}
-                className={cn("shrink-0 rounded px-2 py-1 text-[13px] whitespace-nowrap text-ink-3 hover:text-ink", active && "bg-paper text-ink shadow-[inset_0_0_0_1px_var(--rule-strong)]")}>
-                {l.label}
-              </Link>
-            );
-          })}
-        </nav>
-      </div>
-    </div>
-  );
-}
+import { Prov } from "./kit";
 
 export function SectionHead({ n, kicker, title, children, id }: { n?: number | string; kicker?: string; title: string; children?: React.ReactNode; id?: string }) {
   return (
@@ -54,16 +21,17 @@ export function SectionHead({ n, kicker, title, children, id }: { n?: number | s
   );
 }
 
-export function Toy({ children = "Toy example" }: { children?: React.ReactNode }) {
-  return <span className="inline-flex items-center rounded-[3px] border border-dashed border-ink-4 px-1.5 py-[1px] text-[11px] font-medium text-ink-3">{children}</span>;
+// The older pages use these names; they now render the four standard provenance labels.
+export function Toy({ children }: { children?: React.ReactNode }) {
+  return <Prov kind="toy" detail={typeof children === "string" && children !== "Toy example" ? children : undefined} />;
 }
 
-export function Measured({ children = "Measured on Qwen3-8B-Base" }: { children?: React.ReactNode }) {
-  return <span className="inline-flex items-center rounded-[3px] border border-llm/30 bg-llm-soft px-1.5 py-[1px] text-[11px] font-medium text-llm">{children}</span>;
+export function Measured({ children }: { children?: React.ReactNode }) {
+  return <Prov kind="recorded" detail={typeof children === "string" && children !== "Measured on Qwen3-8B-Base" ? children : undefined} />;
 }
 
-export function Verified({ children = "Verified from the checkpoint" }: { children?: React.ReactNode }) {
-  return <span className="inline-flex items-center rounded-[3px] border border-ours/30 bg-tint-ours px-1.5 py-[1px] text-[11px] font-medium text-ours">{children}</span>;
+export function Verified({ children }: { children?: React.ReactNode }) {
+  return <Prov kind="recorded" detail={typeof children === "string" && children !== "Verified from the checkpoint" ? children : "verified from the checkpoint"} />;
 }
 
 export function Shape({ children }: { children: React.ReactNode }) {

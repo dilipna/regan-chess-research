@@ -8,6 +8,7 @@ import { fmtInt, fmtProb, showTok } from "@/lib/latent/toy";
 import type { Recall, RecallPassage, RecallPrecision } from "@/lib/latent/types";
 import { LineChart, SERIES } from "./charts";
 import { Callout, Measured, Panel, SectionHead } from "./shell";
+import { Prov } from "./kit";
 
 export function useRecall() {
   const [data, setData] = useState<Recall | null>(null);
@@ -87,8 +88,27 @@ export function RecallMicroscope({ precision }: { precision?: RecallPrecision })
   if (err) return <p role="alert" className="text-[13px] text-flag">Could not load the recall artifact: {err}</p>;
   if (!data || !p) return <p className="py-10 text-[13px] text-ink-3" aria-live="polite">Loading the recall artifact…</p>;
   const sel = t ?? firstMiss;
+  const g = data.passages[0];
+  const demoT = Math.min(5, g.positions.length - 1);
+  const ctx = g.positions.slice(0, demoT + 1).map((x) => x.true ?? "").join("");
   return (
     <div className="grid gap-8">
+      <section className="ll-panel grid gap-4 rounded-2xl border border-rule bg-paper p-5 sm:p-6">
+        <div className="flex flex-wrap items-center justify-between gap-2"><h3 className="text-[18px] font-semibold text-ink">How recall is scored here: teacher forcing</h3><Prov kind="recorded" detail="one real position" /></div>
+        <div className="grid items-center gap-3 md:grid-cols-[1fr_auto_1fr]">
+          <div className="rounded-xl border-2 border-[var(--role-resid)] bg-[var(--role-resid-soft)] p-3"><div className="text-[12px] font-semibold tracking-wide text-ink-3 uppercase">The model is given the true text so far</div><p className="mt-1 font-serif text-[18px] text-ink">{ctx}</p></div>
+          <span aria-hidden className="text-center text-[22px] text-ink-3">→</span>
+          <div className="rounded-xl border-2 border-rule-strong p-3"><div className="text-[12px] font-semibold tracking-wide text-ink-3 uppercase">Its top prediction vs the true next token</div>
+            <p className="mt-1 text-[16px]">predicted <span className="font-mono">{showTok(g.positions[demoT + 1]?.top ?? "")}</span> · true <span className="font-mono">{showTok(g.positions[demoT + 1]?.true ?? "")}</span> · rank {g.positions[demoT + 1]?.rank}</p></div>
+        </div>
+        <p className="text-[15px] text-ink-2">At every position the model receives the <strong>true</strong> preceding text, even if it predicted the previous token wrongly. Top-1 recall is the share of positions where its highest-scoring token is the true next token.</p>
+        <ul className="grid gap-1.5 text-[14.5px] text-ink-2 md:grid-cols-2">
+          <li>• Next-token accuracy is <strong>not</strong> the same as reproducing the whole passage freely: free generation feeds the model its own outputs, so one error can derail the rest. That was not measured.</li>
+          <li>• The Gettysburg-versus-control gap is consistent with the famous text being familiar, but it does <strong>not prove memorization</strong>: the texts differ in style, topic and length, and there is one passage of each.</li>
+          <li>• Values at earlier depths are <strong>intermediate diagnostic projections</strong> through the final norm and output head, not the model&apos;s actual output at that layer.</li>
+          <li>• Recall rates near a tie are sensitive to numerical precision (see the bfloat16 vs float32 check below).</li>
+        </ul>
+      </section>
       <Panel title="Recall summary" badge={<Measured>{`Qwen3-8B-Base, ${data.dtype}, layer-streamed on a laptop GPU`}</Measured>}>
         <div className="scroll-x">
           <table className="table-lab">

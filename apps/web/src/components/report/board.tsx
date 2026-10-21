@@ -5,6 +5,15 @@ import { Chessboard } from "react-chessboard";
 import type { Arrow } from "react-chessboard";
 import { useMemo, useState } from "react";
 
+// The site's text colours are bright for a black page; on the board's light squares arrows need deeper tones.
+// The mapping keeps each arrow's meaning (played = black, Stockfish = blue, Qwen = red, Maia = green).
+const ON_BOARD: Record<string, string> = {
+  "var(--ink)": "var(--arrow-played)",
+  "var(--engine)": "var(--arrow-engine)",
+  "var(--llm)": "var(--arrow-llm)",
+  "var(--human)": "var(--arrow-human)",
+};
+
 export interface BoardArrow {
   uci: string;
   color: string;
@@ -55,7 +64,7 @@ export function Board({
       const k = a.uci.slice(0, 4);
       if (seen.has(k)) continue;
       seen.add(k);
-      out.push({ startSquare: a.uci.slice(0, 2), endSquare: a.uci.slice(2, 4), color: a.color });
+      out.push({ startSquare: a.uci.slice(0, 2), endSquare: a.uci.slice(2, 4), color: ON_BOARD[a.color] ?? a.color });
     }
     return out;
   }, [arrows]);
@@ -121,10 +130,10 @@ export function Board({
           squareStyles,
           showAnimations: true,
           animationDurationInMs: 220,
-          darkSquareStyle: { backgroundColor: "var(--board-dark)" },
-          lightSquareStyle: { backgroundColor: "var(--board-light)" },
-          darkSquareNotationStyle: { color: "var(--board-light)", fontSize: "10px", fontWeight: 500 },
-          lightSquareNotationStyle: { color: "var(--board-dark)", fontSize: "10px", fontWeight: 500 },
+          darkSquareStyle: { backgroundColor: "var(--square-dark)" },
+          lightSquareStyle: { backgroundColor: "var(--square-light)" },
+          darkSquareNotationStyle: { color: "var(--square-light)", fontSize: "10px", fontWeight: 500 },
+          lightSquareNotationStyle: { color: "var(--square-dark)", fontSize: "10px", fontWeight: 500 },
         }}
       />
     </div>

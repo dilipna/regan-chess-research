@@ -9,6 +9,7 @@ import { Methods } from "@/components/latent/methods";
 import { MlpLab } from "@/components/latent/mlp-lab";
 import { OutputLab } from "@/components/latent/output-lab";
 import { ArchitectureOverview, Hero, ModeCards } from "@/components/latent/overview";
+import { PHASES } from "@/lib/site/phases";
 import { ComponentResearch, LayerProbeSection, PcaSection, RmsnormResearch } from "@/components/latent/research";
 import { RmsnormLab } from "@/components/latent/rmsnorm-lab";
 import { KvCacheLab, TeachBack, TrainingSection } from "@/components/latent/training";
@@ -190,14 +191,15 @@ describe("Version 1 preservation and copy rules", () => {
     for (const r of ["", "about", "analyze", "compare", "demo", "examples", "methodology", "present", "research", "results", "walkthrough"])
       expect(existsSync(path.join(WEB, "src", "app", r, "page.tsx"))).toBe(true);
   });
-  it("the V1 navigation links to V2 and the sitemap lists the new routes", () => {
-    expect(readFileSync(path.join(WEB, "src", "components", "site", "nav.tsx"), "utf-8")).toContain("V2 · Model Internals");
+  it("the site navigation offers both phases and the sitemap lists the new routes", () => {
+    expect(readFileSync(path.join(WEB, "src", "components", "site", "nav.tsx"), "utf-8")).toContain("PHASES.map");
+    expect(PHASES.map((p) => [p.n, p.home])).toEqual([[1, "/chess"], [2, "/latent/professor"]]);
     const sm = readFileSync(path.join(WEB, "src", "app", "sitemap.ts"), "utf-8");
     for (const r of ["/latent", "/latent/learn", "/latent/research", "/latent/recall", "/latent/methods", "/latent/demo"]) expect(sm).toContain(`"${r}"`);
   });
-  it("the dark theme is scoped to LatentLens pages and leaves Version 1 light", () => {
+  it("the LatentLens theme is scoped to LatentLens pages and leaves Version 1 unchanged", () => {
     const css = readFileSync(path.join(WEB, "src", "app", "latent", "latent.css"), "utf-8");
-    expect(readFileSync(path.join(WEB, "src", "app", "latent", "layout.tsx"), "utf-8")).toContain('data-latent-theme="observatory"');
+    expect(readFileSync(path.join(WEB, "src", "app", "latent", "layout.tsx"), "utf-8")).toContain('data-latent-theme="deep"');
     for (const rule of css.match(/^[^\s@/*}][^{]*\{/gm) ?? []) expect(rule).toMatch(/data-latent-theme|^\s*(0%|50%|100%)/);
     expect(readFileSync(path.join(WEB, "src", "app", "globals.css"), "utf-8")).not.toContain("data-latent-theme");
   });

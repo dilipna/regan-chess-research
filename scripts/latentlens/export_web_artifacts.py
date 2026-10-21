@@ -120,6 +120,11 @@ def main():
         for k, v in problems.items():
             print("INVALID", k, v)
         raise SystemExit("artifact validation failed; the invalid files above were not copied and metadata was not written")
+    # Glass Box tensors are binary (float32); copy them byte for byte next to their manifest.
+    for b in sorted((res / "glassbox").glob("*.bin")) if (res / "glassbox").exists() else []:
+        (web / "glassbox").mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(b, web / "glassbox" / b.name)
+        status[f"glassbox/{b.name}"] = "ok"
     for stale in [q for q in (web / "pca").glob("*.json") if not (res / "pca" / q.name).exists()]:
         stale.unlink()
 

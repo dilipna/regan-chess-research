@@ -200,6 +200,25 @@ export interface StreamingCheck {
   results: { text: string; positions: number; top1_agreement: number; max_abs_logprob_diff_top20: number }[];
 }
 
+export interface Distribution {
+  top: { id: number; text: string; logit: number; p: number }[];
+  logsumexp_by_temperature: Record<string, number>;
+  top_mass: number;
+  entropy: number;
+}
+
+export interface GenerationSteps {
+  status: Status;
+  model_id: string;
+  revision: string;
+  dtype: string;
+  loader: string;
+  prompt: string;
+  procedure: string;
+  step1: Distribution;
+  step2: ({ appended: { id: number; text: string }; context: string } & Distribution)[];
+}
+
 export interface RecallPrecision {
   status: Status;
   compared: string[];

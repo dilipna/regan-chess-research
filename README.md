@@ -386,9 +386,10 @@ happening inside the model that produces those outputs?* It opens the same Qwen3
 
 `latentlens/streaming.py` builds each real `Qwen3DecoderLayer` from the checkpoint config, loads only that layer's
 weights, runs every sequence through it and frees it. Tests show it reproduces the ordinary forward pass within 1e-4 in
-float32 (Qwen3-0.6B-Base); on Qwen3-8B in bf16 it agrees with an independent offloaded transformers run on 18 of 20
-top-1 tokens (differences are bf16 near-ties). Hidden states are read with explicit hooks because in transformers 5.18
-`output_hidden_states[-1]` is post-final-norm while the other entries are pre-norm.
+float32 (Qwen3-0.6B-Base). On Qwen3-8B in bf16 it was compared with an independent offloaded transformers run: 18 of 20
+top-1 tokens agreed and log-probabilities differed by up to 0.46 nats. That is agreement within bf16 noise on a small check,
+not proof of numerical equivalence; the runner is still being validated. Hidden states are read with explicit hooks because in
+transformers 5.18 `output_hidden_states[-1]` is post-final-norm while the other entries are pre-norm.
 
 ### Scripts (`scripts/latentlens/`)
 
@@ -403,6 +404,9 @@ top-1 tokens (differences are bf16 near-ties). Hidden states are read with expli
 | `train_layer_probes.py` | layerwise probes, controls, one-time test |
 | `probe_rmsnorm.py`, `probe_components.py`, `build_pca_artifacts.py` | normalization, attention-vs-MLP, PCA |
 | `verify_streaming.py` | streamed vs offloaded full-model check on the real 8B |
+| `record_generation_steps.py` | two recorded generation steps (top candidates and the step after each) for the journey |
+| `capture_glassbox.py` | Glass Box: every intermediate tensor of blocks 1, 18 and 36 for one token (float32 copies of bfloat16 values, 0.4 MB per block) plus a Python re-derivation ledger |
+| `analyze_recall_versions.py` | "Mistake, or another version?": classifies Gettysburg recall misses against the five Lincoln manuscripts (no model run; reads the recorded recall artifact) |
 | `export_web_artifacts.py` | validate, write pending placeholders, copy compact JSON to the website |
 
 Environment: `uv venv .venv-latent` and `pip install -r scripts/latentlens/requirements.txt` (torch 2.14.1 first). The
@@ -442,3 +446,15 @@ mechanisms or authorship. Black-box API models are never internally probed.
 Run the human-vs-AI study on EditLens (CSE GPU); compare recall trajectories of the 14B and ~27B Qwen models Professor
 Regan used (same text, same script, bf16 and fp32); add adapters for further open-weight families only after the Qwen
 pipeline has produced results.
+
+### Learning redesign (branch `latentlens-redesign`)
+
+`/latent/journey` is a guided, roughly 10-minute path built around one question, *How does this piece of text become the
+next token?*, with three explanation levels (Story, Mechanics, Research) that keep the same example and step. Six labs
+(`/latent/labs`) cover RMSNorm vs LayerNorm, an attention microscope, RoPE, temperature and sampling, the KV cache and one
+training step. `/latent/demo` is a keyboard-controlled five-step presentation. Design, provenance rules and the learner
+tasks that still need real user testing: [docs/LATENTLENS_REDESIGN.md](docs/LATENTLENS_REDESIGN.md).
+
+**Branches.** `main` = the Version 1 snapshot (tag `v1-baseline`); `latentlens-v2` = Version 1 + the first LatentLens
+release (currently deployed); `latentlens-redesign` = this learning redesign, not deployed and not merged. Version 1 stays
+the stable reference; no LatentLens branch is meant to be merged into `main` without a separate decision.
