@@ -2,6 +2,8 @@
 
 A fresh clone can verify four saved Maia metrics and their paired source-game intervals without model downloads or GPU access. This checks artifact arithmetic and consistency; full split/inference/hybrid reproduction remains separately qualified. See [CPU reproduction and limits](docs/cpu-verification.md).
 
+The release also protects interrupted hidden-state extraction with shared run/split identities and validated atomic checkpoints. See the [engineering case study](docs/ENGINEERING_CASE_STUDY.md) and [checkpoint/recovery guide](docs/extraction-checkpoints.md). The website's `/engineering` page exposes the executed saved-output verification reports; it does not claim new model-quality results or completed Qwen held-out scoring.
+
 # MoveLens
 
 **Three ways to understand a chess move.** Statistics, language models, and human chess behavior on the same positions.
@@ -456,5 +458,7 @@ training step. `/latent/demo` is a keyboard-controlled five-step presentation. D
 tasks that still need real user testing: [docs/LATENTLENS_REDESIGN.md](docs/LATENTLENS_REDESIGN.md).
 
 **Branches.** `main` = the Version 1 snapshot (tag `v1-baseline`); `latentlens-v2` = Version 1 + the first LatentLens
-release (currently deployed); `latentlens-redesign` = this learning redesign, not deployed and not merged. Version 1 stays
-the stable reference; no LatentLens branch is meant to be merged into `main` without a separate decision.
+release; `latentlens-redesign` and `latentlens-storybook` contain later learning/UI work. Read-only Vercel source metadata
+on October 21, 2026 confirmed the existing production revision as `latentlens-storybook` at `7e70f1d`. The engineering
+release branch `improve/chess-release` retains that deployed application and adds the evidence/recovery work described above.
+Version 1 stays the stable reference; no LatentLens branch is meant to be merged into `main` without a separate decision.
