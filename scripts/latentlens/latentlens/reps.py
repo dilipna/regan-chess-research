@@ -43,10 +43,18 @@ def load_run(path: str | Path) -> tuple[dict, dict[str, Split]]:
     with output_lock(root):
         run = read_json(root / "run.json")
         splits = {}
+        if run.get("checkpoint_schema") == 1:
+            recorded = {p.parent.name for p in root.glob("*/resume-contract.json")}
+            if recorded != set(run["splits"]):
+                raise ValueError("Extraction has incomplete split records")
         for name in run["splits"]:
             sdir = root / name
             if run.get("checkpoint_schema") == 1:
-                verify_completed(sdir)
+                marker = verify_completed(sdir)
+                contract = read_json(sdir / "resume-contract.json")
+                if (marker["identity_sha256"] != run["splits"][name].get("identity_sha256")
+                        or contract["identity"].get("shared_identity_sha256") != run.get("shared_identity_sha256")):
+                    raise ValueError("Split identity differs from the recorded extraction run")
             meta = [json.loads(l) for l in (sdir / "meta.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
             splits[name] = Split(name, meta, sdir)
     return run, splits

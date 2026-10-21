@@ -189,6 +189,8 @@ def extract(args, docs, report, out, sdir, a):
     from latentlens.common import library_versions
 
     a.load_model()
+    if not a.revision:
+        raise ValueError("Verified extraction requires a pinned model revision")
     L, D = a.get_layer_count(), a.get_hidden_size()
     depths = parse_list(args.depths, L + 1)
     comp = (
@@ -276,14 +278,27 @@ def extract(args, docs, report, out, sdir, a):
                 "latentlens/capture.py",
                 "latentlens/streaming.py",
                 "latentlens/data.py",
+                "latentlens/common.py",
                 "latentlens/checkpoint.py",
             )
         },
     }
+    shared_identity = digest(
+        {
+            "config": {key: value for key, value in cfg.items() if key != "loader"},
+            "runtime": identity["runtime"],
+            "implementation": identity["implementation"],
+            "device": identity["device"],
+        }
+    )
+    if run_path.exists() and run.get("shared_identity_sha256") != shared_identity:
+        raise ValueError("The shared extraction identity changed; use a new --out")
+    identity["shared_identity_sha256"] = shared_identity
     n_chunks = (len(toks) + args.chunk_size - 1) // args.chunk_size
     checkpoint = SplitCheckpoint(sdir, identity, n_chunks)
     checkpoint.invalidate_completion()
     run["checkpoint_schema"] = 1
+    run["shared_identity_sha256"] = shared_identity
     atomic_json(run_path, run)  # identify interrupted first extraction
     encoded_meta = "".join(
         json.dumps(m, ensure_ascii=False) + "\n" for m in metas
@@ -418,6 +433,7 @@ def extract(args, docs, report, out, sdir, a):
         lambda fh: np.save(fh, np.array([m["label"] for m in metas], dtype=np.int8)),
     )
     run["splits"][args.split] = {
+        "identity_sha256": checkpoint.identity,
         "n": len(metas),
         "n_human": sum(m["label"] == 0 for m in metas),
         "n_ai": sum(m["label"] == 1 for m in metas),
@@ -427,7 +443,17 @@ def extract(args, docs, report, out, sdir, a):
     }
     run["provenance"] = provenance(script="scripts/latentlens/extract_hidden_states.py")
     atomic_json(run_path, run)
-    checkpoint.mark_complete([sdir / "meta.jsonl", *sorted(sdir.glob("*.npy"))])
+    output_names = {
+        "meta.jsonl",
+        "stylometry.npy",
+        "labels.npy",
+        *(f"{key}.npy" for key in keys or []),
+    }
+    if {p.name for p in sdir.glob("*.npy")} != output_names - {"meta.jsonl"}:
+        raise ValueError(
+            "Unexpected consolidated arrays; preserve and inspect the output directory"
+        )
+    checkpoint.mark_complete([sdir / name for name in sorted(output_names)])
     print(f"[{args.split}] {len(metas)} documents -> {sdir}")
 
 
