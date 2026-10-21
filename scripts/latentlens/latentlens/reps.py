@@ -37,11 +37,16 @@ class Split:
 
 
 def load_run(path: str | Path) -> tuple[dict, dict[str, Split]]:
+    from .checkpoint import output_lock, verify_completed
+
     root = Path(path)
-    run = read_json(root / "run.json")
-    splits = {}
-    for name in run["splits"]:
-        sdir = root / name
-        meta = [json.loads(l) for l in (sdir / "meta.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
-        splits[name] = Split(name, meta, sdir)
+    with output_lock(root):
+        run = read_json(root / "run.json")
+        splits = {}
+        for name in run["splits"]:
+            sdir = root / name
+            if run.get("checkpoint_schema") == 1:
+                verify_completed(sdir)
+            meta = [json.loads(l) for l in (sdir / "meta.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()]
+            splits[name] = Split(name, meta, sdir)
     return run, splits
