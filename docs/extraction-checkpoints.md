@@ -14,6 +14,8 @@ For an interrupted new-format run, rerun the exact command with the same selecte
 
 The implementation keeps chunk size and loader/batch/device settings in each split's identity. Shared model, dtype, depths, pooling, label mapping and NLL semantics remain compatible across splits. A source-file reorder that leaves the deterministically selected ordered documents unchanged does not change that selected-content identity.
 
+The output root also binds shared configuration, numerical runtime, execution device and implementation identity across splits. A separate adversarial fixture reproduced the gap where a new split could otherwise join an existing run under a changed runtime; this now fails before publishing its metadata. Models require a pinned revision. New-format readers bind each completed split to the identities in run.json and reject unrecorded/incomplete split contracts. Changing library versions or extraction code requires a new output folder even when a new split is being added.
+
 ## Guarantees and limits
 
 This is single-host coordination on a filesystem with normal OS locking and atomic replace semantics. It is not a distributed job scheduler, a network-filesystem lease or a guarantee of survival of all directory metadata under sudden power loss. File hashes detect accidental drift/corruption relative to the recorded contract; an authorized operator can rewrite both data and receipts. Final consolidation still loads arrays in memory and may need a separate measured scaling improvement for very large corpora.

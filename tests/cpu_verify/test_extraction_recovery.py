@@ -120,3 +120,29 @@ def test_model_cleanup_after_failure(tmp_path, dataset, monkeypatch):
     with pytest.raises(RuntimeError, match="model failure"):
         invoke(dataset, tmp_path / "out")
     assert closed == [True]
+
+
+def test_numerical_runtime_drift_cannot_mix_new_split(tmp_path, dataset, monkeypatch):
+    from latentlens import common
+
+    with dataset.open("a") as fh:
+        fh.write(
+            json.dumps(
+                {
+                    "id": "val-one",
+                    "text": "validation fixture",
+                    "label": "human",
+                    "split": "val",
+                }
+            )
+            + "\n"
+        )
+    out = tmp_path / "out"
+    invoke(dataset, out)
+    original = common.library_versions
+    monkeypatch.setattr(
+        common, "library_versions", lambda: {**original(), "torch": "changed-runtime"}
+    )
+    with pytest.raises(ValueError, match="shared extraction identity"):
+        invoke(dataset, out, extra=["--split", "val"])
+    assert not (out / "val/meta.jsonl").exists()
