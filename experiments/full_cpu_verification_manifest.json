@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "baseline_commit": "0f4fd281b51be26d7aa4e5b5a074d79b36ab7001",
+  "absolute_tolerance": 1e-09,
+  "scope": "Saved hybrid predictions and case-normalized recorded-player/game split assignments; no inference or true player-identity verification",
+  "evidence_files": {
+    "test_predictions.parquet": "07db35613fb926925ae617519404581698d24f05c237c2685f800a373f5467e9",
+    "splits.json": "b4cb777d5afb82e817ac638c2acee75e5ada2e2b5211bc4c4fb2e82cd01c9f5f",
+    "variants.parquet": "8baa1b4d0cafcff781d11dbcac1adda43e07758fa0562227c4f59884152797e6"
+  },
+  "reference_files": {
+    "data/artifacts/metrics.json": "9da1aa1be1f6299c365ef387850258d75df012201cff6467346d755c6609b4b2",
+    "data/artifacts/paired_bootstrap.json": "abb053c80425a06a2e129803f994ce1a1b90db3b655e90b2737e8020944ebf46"
+  }
+}
