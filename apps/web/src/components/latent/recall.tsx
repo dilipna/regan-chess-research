@@ -62,7 +62,7 @@ function PositionTrajectory({ p, t, nLayers }: { p: RecallPassage; t: number; nL
         markerLabelBottom
         caption={<>Model output (depth {nLayers}): rank {pos.rank}, p = {fmtProb(pos.p_true)}, top token &quot;{showTok(pos.top)}&quot; (p = {fmtProb(pos.p_top)}), entropy {pos.entropy.toFixed(2)} nats,
           margin {pos.margin.toFixed(2)}. &quot;Stable from&quot; = first depth after which the diagnostic top token always equals the final top token.</>} />
-      <div className="scroll-x max-h-[330px] overflow-y-auto rounded border border-rule">
+      <div tabIndex={0} role="region" aria-label="Token predictions by depth" className="scroll-x max-h-[330px] overflow-y-auto rounded border border-rule">
         <table className="table-lab">
           <thead><tr><th>depth</th><th>top projected token</th><th className="r">true-token rank</th><th className="r">p (diag.)</th></tr></thead>
           <tbody>{ranks.map((r, d) => (
@@ -110,7 +110,7 @@ export function RecallMicroscope({ precision }: { precision?: RecallPrecision })
         </ul>
       </section>
       <Panel title="Recall summary" badge={<Measured>{`Qwen3-8B-Base, ${data.dtype}, layer-streamed on a laptop GPU`}</Measured>}>
-        <div className="scroll-x">
+        <div tabIndex={0} role="region" aria-label="Recall summary table" className="scroll-x">
           <table className="table-lab">
             <thead><tr><th>passage</th><th className="r">scored tokens</th><th className="r">top-1 recall</th><th className="r">top-5</th><th className="r">median rank</th><th className="r">perplexity</th><th className="r">median stabilization depth</th></tr></thead>
             <tbody>{data.passages.map((q) => (
@@ -175,7 +175,7 @@ export function FutureComparison({ nLayers }: { nLayers: number }) {
           </ul>
         </Panel>
         <Panel title="How to run it">
-          <pre className="scroll-x rounded border border-rule bg-paper-2 p-3 font-mono text-[11.5px] leading-relaxed whitespace-pre text-ink-2">{`python scripts/latentlens/run_recall_analysis.py --model <model A> \\
+          <pre tabIndex={0} aria-label="Commands for a future model comparison" className="scroll-x rounded border border-rule bg-paper-2 p-3 font-mono text-[11.5px] leading-relaxed whitespace-pre text-ink-2">{`python scripts/latentlens/run_recall_analysis.py --model <model A> \\
     --loader full --input speech.txt --no-store-text --out A.json
 python scripts/latentlens/run_recall_analysis.py --model <model B> \\
     --loader full --input speech.txt --no-store-text --out B.json

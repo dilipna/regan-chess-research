@@ -1,8 +1,8 @@
 "use client";
 
 import { Chess, type Square } from "chess.js";
-import { Chessboard } from "react-chessboard";
-import type { Arrow } from "react-chessboard";
+import { Chessboard, defaultPieces } from "react-chessboard";
+import type { Arrow, PieceRenderObject } from "react-chessboard";
 import { useMemo, useState } from "react";
 
 // The site's text colours are bright for a black page; on the board's light squares arrows need deeper tones.
@@ -13,6 +13,18 @@ const ON_BOARD: Record<string, string> = {
   "var(--llm)": "var(--arrow-llm)",
   "var(--human)": "var(--arrow-human)",
 };
+
+const PIECE_NAMES: Record<string, string> = { P: "pawn", N: "knight", B: "bishop", R: "rook", Q: "queen", K: "king" };
+// The library's draggable wrapper uses role=button, including on prepared boards.
+// Supply its accessible name through the supported piece renderer API.
+const NAMED_PIECES: PieceRenderObject = Object.fromEntries(
+  Object.entries(defaultPieces).map(([key, Piece]) => [key, (props?: Parameters<PieceRenderObject[string]>[0]) => (
+    <>
+      <span className="sr-only">{key[0] === "w" ? "White" : "Black"} {PIECE_NAMES[key[1]]}{props?.square ? ` on ${props.square}` : ""}</span>
+      <span aria-hidden="true" style={{ display: "block", width: "100%", height: "100%" }}><Piece {...props} /></span>
+    </>
+  )]),
+);
 
 export interface BoardArrow {
   uci: string;
@@ -109,6 +121,7 @@ export function Board({
       <Chessboard
         options={{
           id,
+          pieces: NAMED_PIECES,
           position: fen,
           boardOrientation: orientation,
           allowDragging: !!onMove,

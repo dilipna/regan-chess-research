@@ -12,6 +12,7 @@ export function Footer() {
           <Link className="hover:text-ink" href="/methodology">Methods</Link>
           <Link className="hover:text-ink" href="/results">Full results</Link>
           <Link className="hover:text-ink" href="/methodology#repro">Provenance</Link>
+          <Link className="hover:text-ink" href="/engineering">Engineering evidence</Link>
           <Link className="hover:text-ink" href="/about">Earlier views</Link>
         </div>
       </div>

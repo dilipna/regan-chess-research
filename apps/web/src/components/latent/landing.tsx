@@ -13,7 +13,7 @@ export function LandingHero() {
     <div className="grid gap-8 border-b border-rule pb-10 lg:grid-cols-[1.3fr_1fr] lg:items-end">
       <div>
         <div className="text-[13px] font-semibold tracking-wide text-ink-3 uppercase">LatentLens · Version 2 of MoveLens</div>
-        <h1 className="mt-2 font-serif text-[40px] leading-[1.05] font-semibold text-ink sm:text-[56px]">How does this piece of text become the next token?</h1>
+        <h2 className="mt-2 font-serif text-[40px] leading-[1.05] font-semibold text-ink sm:text-[56px]">How does this piece of text become the next token?</h2>
         <p className="mt-5 max-w-2xl text-[18px] leading-relaxed text-ink-2">
           Follow one sentence through a real language model, Qwen3-8B-Base, one step at a time. You predict, change something, and see what happens.
           No background is needed to start; the Mechanics and Research levels open the mathematics and the recorded measurements.

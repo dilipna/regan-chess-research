@@ -46,7 +46,7 @@ export function Nav() {
       {phase && (
         <div className="border-b border-rule bg-paper">
           <nav aria-label={`Phase ${phase.n} pages`} className="no-scrollbar mx-auto flex h-11 max-w-[1180px] items-center gap-1 overflow-x-auto px-4 sm:px-6">
-            <span className="mr-2 shrink-0 text-[12.5px] text-ink-4">{phase.plain}</span>
+            <span className="mr-2 shrink-0 text-[12.5px] text-ink-3">{phase.plain}</span>
             {links.map((l) => (
               <Link key={l.href} href={l.href} aria-current={isActive(l.href) ? "page" : undefined}
                 className={cn("shrink-0 rounded-md px-2.5 py-1 text-[13.5px] whitespace-nowrap text-ink-3 transition-colors hover:text-ink",
@@ -54,7 +54,7 @@ export function Nav() {
                 {l.label}
               </Link>
             ))}
-            <Link href={`/#all-pages`} className="ml-auto shrink-0 px-2 py-1 text-[12.5px] whitespace-nowrap text-ink-4 hover:text-ink">All pages</Link>
+            <Link href={`/#all-pages`} className="ml-auto shrink-0 px-2 py-1 text-[12.5px] whitespace-nowrap text-ink-3 hover:text-ink">All pages</Link>
           </nav>
         </div>
       )}

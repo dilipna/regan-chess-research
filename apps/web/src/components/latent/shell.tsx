@@ -6,7 +6,8 @@ import type { Part } from "@/lib/latent/parts";
 import type { Pending } from "@/lib/latent/types";
 import { Prov } from "./kit";
 
-export function SectionHead({ n, kicker, title, children, id }: { n?: number | string; kicker?: string; title: string; children?: React.ReactNode; id?: string }) {
+export function SectionHead({ n, kicker, title, children, id, level = 2 }: { n?: number | string; kicker?: string; title: string; children?: React.ReactNode; id?: string; level?: 1 | 2 }) {
+  const Heading = level === 1 ? "h1" : "h2";
   return (
     <header id={id} className="mb-6 scroll-mt-28">
       {(kicker || n !== undefined) && (
@@ -15,7 +16,7 @@ export function SectionHead({ n, kicker, title, children, id }: { n?: number | s
           {kicker}
         </div>
       )}
-      <h2 className="font-serif text-[26px] leading-tight font-semibold tracking-tight text-ink sm:text-[30px]">{title}</h2>
+      <Heading className="font-serif text-[26px] leading-tight font-semibold tracking-tight text-ink sm:text-[30px]">{title}</Heading>
       {children && <div className="mt-3 max-w-3xl text-[15px] leading-relaxed text-ink-2">{children}</div>}
     </header>
   );

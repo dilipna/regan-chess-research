@@ -11,7 +11,7 @@ export default async function RecallPage() {
   if (!d.arch) return <p role="alert" className="text-[13px] text-flag">Artifacts could not be loaded.</p>;
   return (
     <>
-      <SectionHead n={12} kicker="Recall Microscope" title="At what depth does a known continuation begin to dominate?">
+      <SectionHead level={1} n={12} kicker="Recall Microscope" title="At what depth does a known continuation begin to dominate?">
         Teacher-forced next-token recall on a famous public-domain text and on an original paragraph the model cannot have seen. For every position we record the true
         token&apos;s rank, probability and margin at the output, and at every depth through an intermediate diagnostic projection.
       </SectionHead>

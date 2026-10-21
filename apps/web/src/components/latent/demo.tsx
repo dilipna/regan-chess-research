@@ -127,7 +127,7 @@ export function ProfessorDemo({ arch, layerProbe, tok, trace, glassbox, versions
         </div>
       </div>
       <div className="reveal grid gap-6" key={`${s}-${epoch}`}>
-        <div className="text-[13px] font-semibold tracking-wide text-ink-3 uppercase">Step {s + 1} of {n} · {step.title}</div>
+        <h1 className="text-[13px] font-semibold tracking-wide text-ink-3 uppercase">Step {s + 1} of {n} · {step.title}</h1>
         <Say>{step.say}</Say>
         {notes && <p className="rounded-xl border-2 border-dashed border-rule-strong bg-paper-2/60 p-4 text-[14.5px] leading-relaxed text-ink-2"><strong>Presenter notes.</strong> {NOTES[s]}</p>}
         <div>{step.body}</div>

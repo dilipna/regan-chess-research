@@ -1,0 +1,136 @@
+{
+  "positions": 12863,
+  "source_games": 321,
+  "player_games": 605,
+  "models": {
+    "M": {
+      "top1_accuracy": {
+        "value": 0.5693850579180596,
+        "ci95": [
+          0.5596850848692518,
+          0.5792920191530658
+        ]
+      },
+      "top3_accuracy": {
+        "value": 0.8438933374795926,
+        "ci95": [
+          0.8364744983294716,
+          0.8513879826706915
+        ]
+      },
+      "mean_nll": {
+        "value": 1.2798484787812183,
+        "ci95": [
+          1.2509357363761249,
+          1.3087480742035151
+        ]
+      },
+      "mean_rank": {
+        "value": 2.234859675036928,
+        "ci95": [
+          2.182411520022295,
+          2.2910110348416155
+        ]
+      }
+    },
+    "M5": {
+      "top1_accuracy": {
+        "value": 0.5554691751535412,
+        "ci95": [
+          0.5451524254474203,
+          0.5651894876383764
+        ]
+      },
+      "top3_accuracy": {
+        "value": 0.8248464588354194,
+        "ci95": [
+          0.8173982484690333,
+          0.8324571216339112
+        ]
+      },
+      "mean_nll": {
+        "value": 1.3501596768028683,
+        "ci95": [
+          1.3202778153412698,
+          1.3790900929024166
+        ]
+      },
+      "mean_rank": {
+        "value": 2.368265567907953,
+        "ci95": [
+          2.307284894705213,
+          2.4275690358022515
+        ]
+      }
+    }
+  },
+  "paired": {
+    "top1_accuracy": {
+      "from": "M5",
+      "to": "M",
+      "delta": 0.013915882764518384,
+      "ci95": [
+        0.008291403385044128,
+        0.019312689930405424
+      ]
+    },
+    "top3_accuracy": {
+      "from": "M5",
+      "to": "M",
+      "delta": 0.019046878644173204,
+      "ci95": [
+        0.015266314900001892,
+        0.02280315771272737
+      ]
+    },
+    "mean_nll": {
+      "from": "M5",
+      "to": "M",
+      "delta": -0.07031119802164998,
+      "ci95": [
+        -0.07767804681614815,
+        -0.06293913868141178
+      ]
+    },
+    "mean_rank": {
+      "from": "M5",
+      "to": "M",
+      "delta": -0.13340589287102533,
+      "ci95": [
+        -0.15305739528033604,
+        -0.11215304498665019
+      ]
+    }
+  },
+  "bootstrap": {
+    "seed": 20261017,
+    "n_boot": 2000,
+    "cluster": "source game"
+  },
+  "status": "PASS",
+  "scope": "Four Maia Task-1 metrics and paired source-game bootstrap only; not full pipeline or split leakage verification",
+  "inputs_sha256": {
+    "data/artifacts/maia_move_scores.parquet": "40bc25c2de8229f4978c97b5953c58786737b6754d45a42fc9a331443f093b6d",
+    "data/artifacts/three_model_move_prediction.json": "1cd61bd065619c3da735eec0e78503b8bbe41714d916850ec35cbff4f3acca86",
+    "data/artifacts/three_model_bootstrap.json": "405239498e1e52d934e5cabd7633000f2c8e43018007c3fe3b8ce251471d2a27",
+    "experiments/three_model_plan.py": "a24d7229bda223dcb0d3fe2483d0d4fc9702e19f8b6514718488dbbf744b0762"
+  },
+  "analysis_plan_sha256": "58637622b3a881238d122acd0b73718f992123c038cb5b925baac23c1f9d9d36",
+  "absolute_tolerance": 1e-10,
+  "cpu_contract_sha256": "73030d62ebcc8bda95ec653e06ab91933e641e5e1b4268429cf92f456b08e311",
+  "verifier_sha256": "e435677e58effc13c12755ac740cd3f4f671ac130ec92d9630ae9cbf1533b41d",
+  "runtime": {
+    "python": "3.10.9",
+    "numpy": "1.26.4",
+    "pyarrow": "21.0.0"
+  },
+  "qwen_held_out_status": "pending; no inference or imputation",
+  "actual_split_disjointness_verified": false,
+  "not_reproduced": [
+    "Original Maia inference or legal-set normalization",
+    "Actual train/validation/test player disjointness: split inputs absent",
+    "Full multiclass Brier, engine-event metrics, Task-2/hybrid results: required policy/target/prediction artifacts absent",
+    "Stockfish regeneration or Qwen held-out evaluation"
+  ],
+  "source_commit": "70d64da76247249994a34d4ebe0038120469e36d"
+}
