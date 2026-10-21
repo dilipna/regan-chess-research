@@ -1,4 +1,6 @@
 .venv/
+.venv-cpu/
+reports/cpu-evidence/
 __pycache__/
 *.pyc
 .pytest_cache/

@@ -1,0 +1,4 @@
+# Separate artifact-arithmetic environment, not the training/inference environment.
+numpy==1.26.4
+pyarrow==21.0.0
+pytest==8.1.1
