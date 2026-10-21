@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "baseline_commit": "0f4fd281b51be26d7aa4e5b5a074d79b36ab7001",
+  "scope": "Four Maia Task-1 metrics and paired source-game bootstrap only; not full pipeline or split leakage verification",
+  "absolute_tolerance": 1e-10,
+  "expected_files": {
+    "data/artifacts/maia_move_scores.parquet": "40bc25c2de8229f4978c97b5953c58786737b6754d45a42fc9a331443f093b6d",
+    "data/artifacts/three_model_move_prediction.json": "1cd61bd065619c3da735eec0e78503b8bbe41714d916850ec35cbff4f3acca86",
+    "data/artifacts/three_model_bootstrap.json": "405239498e1e52d934e5cabd7633000f2c8e43018007c3fe3b8ce251471d2a27",
+    "experiments/three_model_plan.py": "a24d7229bda223dcb0d3fe2483d0d4fc9702e19f8b6514718488dbbf744b0762"
+  }
+}
